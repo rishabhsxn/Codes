@@ -1,0 +1,1 @@
+// using bitwise AND OR and left shifting find the duplicates present in the string

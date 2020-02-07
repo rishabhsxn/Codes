@@ -1,0 +1,7 @@
+Name                Age Gender  Branch  Roll no.
+
+Rishabh             20  Male    CSE     42
+Poojan              18  Female  CSE     21
+Amod                19  Male    IT      1
+Jigyasa             19  Female  ECE     30
+Rimjhim             18  Female  CSE     40
