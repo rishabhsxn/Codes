@@ -1,0 +1,14 @@
+to start the json server
+go to the server folder and open terminal there, and type the command given below- 
+json-server --watch db.json -p 3001 -d 2000
+
+-p flag for specifying the port to be used
+-d flag to specify the delay time, in this case 2 sec to simulate a request to a server over the internet
+
+urls - 
+http://localhost:3001/dishes
+http://localhost:3001/promotions
+http://localhost:3001/leaders
+http://localhost:3001/feedback
+
+http://localhost:3001/images/<image name>.png
