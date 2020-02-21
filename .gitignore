@@ -13,6 +13,7 @@ Mobile_Development/Android/Udemy/Resources/Course_extras
 
 #to ignore dependencies from everywhere
 **/node_modules
+**/.idea
 .expo/*
 npm-debug.*
 *.jks
