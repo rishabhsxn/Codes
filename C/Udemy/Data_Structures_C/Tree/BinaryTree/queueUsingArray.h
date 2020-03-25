@@ -17,7 +17,7 @@ struct Queue{
     int rear;       // rear will be on the index of the actual rear element
 };
 
-struct Queue * createQueue();
+struct Queue * createQueue(int);
 int enqueue(struct Queue *, struct Node *);           // return -1 if enqueue is not successful else 0
 struct Node * dequeue(struct Queue *);           // returns NULL if dequeue not successful otherwise, element
 int isFull(struct Queue);              // 0 = false, 1 = true
@@ -25,12 +25,12 @@ int isEmpty(struct Queue);             // 0 = false, 1 = true
 void printQueue(struct Queue);
 
 
-struct Queue * createQueue(){
+struct Queue * createQueue(int capacity){
     struct Queue *Q = NULL;
     Q = (struct Queue *) malloc(sizeof(struct Queue));
-    printf("enter capacity: ");
-    scanf("%d",&Q->capacity);
-    Q->capacity = Q->capacity + 1;   // because 1 space is left empty always
+    // printf("enter capacity: ");
+    // scanf("%d",&Q->capacity);
+    Q->capacity = capacity + 1;   // because 1 space is left empty always
 
     Q->q = (struct Node **)malloc(Q->capacity*sizeof(struct Node *));
     Q->front = Q->rear = 0;
