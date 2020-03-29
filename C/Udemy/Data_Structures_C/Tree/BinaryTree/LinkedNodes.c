@@ -40,6 +40,18 @@ int main(){
     int levelCount = levelTree(root);
     printf("Levels in this Tree: %d\n",levelCount);
 
+    int height = heightTree(root);
+    printf("Height of Tree: %d\n",height);
+
+    int leafCount = leafNodes(root);
+    printf("No. of Leaf nodes: %d\n",leafCount);
+
+    int nodeDegreeTwoCount = nodesDegreeTwo(root);
+    printf("No. of nodes with Degree(2): %d\n",nodeDegreeTwoCount);
+
+    int nodeDegreeOneCount = nodesDegreeOne(root);
+    printf("No. of nodes with Degree(1): %d\n\n",nodeDegreeOneCount);
+
     return 0;
 }
 
@@ -165,4 +177,48 @@ int levelTree(struct Node *node){
 
 int heightTree(struct Node *root){
     return levelTree(root) - 1;
+}
+
+int leafNodes(struct Node *node){
+    if(node){
+        int x,y;
+
+        x = leafNodes(node->lChild);
+        y = leafNodes(node->rChild);
+
+        if(!(node->lChild) && !(node->rChild))
+            return x + y + 1;    // if it's left and right child are NULL, then count it otherwise not
+        else
+            return x + y;
+    }
+    return 0;
+}
+
+int nodesDegreeTwo(struct Node *node){
+    if(node){
+        int x,y;
+
+        x = nodesDegreeTwo(node->lChild);
+        y = nodesDegreeTwo(node->rChild);
+
+        if(node->lChild && node->rChild)
+            return x + y + 1;       // count node only if both child are not NULL
+        else
+            return x + y;
+    }
+    return 0;
+}
+
+int nodesDegreeOne(struct Node *node){
+    if(node){
+        int x,y;
+
+        x = nodesDegreeOne(node->lChild);
+        y = nodesDegreeOne(node->rChild);
+
+        if((node->lChild && !(node->rChild)) || (!(node->lChild) && node->rChild))
+            return x + y + 1;          // count node only if only one child is present
+        else
+            return x + y;
+    }
 }
