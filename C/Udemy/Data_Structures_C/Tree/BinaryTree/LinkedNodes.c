@@ -2,9 +2,13 @@
 // this program uses Queue of type struct Node, which is implemented in the Header file
 // we are creating the tree level by level (top to bottom)
 
+// more functions - countNodes, heightTree, levelTree, leafNodes, nodesDegreeTwo, nodesDegreeOne
+
 #include<stdio.h>
 #include<stdlib.h>
 #include"queueUsingArray.h"
+
+#define defaultQueueCapacity 20
 
 // because it is already declared in the Header File
 // struct Node{
@@ -15,14 +19,26 @@
 
 struct Node * createTree(struct Queue);   // it will make own copy of Queue, use it and then discard it
 void displayBinaryTree(struct Node *, struct Queue);
+int countNodes(struct Node *);          // recursive function
+int heightTree(struct Node *);
+int levelTree(struct Node *);
+int leafNodes(struct Node *);
+int nodesDegreeTwo(struct Node *);
+int nodesDegreeOne(struct Node *);
 
 
 int main(){
 
-    struct Queue *Q = createQueue();
+    struct Queue *Q = createQueue(defaultQueueCapacity);
 
     struct Node *root = createTree(*Q);
     displayBinaryTree(root, *Q);
+
+    int noOfNodes = countNodes(root);
+    printf("\nNo. of nodes: %d\n",noOfNodes);
+
+    int levelCount = levelTree(root);
+    printf("Levels in this Tree: %d\n",levelCount);
 
     return 0;
 }
@@ -117,4 +133,36 @@ void displayBinaryTree(struct Node *root, struct Queue Q){
 
         printf("\n");
     }
+}
+
+
+int countNodes(struct Node *node){
+    if(node){
+        int x,y;
+        x = countNodes(node->lChild);
+        y = countNodes(node->rChild);
+        return x+y+1;
+    }
+
+    return 0;
+}
+
+int levelTree(struct Node *node){
+    if(node){
+        int x,y;
+
+        x = levelTree(node->lChild);
+        y = levelTree(node->rChild);
+
+        if(x>y)
+            return x+1;         // select the side with greater height, add 1 to it and return it.
+        else
+            return y+1;
+    }
+
+    return 0;       // if node is NULL, height of left and right subtree is 0
+}
+
+int heightTree(struct Node *root){
+    return levelTree(root) - 1;
 }
