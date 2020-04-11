@@ -4,42 +4,42 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct Node{
-    struct Node *lChild;
+struct Node_Char{
+    struct Node_Char *lChild;
     char data;
-    struct Node *rChild;
+    struct Node_Char *rChild;
 };
 
-struct Queue{
+struct Queue_Char{
     int capacity;
-    struct Node **q;
+    struct Node_Char **q;
     int front;      // front will be one index before the actual front element
     int rear;       // rear will be on the index of the actual rear element
 };
 
-struct Queue * createQueue(int);
-int enqueue(struct Queue *, struct Node *);           // return -1 if enqueue is not successful else 0
-struct Node * dequeue(struct Queue *);           // returns NULL if dequeue not successful otherwise, element
-int isFull(struct Queue);              // 0 = false, 1 = true
-int isEmpty(struct Queue);             // 0 = false, 1 = true
-void printQueue(struct Queue);
+struct Queue_Char * createQueue_Char(int);
+int enqueue_Char(struct Queue_Char *, struct Node_Char *);           // return -1 if enqueue is not successful else 0
+struct Node_Char * dequeue_Char(struct Queue_Char *);           // returns NULL if dequeue not successful otherwise, element
+int isFull_Char(struct Queue_Char);              // 0 = false, 1 = true
+int isEmpty_Char(struct Queue_Char);             // 0 = false, 1 = true
+void printQueue_Char(struct Queue_Char);
 
 
-struct Queue * createQueue(int capacity){
-    struct Queue *Q = NULL;
-    Q = (struct Queue *) malloc(sizeof(struct Queue));
+struct Queue_Char * createQueue_Char(int capacity){
+    struct Queue_Char *Q = NULL;
+    Q = (struct Queue_Char *) malloc(sizeof(struct Queue_Char));
     // printf("enter capacity: ");
     // scanf("%d",&Q->capacity);
     Q->capacity = capacity + 1;   // because 1 space is left empty always
 
-    Q->q = (struct Node **)malloc(Q->capacity*sizeof(struct Node *));
+    Q->q = (struct Node_Char **)malloc(Q->capacity*sizeof(struct Node_Char *));
     Q->front = Q->rear = 0;
 
     return Q;
 }
 
 
-int enqueue(struct Queue *Q, struct Node *nodePointer){
+int enqueue_Char(struct Queue_Char *Q, struct Node_Char *nodePointer){
     if(isFull(*Q)){
         printf("Queue full, cannot Enqueue!!\n");
         return -1;
@@ -50,7 +50,7 @@ int enqueue(struct Queue *Q, struct Node *nodePointer){
     return 0;
 }
 
-struct Node * dequeue(struct Queue *Q){
+struct Node_Char * dequeue_Char(struct Queue_Char *Q){
     if(isEmpty(*Q)){
         printf("Queue is empty, cannot Dequeue !!!\n");
         return NULL;
@@ -61,14 +61,14 @@ struct Node * dequeue(struct Queue *Q){
 }
 
 
-int isEmpty(struct Queue Q){
+int isEmpty_Char(struct Queue_Char Q){
     if(Q.front==Q.rear)
         return 1;
     return 0;
 }
 
 
-int isFull(struct Queue Q){
+int isFull_Char(struct Queue_Char Q){
     if( (Q.rear+1) % Q.capacity == Q.front)
         return 1;
     return 0;
