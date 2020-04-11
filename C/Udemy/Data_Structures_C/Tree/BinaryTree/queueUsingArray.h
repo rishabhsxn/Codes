@@ -71,7 +71,7 @@ struct Queue_Int * createQueue_Int(int capacity){
 
 
 int enqueue_Char(struct Queue_Char *Q, struct Node_Char *nodePointer){
-    if(isFull(*Q)){
+    if(isFull_Char(*Q)){
         printf("Queue full, cannot Enqueue!!\n");
         return -1;
     }
@@ -81,7 +81,7 @@ int enqueue_Char(struct Queue_Char *Q, struct Node_Char *nodePointer){
     return 0;
 }
 int enqueue_Int(struct Queue_Int *Q, struct Node_Int *nodePointer){
-    if(isFull(*Q)){
+    if(isFull_Int(*Q)){
         printf("Queue full, cannot Enqueue!!\n");
         return -1;
     }
@@ -92,7 +92,7 @@ int enqueue_Int(struct Queue_Int *Q, struct Node_Int *nodePointer){
 }
 
 struct Node_Char * dequeue_Char(struct Queue_Char *Q){
-    if(isEmpty(*Q)){
+    if(isEmpty_Char(*Q)){
         printf("Queue is empty, cannot Dequeue !!!\n");
         return NULL;
     }
@@ -101,7 +101,7 @@ struct Node_Char * dequeue_Char(struct Queue_Char *Q){
     return Q->q[Q->front];
 }
 struct Node_Int * dequeue_Int(struct Queue_Int *Q){
-    if(isEmpty(*Q)){
+    if(isEmpty_Int(*Q)){
         printf("Queue is empty, cannot Dequeue !!!\n");
         return NULL;
     }
