@@ -2,7 +2,7 @@
 // this program uses Queue of type struct Node, which is implemented in the Header file
 // we are creating the tree level by level (top to bottom)
 
-// more functions - countNodes, heightTree, levelTree, leafNodes, nodesDegreeTwo, nodesDegreeOne
+// more functions - countNodes_Char, heightTree_Char, levelTree_Char, leafNodes_Char, nodesDegreeTwo_Char, nodesDegreeOne_Char
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -17,46 +17,46 @@
 //     struct Node *rChild;
 // };
 
-struct Node_Char * createTree(struct Queue_Char);   // it will make own copy of Queue, use it and then discard it
-void displayBinaryTree(struct Node_Char *, struct Queue_Char);
-int countNodes(struct Node_Char *);          // recursive function
-int heightTree(struct Node_Char *);
-int levelTree(struct Node_Char *);
-int leafNodes(struct Node_Char *);
-int nodesDegreeTwo(struct Node_Char *);
-int nodesDegreeOne(struct Node_Char *);
+struct Node_Char * createTree_Char();   // it will make own copy of Queue, use it and then discard it
+void displayBinaryTree_Char(struct Node_Char *);
+int countNodes_Char(struct Node_Char *);          // recursive function
+int heightTree_Char(struct Node_Char *);
+int levelTree_Char(struct Node_Char *);
+int leafNodes_Char(struct Node_Char *);
+int nodesDegreeTwo_Char(struct Node_Char *);
+int nodesDegreeOne_Char(struct Node_Char *);
 
 
 int main(){
 
-    struct Queue_Char *Q = createQueue_Char(defaultQueueCapacity);
 
-    struct Node_Char *root = createTree(*Q);
-    displayBinaryTree(root, *Q);
+    struct Node_Char *root = createTree_Char();
+    displayBinaryTree_Char(root);
 
-    int noOfNodes = countNodes(root);
+    int noOfNodes = countNodes_Char(root);
     printf("\nNo. of nodes: %d\n",noOfNodes);
 
-    int levelCount = levelTree(root);
+    int levelCount = levelTree_Char(root);
     printf("Levels in this Tree: %d\n",levelCount);
 
-    int height = heightTree(root);
+    int height = heightTree_Char(root);
     printf("Height of Tree: %d\n",height);
 
-    int leafCount = leafNodes(root);
+    int leafCount = leafNodes_Char(root);
     printf("No. of Leaf nodes: %d\n",leafCount);
 
-    int nodeDegreeTwoCount = nodesDegreeTwo(root);
+    int nodeDegreeTwoCount = nodesDegreeTwo_Char(root);
     printf("No. of nodes with Degree(2): %d\n",nodeDegreeTwoCount);
 
-    int nodeDegreeOneCount = nodesDegreeOne(root);
+    int nodeDegreeOneCount = nodesDegreeOne_Char(root);
     printf("No. of nodes with Degree(1): %d\n\n",nodeDegreeOneCount);
 
     return 0;
 }
 
 
-struct Node_Char * createTree(struct Queue_Char Q){
+struct Node_Char * createTree_Char(){
+    struct Queue_Char *Q = createQueue_Char(defaultQueueCapacity); 
     char rootData;
     printf("Root: ");
     scanf(" %c",&rootData);
@@ -66,14 +66,14 @@ struct Node_Char * createTree(struct Queue_Char Q){
         return NULL;
     }
     root->data = rootData;
-    enqueue_Char(&Q, root);
+    enqueue_Char(Q, root);
 
     struct Node_Char *temp;
 
     printf("\n****if a node doesn't exist, enter @ when asked****\n\n");
-    while(!isEmpty_Char(Q)){
+    while(!isEmpty_Char(*Q)){
 
-        temp = dequeue_Char(&Q);
+        temp = dequeue_Char(Q);
 
         if(temp==NULL){
             printf("Queue is empty\n");
@@ -93,7 +93,7 @@ struct Node_Char * createTree(struct Queue_Char Q){
             }
             lChild->data = lChildData;
             temp->lChild = lChild;
-            int x = enqueue_Char(&Q, lChild);
+            int x = enqueue_Char(Q, lChild);
             if(x==-1)
                 return NULL;
         }
@@ -111,7 +111,7 @@ struct Node_Char * createTree(struct Queue_Char Q){
             }
             rChild->data = rChildData;
             temp->rChild = rChild;
-            int x = enqueue_Char(&Q, rChild);
+            int x = enqueue_Char(Q, rChild);
             if(x==-1)
                 return NULL;
         }
@@ -121,26 +121,27 @@ struct Node_Char * createTree(struct Queue_Char Q){
 }
 
 
-void displayBinaryTree(struct Node_Char *root, struct Queue_Char Q){
+void displayBinaryTree_Char(struct Node_Char *root){
+    struct Queue_Char *Q = createQueue_Char(defaultQueueCapacity); 
     printf("\n\n--------------------Displaying Tree-------------------\n\n");
     struct Node_Char *temp;
-    enqueue_Char(&Q, root);
+    enqueue_Char(Q, root);
 
     printf("Root ");
-    while(!isEmpty_Char(Q)){
-        temp = dequeue_Char(&Q);
+    while(!isEmpty_Char(*Q)){
+        temp = dequeue_Char(Q);
         printf("Node: %c\n",temp->data);
 
         struct Node_Char *lChild = temp->lChild;
         if(lChild!=NULL){
             printf("left child: %c\n",lChild->data);
-            enqueue_Char(&Q, lChild);
+            enqueue_Char(Q, lChild);
         }
 
         struct Node_Char *rChild = temp->rChild;
         if(rChild!=NULL){
             printf("right child: %c\n",rChild->data);
-            enqueue_Char(&Q, rChild);
+            enqueue_Char(Q, rChild);
         }
 
         printf("\n");
@@ -148,23 +149,23 @@ void displayBinaryTree(struct Node_Char *root, struct Queue_Char Q){
 }
 
 
-int countNodes(struct Node_Char *node){
+int countNodes_Char(struct Node_Char *node){
     if(node){
         int x,y;
-        x = countNodes(node->lChild);
-        y = countNodes(node->rChild);
+        x = countNodes_Char(node->lChild);
+        y = countNodes_Char(node->rChild);
         return x+y+1;
     }
 
     return 0;
 }
 
-int levelTree(struct Node_Char *node){
+int levelTree_Char(struct Node_Char *node){
     if(node){
         int x,y;
 
-        x = levelTree(node->lChild);
-        y = levelTree(node->rChild);
+        x = levelTree_Char(node->lChild);
+        y = levelTree_Char(node->rChild);
 
         if(x>y)
             return x+1;         // select the side with greater height, add 1 to it and return it.
@@ -175,16 +176,16 @@ int levelTree(struct Node_Char *node){
     return 0;       // if node is NULL, height of left and right subtree is 0
 }
 
-int heightTree(struct Node_Char *root){
-    return levelTree(root) - 1;
+int heightTree_Char(struct Node_Char *root){
+    return levelTree_Char(root) - 1;
 }
 
-int leafNodes(struct Node_Char *node){
+int leafNodes_Char(struct Node_Char *node){
     if(node){
         int x,y;
 
-        x = leafNodes(node->lChild);
-        y = leafNodes(node->rChild);
+        x = leafNodes_Char(node->lChild);
+        y = leafNodes_Char(node->rChild);
 
         if(!(node->lChild) && !(node->rChild))
             return x + y + 1;    // if it's left and right child are NULL, then count it otherwise not
@@ -194,12 +195,12 @@ int leafNodes(struct Node_Char *node){
     return 0;
 }
 
-int nodesDegreeTwo(struct Node_Char *node){
+int nodesDegreeTwo_Char(struct Node_Char *node){
     if(node){
         int x,y;
 
-        x = nodesDegreeTwo(node->lChild);
-        y = nodesDegreeTwo(node->rChild);
+        x = nodesDegreeTwo_Char(node->lChild);
+        y = nodesDegreeTwo_Char(node->rChild);
 
         if(node->lChild && node->rChild)
             return x + y + 1;       // count node only if both child are not NULL
@@ -209,12 +210,12 @@ int nodesDegreeTwo(struct Node_Char *node){
     return 0;
 }
 
-int nodesDegreeOne(struct Node_Char *node){
+int nodesDegreeOne_Char(struct Node_Char *node){
     if(node){
         int x,y;
 
-        x = nodesDegreeOne(node->lChild);
-        y = nodesDegreeOne(node->rChild);
+        x = nodesDegreeOne_Char(node->lChild);
+        y = nodesDegreeOne_Char(node->rChild);
 
         if((node->lChild && !(node->rChild)) || (!(node->lChild) && node->rChild))
             return x + y + 1;          // count node only if only one child is present
