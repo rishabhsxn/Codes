@@ -10,45 +10,45 @@
 //     struct Node *rChild;
 // };
 
-struct Stack{
+struct Stack_Char{
     int size;
     int top;
-    struct Node **s;
+    struct Node_Char **s;
 };
 
-struct Stack* createStack(int);        // returns the address of the stack
+struct Stack_Char* createStack_Char(int);        // returns the address of the stack
 // void displayStack(struct Stack *);
-int push(struct Stack *, struct Node *);          // returns 0, if push is successful otherwise -1
-struct Node * pop(struct Stack *);                // returns NULL if stack is empty
-int isFull_Stack(struct Stack *);             // return 1 if stack is full otherwise 0
-int isEmpty_Stack(struct Stack *);            // returns 1 if stack is empty otherwise 0
+int push_Char(struct Stack_Char *, struct Node_Char *);          // returns 0, if push is successful otherwise -1
+struct Node_Char * pop_Char(struct Stack_Char *);                // returns NULL if stack is empty
+int isFull_Stack_Char(struct Stack_Char *);             // return 1 if stack is full otherwise 0
+int isEmpty_Stack_Char(struct Stack_Char *);            // returns 1 if stack is empty otherwise 0
 
 
-struct Stack * createStack(int size){
-    struct Stack *S = (struct Stack *)malloc(sizeof(struct Stack));
+struct Stack_Char * createStack_Char(int size){
+    struct Stack_Char *S = (struct Stack_Char *)malloc(sizeof(struct Stack_Char));
     S->size = size;
     S->top = -1;
-    S->s = (struct Node **)malloc(S->size*sizeof(struct Node *));
+    S->s = (struct Node_Char **)malloc(S->size*sizeof(struct Node_Char *));
 
     return S;
 }
 
-int isFull_Stack(struct Stack *S){
+int isFull_Stack_Char(struct Stack_Char *S){
     if(S->top == S->size-1)
         return 1;
     
     return 0;
 }
 
-int isEmpty_Stack(struct Stack *S){
+int isEmpty_Stack_Char(struct Stack_Char *S){
     if(S->top == -1)
         return 1;
 
     return 0;
 }
 
-int push(struct Stack *S, struct Node *node){
-    if(isFull_Stack(S)){
+int push_Char(struct Stack_Char *S, struct Node_Char *node){
+    if(isFull_Stack_Char(S)){
         printf("\nStack Overflow. Push operation failed\n");
         return -1;
     }
@@ -59,11 +59,11 @@ int push(struct Stack *S, struct Node *node){
     }
 }
 
-struct Node * pop(struct Stack *S){
-    if(isEmpty_Stack(S))
+struct Node_Char * pop_Char(struct Stack_Char *S){
+    if(isEmpty_Stack_Char(S))
         return NULL;
 
-    struct Node *node = S->s[S->top];
+    struct Node_Char *node = S->s[S->top];
     S->top--;
     return node;
 }
