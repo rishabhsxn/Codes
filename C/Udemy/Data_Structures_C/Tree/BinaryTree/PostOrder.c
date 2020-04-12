@@ -19,46 +19,46 @@ the pointers from stack, we can differentiate when to go to right child and when
 
 #define defaultStackCapacity 20
 
-void postOrderRecursive(struct Node *);
-void postOrderIterative(struct Node *);
+void postOrderRecursive_Char(struct Node_Char *);
+void postOrderIterative_Char(struct Node_Char *);
 
 int main(){
 
-    struct Node *root = createTree();
+    struct Node_Char *root = createTree_Char();
 
     printf("\n***Recursive method***\n");
     printf("Post-order: ");
-    postOrderRecursive(root);
+    postOrderRecursive_Char(root);
     printf("\n");
 
 
     printf("\n***Iterative method***\n");
-    postOrderIterative(root);
+    postOrderIterative_Char(root);
 
     return 0;
 }
 
 
-void postOrderRecursive(struct Node *node){
+void postOrderRecursive_Char(struct Node_Char *node){
     if(node){
-        postOrderRecursive(node->lChild);
-        postOrderRecursive(node->rChild);
+        postOrderRecursive_Char(node->lChild);
+        postOrderRecursive_Char(node->rChild);
         printf("%c ",node->data);
     }
 }
 
 
-void postOrderIterative(struct Node *root){
-    struct Stack *S = createStack(defaultStackCapacity);
+void postOrderIterative_Char(struct Node_Char *root){
+    struct Stack_Char *S = createStack_Char(defaultStackCapacity);
 
     int long addressInInt;  // this variable will hold the address(negative also), because simple pointer can't be negative
 
-    struct Node *node = root;
+    struct Node_Char *node = root;
     printf("Post-order: ");
-    while(!isEmpty_Stack(S) || node){
+    while(!isEmpty_Stack_Char(S) || node){
 
         if(node){
-            int x = push(S, node);
+            int x = push_Char(S, node);
             if(x==-1){
                 printf("Cannot push node pointer in stack\n");
                 break;
@@ -66,15 +66,15 @@ void postOrderIterative(struct Node *root){
             node = node->lChild;
         }
         else{
-            addressInInt = (int long) pop(S);   // type cast into node pointer before using(dereferencing) it.
+            addressInInt = (int long) pop_Char(S);   // type cast into node pointer before using(dereferencing) it.
             if(addressInInt<0){
-                node = (struct Node *)(-addressInInt);
+                node = (struct Node_Char *)(-addressInInt);
                 printf("%c ",node->data);
                 node = NULL;
             }
             else{
-                node = (struct Node *) addressInInt;
-                push(S, (struct Node *)(-addressInInt));
+                node = (struct Node_Char *) addressInInt;
+                push_Char(S, (struct Node_Char *)(-addressInInt));
                 node = node->rChild;
             }
         }

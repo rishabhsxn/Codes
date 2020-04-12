@@ -8,47 +8,47 @@
 
 #define defaultStackSize 20 
 
-void preOrderRecursive(struct Node *);
-void preOrderIterative(struct Node *); // the iterative method requires stack to backtrack nodes
+void preOrderRecursive_Char(struct Node_Char *);
+void preOrderIterative_Char(struct Node_Char *); // the iterative method requires stack to backtrack nodes
 
 
 int main(){
     // create a binary tree
-    struct Node *root = createTree();
+    struct Node_Char *root = createTree_Char();
 
     // find and display Pre-order (recursive)
     printf("\n***Recursive method***\n");
     printf("Pre-order: ");
-    preOrderRecursive(root);
+    preOrderRecursive_Char(root);
     printf("\n");
 
 
     // find and display Pre-order (iterative)
     printf("\n***Iterative method***\n");
-    preOrderIterative(root);
+    preOrderIterative_Char(root);
 
     return 0;
 }
 
 
-void preOrderRecursive(struct Node *node){
+void preOrderRecursive_Char(struct Node_Char *node){
     if(node!=NULL){
         printf("%c ",node->data);
-        preOrderRecursive(node->lChild);
-        preOrderRecursive(node->rChild);
+        preOrderRecursive_Char(node->lChild);
+        preOrderRecursive_Char(node->rChild);
     }
 }
 
-void preOrderIterative(struct Node *root){
-    struct Stack *S = createStack(defaultStackSize);
+void preOrderIterative_Char(struct Node_Char *root){
+    struct Stack_Char *S = createStack_Char(defaultStackSize);
 
-    struct Node *temp = root;
+    struct Node_Char *temp = root;
     printf("Pre-order: ");
-    while(!isEmpty_Stack(S) || temp!=NULL){
+    while(!isEmpty_Stack_Char(S) || temp!=NULL){
 
         if(temp!=NULL){
             printf("%c ",temp->data);
-            int x = push(S, temp);
+            int x = push_Char(S, temp);
 
             if(x==-1){
                 printf("Cannot push node pointer in stack\n");
@@ -58,7 +58,7 @@ void preOrderIterative(struct Node *root){
             temp = temp->lChild;
         }
         else{
-            temp = pop(S);
+            temp = pop_Char(S);
             if(temp!=NULL)
                 temp = temp->rChild;
         }
