@@ -26,3 +26,28 @@ int main(){
     }
     return 0;
 }
+
+// can be done in O(n) 
+// void findMissing(struct Array arr){
+    
+//     struct Array ret;
+//     ret.capacity = arr.ptr[arr.used-1] - arr.ptr[0];
+//     ret.used = 0;
+//     ret.ptr = (int*)malloc(sizeof(int)*arr.capacity);
+//     for(int i = arr.ptr[0],j=0; i<=arr.ptr[arr.used-1]; i++){
+//         if (i != arr.ptr[j])
+//         {
+//             //printf("inside if for %d\n",i);
+//             ret.ptr[ret.used] = i;
+//             //printf("%d is used\n",ret.used);
+//             ret.used++;
+//         }
+//         else{
+//             //printf("inside else for %d\n",i);
+//             j++;
+//         }
+//     }
+//     printf("NO. of misssing elements were %d\n",ret.used);
+//     printArray(ret.ptr, ret.used);
+//     //return ret;
+// }
