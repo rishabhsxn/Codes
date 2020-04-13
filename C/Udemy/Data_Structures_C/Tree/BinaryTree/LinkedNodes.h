@@ -145,6 +145,10 @@ struct Node_Int * createTree_Int(){
 }
 
 void displayBinaryTree_Char(struct Node_Char *root){
+    if(!root){
+        printf("\n----------Tree is empty!!----------\n");
+        return;
+    }
     struct Queue_Char *Q = createQueue_Char(defaultQueueCapacity);
     printf("\n\n--------------------Displaying Tree-------------------\n\n");
     struct Node_Char *temp;
@@ -171,6 +175,10 @@ void displayBinaryTree_Char(struct Node_Char *root){
     }
 }
 void displayBinaryTree_Int(struct Node_Int *root){
+    if(!root){
+        printf("\n----------Tree is empty!!----------\n");
+        return;
+    }
     struct Queue_Int *Q = createQueue_Int(defaultQueueCapacity); 
     printf("\n\n--------------------Displaying Tree-------------------\n\n");
     struct Node_Int *temp;
