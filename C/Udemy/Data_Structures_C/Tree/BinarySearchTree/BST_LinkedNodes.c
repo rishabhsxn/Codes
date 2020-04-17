@@ -7,7 +7,9 @@ struct Node_Int * creation_BST_Int();       // returns the address of the root n
 void insert_BST_recursive_Int(struct Node_Int *, int);
 void insert_BST_iterative_Int(struct Node_Int *, int);
 struct Node_Int * search_BST_Int(struct Node_Int *, int);
-
+int delete_BST_Int(struct Node_Int **, int);        // 0 = unsuccessful as element does not exist in tree
+struct Node_Int * get_InorderPredecessor(struct Node_Int *);    // removes the predecessor and maintain the tree
+struct Node_Int * get_InorderSuccessor(struct Node_Int *);      // removes the successor and maintain the tree
 
 int main(){
     printf("\n-----------------------------Creating BST-----------------------------\n\n");
@@ -18,7 +20,7 @@ int main(){
     int choice = 1;
     do{
         printf("\n----------------------------------------------------------------------");
-        printf("\nSelect an option:\n1. Insert in BST\n2. Display BST\n3. Search for an element\n4. Terminate\n\n");
+        printf("\nSelect an option:\n1. Insert in BST\n2. Display BST\n3. Search for an element\n4. Delete an element\n5. Terminate\n\n");
         scanf("%d", &choice);
         int num;
         switch(choice){
@@ -36,13 +38,18 @@ int main(){
                 struct Node_Int *result = search_BST_Int(root, num);
                 break;
             case 4:
+                printf("Key to delete: ");
+                scanf("%d", &num);
+                delete_BST_Int(&root, num);
+                break;
+            case 5:
                 printf("\nTerminating.....\n");
                 break;
             default:
                 printf("\nInvalid selection!!\n");
         }
 
-    }while(choice!=4);
+    }while(choice!=5);
 
     return 0;
 }
@@ -171,4 +178,153 @@ struct Node_Int * search_BST_Int(struct Node_Int *root, int key){
             }
         }
     }
+}
+
+int delete_BST_Int(struct Node_Int **root, int key){
+    if(!(*root)){
+        printf("\nTree is empty!!\n\n");
+        return 0;
+    }
+
+    // search the key
+    struct Node_Int *temp = *root;
+    struct Node_Int *parent = temp;
+    int flagDeleteRoot = 0, flagLeftChild=0, flagRightChild=0;
+
+    while(temp){
+        if(key == temp->data){
+            // delete the node
+
+            // check if the node to be deleted is a leaf node
+            if(!(temp->lChild) && !(temp->rChild)){
+                if(flagLeftChild)
+                    parent->lChild = NULL;
+                else
+                    parent->rChild = NULL;
+                
+                free(temp);
+                return 1;
+            }
+
+            // check if the node to be deleted is root
+            if(temp == *root)
+                flagDeleteRoot = 1;
+
+            // get predecessor
+            struct Node_Int *replacement = get_InorderPredecessor(temp);
+
+            // if no predecessor, get the successor
+            if(!replacement){
+                printf("\n\n******Predecessor not found, going for Successor******\n\n");
+                replacement = get_InorderSuccessor(temp);
+            }
+            else
+                printf("\n\n******Predecessor found: %d******\n\n",replacement->data);            
+
+            // check if replacement is node's lChild or rChild or neither
+            if(replacement == temp->lChild)
+                replacement->rChild = temp->rChild;
+            else if(replacement == temp->rChild)
+                replacement->lChild = temp->lChild;
+            else{
+                replacement->lChild = temp->lChild;
+                replacement->rChild = temp->rChild;
+            }
+
+
+            // root is to be deleted, so change the value of root to new root
+            if(flagDeleteRoot){
+                printf("\nRoot is to be deleted...Pointing root to newRoot\n");
+                free(*root);
+                *root = replacement;
+            }
+            else{
+                // check temp is parent's lChild or rChild
+                free(temp);
+                if(flagLeftChild)
+                    parent->lChild = replacement;
+                else
+                    parent->rChild = replacement;
+            }
+            
+
+            return 1;
+        }
+        else if(key < temp->data){
+            parent = temp;
+            temp = temp->lChild;
+            flagLeftChild = 1;
+            flagRightChild = 0;
+        }
+        else{
+            parent = temp;
+            temp = temp->rChild;
+            flagLeftChild = 0;
+            flagRightChild = 1;
+        }
+    }
+
+    // key not found
+    printf("\nkey not found!!\n\n");
+    return 0;
+}
+
+struct Node_Int * get_InorderPredecessor(struct Node_Int *node){
+    if(!(node->lChild)){
+        // no inorderPredecessor
+        printf("****no predecessor****\n");
+        return NULL;
+    }
+
+    struct Node_Int *follower;  // needed to fill the gap that will be created because of removing of predecessor
+    follower = node;
+    node = node->lChild;
+
+
+    // if the lChild of node don't have rChild, then it will be the predecessor
+    if(node->rChild == NULL)
+        return node;
+
+    while(node->rChild){    // go to extreme right
+        follower = node;
+        node = node->rChild;
+    }
+
+    // check if predecessor has own left child (right child not possible)
+    if(node->lChild)
+        follower->rChild = node->lChild;
+    else
+        follower->rChild = NULL;
+
+    return node;
+}
+
+struct Node_Int * get_InorderSuccessor(struct Node_Int *node){
+    if(!(node->rChild)){
+        // no inorderSuccessor
+        printf("****no succcessor****\n");
+        return NULL;
+    }
+
+    struct Node_Int *follower;  // needed to fill the gap that will be created because of removal of successor
+    follower = node;
+    node = node->rChild;
+
+
+    // if the rChild of node don't have lChild, then it will be the succcessor
+    if(node->lChild == NULL)
+        return node;
+
+    while(node->lChild){    // go to extreme left
+        follower = node;
+        node = node->lChild;
+    }
+
+    // check if successor has own right child (left child not possible)
+    if(node->rChild)
+        follower->lChild = node->rChild;
+    else
+        follower->lChild = NULL;
+
+    return node;
 }
