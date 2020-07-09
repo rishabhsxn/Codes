@@ -11,9 +11,16 @@ int main(){
     int flag=1;
 
     for(int i=0, j=str.length()-1; i<j ; i++, j--){
-        if(str[i] != str.at(j)){
-            flag=0;
-            break;
+        
+        if(str[i] != str[j]){
+            if(str[i]>=65 && str[i]<=90 && str[i]+32 == str[j])     // check if str[i] is a capital letter and str[j] is the same small letter
+                continue;
+            else if(str[i]>=97 && str[i]<=122 && str[i]-32 == str[j])   // check if str[i] is a small letter and str[j] is the same capital letter
+                continue;
+            else{
+                flag=0;
+                break;
+            }
         }
     }
 
