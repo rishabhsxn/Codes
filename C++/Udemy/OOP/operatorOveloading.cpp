@@ -20,7 +20,7 @@ class ComplexNumber{
         ComplexNumber(int real=1, int img=0);
 
         ComplexNumber operator+(ComplexNumber &c);
-        void display();
+        friend ostream & operator<<(ostream &out, ComplexNumber &c);
 
 };
 
@@ -32,8 +32,8 @@ int main(){
 
     c3 = c1 + c2;   // expansion:   c3 = c1.operator+(c2);
     
-    c3.display();
-
+    cout << c3 << endl;   // expansion :    operator<<(cout, c3) << endl;
+    
     return 0;
 }
 
@@ -56,6 +56,7 @@ ComplexNumber ComplexNumber::operator+(ComplexNumber &c){
        How we are able to assign it to a variable and the correct value is printed ? */
 }
 
-void ComplexNumber::display(){
-    cout << real << " + " << img << "i" << endl;
+ostream & operator<<(ostream &out, ComplexNumber &c){
+    out << c.real << " + " << c.img << "i";
+    return out;     // we are returning ostream object so that it can be reused in the same line
 }
