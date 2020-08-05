@@ -33,8 +33,8 @@ class Stack{
 
         bool isEmpty();
         bool isFull();
-        void push(T x) throw (StackOverflow);
-        T pop() throw (StackUnderflow);
+        void push(T x) /* throw (StackOverflow) */;
+        T pop() /* throw (StackUnderflow) */;
         void display();
 };
 
@@ -98,7 +98,7 @@ bool Stack<T>::isFull(){
 }
 
 template <class T>
-void Stack<T>::push(T x) throw (StackOverflow){
+void Stack<T>::push(T x) /* throw (StackOverflow) */{
     if(isFull())
         throw StackOverflow();
     else{
@@ -108,7 +108,7 @@ void Stack<T>::push(T x) throw (StackOverflow){
 }
 
 template <class T>
-T Stack<T>::pop() throw (StackUnderflow){
+T Stack<T>::pop() /* throw (StackUnderflow) */{
     if(isEmpty())
         throw StackUnderflow();
     else{
