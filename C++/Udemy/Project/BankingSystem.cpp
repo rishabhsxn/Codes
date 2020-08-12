@@ -11,7 +11,7 @@
 * Throw custom InsufficientFund exception and handle accordingly */
 
 /* WORKING - when the program starts, Bank object is created, it's constructor will copy all accounts from text file,
-(this is how currentAccountNumber is calculated). Accounts are deleted and created in this map (accounts) and when the 
+(this is how lastAccountNumber is calculated). Accounts are deleted and created in this map (accounts) and when the 
 program exits when the Bank object is deleted, it's destructor will overwrite the new accounts data in the text file. */
 
 
@@ -42,7 +42,7 @@ class Account{
         string lname;
         int account_no;
         int balance;
-        static int currentAccountNumber;    // to keep track of what account no. to assign to new account
+        static int lastAccountNumber;    // to keep track of what account no. to assign to new account
 
     public:
         Account() {};   // empty account needed for operations in Bank class
@@ -51,9 +51,9 @@ class Account{
         string getName();
         int getAccountNo();
         int getBalance();
-        static int getCurrentAccountNumber();
+        static int getLastAccountNumber();
 
-        static void setCurrentAccountNumber(int n);
+        static void setLastAccountNumber(int n);
 
         void withdrawal(int amount) /* throw(InsufficientFund) */;
         void deposit(int amount);
@@ -63,7 +63,7 @@ class Account{
         friend ostream& operator<<(ostream &out, Account &account);
 };
 
-int Account::currentAccountNumber = 0;
+int Account::lastAccountNumber = 0;
 
 
 
@@ -153,8 +153,8 @@ int main(){
 Account::Account(string fname, string lname, int balance){
     this->fname = fname;
     this->lname = lname;
-    currentAccountNumber++;
-    this->account_no = currentAccountNumber;
+    lastAccountNumber++;
+    this->account_no = lastAccountNumber;
     this->balance = balance;
 }
 
@@ -170,12 +170,12 @@ int Account::getBalance(){
     return balance;
 }
 
-int Account::getCurrentAccountNumber(){
-    return currentAccountNumber;
+int Account::getLastAccountNumber(){
+    return lastAccountNumber;
 }
 
-void Account::setCurrentAccountNumber(int n){
-    currentAccountNumber = n;
+void Account::setLastAccountNumber(int n){
+    lastAccountNumber = n;
 }
 
 void Account::withdrawal(int amount){
