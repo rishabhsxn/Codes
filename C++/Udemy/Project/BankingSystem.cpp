@@ -22,7 +22,7 @@ program exits when the Bank object is deleted, it's destructor will overwrite th
 
 using namespace std;
 
-#define MINIMUM_OPENING_FUND 500
+#define MINIMUM_BALANCE 500
 #define FILE_NAME "account_details.txt"
 
 
@@ -57,6 +57,10 @@ class Account{
 
         void withdrawal(int amount) /* throw(InsufficientFund) */;
         void deposit(int amount);
+
+        friend ifstream& operator>>(ifstream &ifs, Account &account);
+        friend ofstream& operator<<(ofstream &ofs, Account &account);
+        friend ostream& operator<<(ostream &out, Account &account);
 };
 
 int Account::currentAccountNumber = 0;
@@ -85,6 +89,8 @@ int main(){
     cout << "----------------------BANKING SYSTEM----------------------" << endl << endl;
 
     int choice;
+    Bank bank;
+    
 
     do{
         cout << "\t1. Create an Account" << endl;
@@ -173,19 +179,52 @@ void Account::setCurrentAccountNumber(int n){
 }
 
 void Account::withdrawal(int amount){
+    if(balance-amount < MINIMUM_BALANCE)
+        throw InsufficientFunds();
 
+    balance -= amount;
 }
 
 void Account::deposit(int amount){
-
+    balance += amount;
 }
 
+ifstream& operator>>(ifstream &ifs, Account &account){
+    ifs >> account.account_no;
+    ifs >> account.fname;
+    ifs >> account.lname;
+    ifs >> account.balance;
+
+    return ifs;
+}
+
+ofstream& operator<<(ofstream &ofs, Account &account){
+    ofs << account.account_no << endl;
+    ofs << account.getName() << endl;
+    ofs << account.balance << endl;
+
+    return ofs;
+}
+
+ostream& operator<<(ostream &out, Account &account){
+    out << "Name: " << account.getName() << endl;
+    out << "Account No.: " << account.account_no << endl;
+    out << "Current Balance: " << account.balance << endl;
+
+    return out;
+}
 
 
 // -------------------------------BANK-------------------------------
 
 Bank::Bank(){
     // open data file and copy all accounts to map
+    ifstream in_file(FILE_NAME);
+
+    if(in_file.is_open()){
+        // file already exist, copy data
+
+    }
 }
 
 Account Bank::openAccount(){
@@ -214,5 +253,5 @@ void Bank::showAllAccounts(){
 
 Bank::~Bank(){
     // overwrite the data file will map accounts
-    
+
 }
