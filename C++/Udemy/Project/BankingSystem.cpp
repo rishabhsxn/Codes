@@ -49,6 +49,7 @@ class Account{
         Account(string fname, string lname, int balance);
 
         string getName();
+        string getFName();
         int getAccountNo();
         int getBalance();
         static int getLastAccountNumber();
@@ -173,6 +174,10 @@ string Account::getName(){
     return fname + " " + lname;
 }
 
+string Account::getFName(){
+    return fname;
+}
+
 int Account::getAccountNo(){
     return account_no;
 }
@@ -240,7 +245,12 @@ Bank::Bank(){
             accounts.insert(pair<int, Account>(account.getAccountNo(), account));
         }
         // from the last account, use it to update the lastAccountNumber
-        Account::setLastAccountNumber(account.getAccountNo());
+        /* If the file already exists and there is no data, empty object is added in accounts and garbage value is taken for lastAccountNumber */
+        // so check if the Account object fname is empty string, if yes empty the accounts (map) and don't set any new value of lastAccountNumber  (already 0)
+        if(account.getFName().empty())
+            accounts.clear();
+        else
+            Account::setLastAccountNumber(account.getAccountNo());
 
         in_file.close();
 
