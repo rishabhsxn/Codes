@@ -70,14 +70,15 @@ int Account::lastAccountNumber = 0;
 class Bank{
     private:
         map<int, Account> accounts;
+        string password = "admin";
 
     public:
         Bank();
         Account openAccount();
-        void balanceEnquiry(int accountNumber);
-        void withdrawl(int accountNumber, int amount);
-        void deposit(int accountNumber, int amount);
-        void closeAccount(int accountNumber);
+        void balanceEnquiry();
+        void withdrawal();
+        void deposit();
+        void closeAccount();
         void showAllAccounts();
         ~Bank();
 };
@@ -223,35 +224,168 @@ Bank::Bank(){
 
     if(in_file.is_open()){
         // file already exist, copy data
+        Account account;
+        while(!in_file.eof()){
+            in_file >> account;
+            accounts.insert(pair<int, Account>(account.getAccountNo(), account));
+        }
+        // from the last account, use it to update the lastAccountNumber
+        Account::setLastAccountNumber(account.getAccountNo());
+
+        in_file.close();
 
     }
 }
 
 Account Bank::openAccount(){
+    string fname, lname;
+    cout << "Enter First Name: ";
+    cin >> fname;
+    cout << "Enter Last Name: ";
+    cin >> lname;
+
+    int openingBalance;
+    cout << "\nEnter Opening Balance: ";
+    cin >> openingBalance;
+
+    Account newAccount(fname, lname, openingBalance);
+    // add this new account to map (accounts), so that it will be added to the data file when program exits
+    accounts.insert(pair<int, Account>(newAccount.getAccountNo(), newAccount));
+
+    cout << "Account successfully created !!" << endl;
+    cout << "Your details: \n" << newAccount << endl << endl;
+}
+
+void Bank::balanceEnquiry(){
+    int accountNumber;
+    cout << "Enter your Account No.: ";
+    cin >> accountNumber;
+
+    // search this account no. in accounts(map), if it exists find the balance otherwise show no account found
+    map<int, Account>::iterator itr;
+
+    for(itr=accounts.begin(); itr!=accounts.end(); itr++){
+
+        if(itr->first == accountNumber){
+            cout << itr->second << endl;
+            return;
+        }
+    }
+
+    cout << "No account with provided account number! Enter the correct account no." << endl << endl;
 
 }
 
-void Bank::balanceEnquiry(int accountNumber){
+void Bank::deposit(){
+    int accountNumber, amount;
+
+    cout << "Enter your Account no.: ";
+    cin >> accountNumber;
+
+    map<int, Account>::iterator itr;
+
+    for(itr=accounts.begin(); itr!=accounts.end(); itr++){
+
+        if(itr->first == accountNumber){
+            cout << "Enter deposit amount: ";
+            cin >> amount;
+            itr->second.deposit(amount);
+            cout << "Deposited Successfully!" << endl;
+            cout << itr->second << endl;
+            return;
+        }
+    }
+
+    cout << "No account with provided account number! Enter the correct account no." << endl << endl;
+
 
 }
 
-void Bank::deposit(int accountNumber, int amount){
+void Bank::withdrawal(){
+    int accountNumber, amount;
+
+    cout << "Enter your Account no.: ";
+    cin >> accountNumber;
+
+    map<int, Account>::iterator itr;
+
+    for(itr=accounts.begin(); itr!=accounts.end(); itr++){
+
+        if(itr->first == accountNumber){
+            cout << "Your current balance: " << itr->second.getBalance() << endl;
+            cout << "Enter withdrawal amount: ";
+            cin >> amount;
+            try{
+                itr->second.withdrawal(amount);
+                cout << "Deposited Successfully!" << endl;
+                cout << itr->second << endl;
+            }
+            catch(InsufficientFunds& er){
+                cout << er.what() << endl;
+            }
+            
+            return;
+        }
+    }
+
+    cout << "No account with provided account number! Enter the correct account no." << endl << endl;
+
 
 }
 
-void Bank::withdrawl(int accountNumber, int amount){
+void Bank::closeAccount(){
+    int accountNumber;
 
-}
+    cout << "Enter your Account no.: ";
+    cin >> accountNumber;
 
-void Bank::closeAccount(int accountNumber){
+    map<int, Account>::iterator itr = accounts.find(accountNumber);
 
+    if(itr != accounts.end()){
+        cout << "Closing Account: " << endl;
+        cout << itr->second << endl << endl;
+
+        accounts.erase(accountNumber);
+        cout << "Account Successfully Closed!" << endl << endl;
+    }
+    else
+        cout << "No account with provided account number! Enter the correct account no." << endl << endl;
 }
 
 void Bank::showAllAccounts(){
+    string pass;
+    cout << "Enter Admin password: ";
+    cin >> pass;
 
+    for(int count=1; count<=2; count--){
+        if(pass == password){
+            map<int, Account>::iterator itr;
+
+            for(itr=accounts.begin(); itr!=accounts.end(); itr++)
+                cout << itr->second << endl;
+
+            return;
+        }
+        else{
+            cout << "Incorrect! You have " << (3-count) << " left." << endl;
+            cout << "Enter Admin password: ";
+            cin >> pass;
+        }
+    }
+
+    cout << "Incorrect Password !!!" << endl << endl;
 }
 
 Bank::~Bank(){
     // overwrite the data file will map accounts
+    ofstream out_file(FILE_NAME, ios::trunc);   // trunc mode to overwrite the data file if it exists
 
+    // create an iterator for the map and then write every element in the file
+    map<int, Account>::iterator itr;
+
+    for(itr=accounts.begin(); itr!=accounts.end(); itr++){
+        out_file << itr->second;        // second part is the Account object
+    }
+
+    out_file.close();
 }
