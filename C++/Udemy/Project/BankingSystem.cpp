@@ -74,7 +74,7 @@ class Bank{
 
     public:
         Bank();
-        Account openAccount();
+        void openAccount();
         void balanceEnquiry();
         void withdrawal();
         void deposit();
@@ -113,10 +113,9 @@ int main(){
             constructors, destructors and virtual members functions.        */
             case 1:
             {
-                Account newAccount;
-                newAccount = bank.openAccount();
-                cout << "Account successfully created !!" << endl;
-                cout << "Your details: \n" << newAccount << endl << endl;
+                // Account newAccount;
+                // newAccount = bank.openAccount();
+                bank.openAccount();
                 break;
             }
 
@@ -248,7 +247,7 @@ Bank::Bank(){
     }
 }
 
-Account Bank::openAccount(){
+void Bank::openAccount(){
     string fname, lname;
     cout << "Enter First Name: ";
     cin >> fname;
@@ -259,11 +258,17 @@ Account Bank::openAccount(){
     cout << "\nEnter Opening Balance: ";
     cin >> openingBalance;
 
-    Account newAccount(fname, lname, openingBalance);
-    // add this new account to map (accounts), so that it will be added to the data file when program exits
-    accounts.insert(pair<int, Account>(newAccount.getAccountNo(), newAccount));
+    if(openingBalance >= 500){
+        Account newAccount(fname, lname, openingBalance);
+        // add this new account to map (accounts), so that it will be added to the data file when program exits
+        accounts.insert(pair<int, Account>(newAccount.getAccountNo(), newAccount));
+        
+        cout << "Account successfully created !!" << endl;
+        cout << "Your details: \n" << newAccount << endl << endl;
+    }
+    else
+        cout << "Account creation unsuccessful ! Minimum Balance is 500." << endl << endl;
 
-    return newAccount;
 }
 
 void Bank::balanceEnquiry(){
@@ -327,7 +332,7 @@ void Bank::withdrawal(){
             cin >> amount;
             try{
                 itr->second.withdrawal(amount);
-                cout << "Deposited Successfully!" << endl;
+                cout << "Withdrawal Successfully!" << endl;
                 cout << itr->second << endl;
             }
             catch(InsufficientFunds& er){
