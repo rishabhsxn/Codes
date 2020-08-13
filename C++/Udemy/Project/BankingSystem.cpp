@@ -369,7 +369,7 @@ void Bank::closeAccount(){
     map<int, Account>::iterator itr = accounts.find(accountNumber);
 
     if(itr != accounts.end()){
-        cout << "Closing this Account? " << endl;
+        cout << "Close this Account? " << endl << endl;
         cout << itr->second << endl << endl;
         cout << "1 = Continue\n0 = Cancel" << endl;
 
@@ -392,7 +392,7 @@ void Bank::showAllAccounts(){
     cout << "Enter Admin password: ";
     cin >> pass;
 
-    for(int count=1; count<=2; count--){
+    for(int count=1; count<=2; count++){
         if(pass == password){
             map<int, Account>::iterator itr;
 
@@ -402,7 +402,7 @@ void Bank::showAllAccounts(){
             return;
         }
         else{
-            cout << "Incorrect! You have " << (3-count) << " left." << endl;
+            cout << "Incorrect! You have " << (3-count) << " chances left." << endl;
             cout << "Enter Admin password: ";
             cin >> pass;
         }
