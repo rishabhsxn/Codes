@@ -277,7 +277,7 @@ void Bank::openAccount(){
         cout << "Your details: \n" << newAccount << endl << endl;
     }
     else
-        cout << "Account creation unsuccessful ! Minimum Balance is 500." << endl << endl;
+        cout << "Account creation UNSUCCESSFUL! Minimum Balance is 500." << endl << endl;
 
 }
 
@@ -312,6 +312,7 @@ void Bank::deposit(){
     for(itr=accounts.begin(); itr!=accounts.end(); itr++){
 
         if(itr->first == accountNumber){
+            cout << itr->second << endl;
             cout << "Enter deposit amount: ";
             cin >> amount;
             itr->second.deposit(amount);
@@ -337,7 +338,7 @@ void Bank::withdrawal(){
     for(itr=accounts.begin(); itr!=accounts.end(); itr++){
 
         if(itr->first == accountNumber){
-            cout << "Your current balance: " << itr->second.getBalance() << endl;
+            cout << itr->second << endl;
             cout << "Enter withdrawal amount: ";
             cin >> amount;
             try{
@@ -346,7 +347,8 @@ void Bank::withdrawal(){
                 cout << itr->second << endl;
             }
             catch(InsufficientFunds& er){
-                cout << er.what() << endl;
+                cout << er.what();
+                cout << "Minimum Balance is 500" << endl << endl;
             }
             
             return;
@@ -367,11 +369,19 @@ void Bank::closeAccount(){
     map<int, Account>::iterator itr = accounts.find(accountNumber);
 
     if(itr != accounts.end()){
-        cout << "Closing Account: " << endl;
+        cout << "Closing this Account? " << endl;
         cout << itr->second << endl << endl;
+        cout << "1 = Continue\n0 = Cancel" << endl;
 
-        accounts.erase(accountNumber);
-        cout << "Account Successfully Closed!" << endl << endl;
+        int x;
+        cin >> x;
+        
+        if(x==1){
+            accounts.erase(accountNumber);
+            cout << "Account Successfully Closed!" << endl << endl;
+        }
+        else
+            cout << "Cancelled!" << endl << endl;
     }
     else
         cout << "No account with provided account number! Enter the correct account no." << endl << endl;
