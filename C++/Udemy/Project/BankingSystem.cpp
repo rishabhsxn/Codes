@@ -103,30 +103,41 @@ int main(){
         cout << "\t7. Quit" << endl << endl;
         cout << "Enter you choice: ";
         cin >> choice;
+        cout << endl;
 
         switch(choice){
+            /*  ***IMP*** These braces were added to remove an error - "transfer of control bypasses initialization of newAccount variable" 
+            Switch is a goto in disguise. In C++, goto, it is not allowed to bypass initialization of a non-POD object
+            
+            POD stands for Plain Old Data - that is, a class (whether defined with the keyword struct or the keyword class) without 
+            constructors, destructors and virtual members functions.        */
             case 1:
-
+            {
+                Account newAccount;
+                newAccount = bank.openAccount();
+                cout << "Account successfully created !!" << endl;
+                cout << "Your details: \n" << newAccount << endl << endl;
                 break;
+            }
 
             case 2:
-
+                bank.balanceEnquiry();
                 break;
 
             case 3:
-
+                bank.deposit();
                 break;
 
             case 4:
-
+                bank.withdrawal();
                 break;
 
             case 5:
-
+                bank.closeAccount();
                 break;
 
             case 6:
-
+                bank.showAllAccounts();
                 break;
             
             case 7:
@@ -252,8 +263,7 @@ Account Bank::openAccount(){
     // add this new account to map (accounts), so that it will be added to the data file when program exits
     accounts.insert(pair<int, Account>(newAccount.getAccountNo(), newAccount));
 
-    cout << "Account successfully created !!" << endl;
-    cout << "Your details: \n" << newAccount << endl << endl;
+    return newAccount;
 }
 
 void Bank::balanceEnquiry(){
