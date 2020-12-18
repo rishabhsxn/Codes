@@ -66,3 +66,14 @@
 //     console.log(`John's BMI (${johnBMI}) is equal to Mark's BMI (${markBMI})`);
     
  
+// Loose Vs Strict Equality operators -  == vs ===
+// == may perform Type Coercion if the two operands are of different data type
+// === will not perform Conversion
+
+let result;
+
+result = 18 == '18';
+console.log(result)     // true
+
+result = 18 === '18';
+console.log(result);    // false
