@@ -9,6 +9,8 @@ python3/coursera/Course5/assignments/ass6_01/index.sqlite
 #Mobile_Development/Android
 #Mobile_Development/Android/Downloaded
 **/.gradle
+**/.settings/
+**/.project
 Mobile_Development/Android/Udemy/Resources/Course_extras
 
 #to ignore dependencies from everywhere
