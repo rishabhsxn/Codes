@@ -12,6 +12,7 @@ python3/coursera/Course5/assignments/ass6_01/index.sqlite
 **/.settings/
 **/.project
 Mobile_Development/Android/Udemy/Resources/Course_extras
+Mobile_Development/Android/Udemy/AlertDemo/app/.classpath
 
 #to ignore dependencies from everywhere
 **/node_modules
