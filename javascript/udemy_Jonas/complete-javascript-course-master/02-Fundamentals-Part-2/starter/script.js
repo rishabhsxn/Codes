@@ -59,59 +59,106 @@
 // checkWinner(avgDolphins, avgKoalas);
 
 
-//-------------------------ARRAYS---------------------------
-// two methods of declaring an array
-// const years = [1920, 1984, 2008, 2020];
-const years = new Array(1920, 1984, 2008, 2020);
-console.log(years);
+// //-------------------------ARRAYS---------------------------
+// // two methods of declaring an array
+// // const years = [1920, 1984, 2008, 2020];
+// const years = new Array(1920, 1984, 2008, 2020);
+// console.log(years);
 
-// if you define an array as "const", the array cannot be redefined or reassigned, but its elements can be changed
-years[years.length - 1] = 1900;    // this is allowed
-console.log(years);
-// years = [1000, 2000, 3000];     // this is not allowed
-// years2 = [5000, 10000, 20000];
-// years = years2;     // this is not allowed
+// // if you define an array as "const", the array cannot be redefined or reassigned, but its elements can be changed
+// years[years.length - 1] = 1900;    // this is allowed
+// console.log(years);
+// // years = [1000, 2000, 3000];     // this is not allowed
+// // years2 = [5000, 10000, 20000];
+// // years = years2;     // this is not allowed
 
-const x = 3000;
-const A = [2500 - 500, x, years];     // the elements expect an expression, so any expression can be put -> variables
-// multiple types of data types can be put in the same array
-console.log(A);
+// const x = 3000;
+// const A = [2500 - 500, x, years];     // the elements expect an expression, so any expression can be put -> variables
+// // multiple types of data types can be put in the same array
+// console.log(A);
 
-// basic functions
-const b = [1, 2, 3, 4];
-console.log(b);
-let b_length = b.push(5);      // adds element at end of array
-b_length = b.unshift(0);   // add element at the start
-// above methods return length of the modified array
-console.log(b);
+// // basic functions
+// const b = [1, 2, 3, 4];
+// console.log(b);
+// let b_length = b.push(5);      // adds element at end of array
+// b_length = b.unshift(0);   // add element at the start
+// // above methods return length of the modified array
+// console.log(b);
 
-// pop and shift are opposite of above
+// // pop and shift are opposite of above
 
-const jonas = {
-    firstName: 'Jonas',
-    lastName: 'Schmedtmann',
-    birthYeah: 1991,
-    job: 'teacher',
-    friends: ['Michael', 'Peter', 'Steven'],
-    hasDriversLicense: true,
+// const jonas = {
+//     firstName: 'Jonas',
+//     lastName: 'Schmedtmann',
+//     birthYeah: 1991,
+//     job: 'teacher',
+//     friends: ['Michael', 'Peter', 'Steven'],
+//     hasDriversLicense: true,
   
-    // calcAge: function (birthYeah) {
-    //   return 2037 - birthYeah;
-    // }
+//     // calcAge: function (birthYeah) {
+//     //   return 2037 - birthYeah;
+//     // }
   
-    // calcAge: function () {
-    //   // console.log(this);
-    //   return 2037 - this.birthYeah;
-    // }
+//     // calcAge: function () {
+//     //   // console.log(this);
+//     //   return 2037 - this.birthYeah;
+//     // }
   
-    calcAge: function () {
-      this.age = 2037 - this.birthYeah;
-      return this.age;
-    },
-  };
+//     calcAge: function () {
+//       this.age = 2037 - this.birthYeah;
+//       return this.age;
+//     },
+//   };
   
-  console.log(jonas.calcAge());
+//   console.log(jonas.calcAge());
   
-  console.log(jonas.age);
-  console.log(jonas.age);
-  console.log(jonas.age);
+//   console.log(jonas.age);
+//   console.log(jonas.age);
+//   console.log(jonas.age);
+
+
+// --------------------------Coding Challenge #3----------------------------
+
+/*
+Let's go back to Mark and John comparing their BMIs! This time, let's use objects to implement the calculations! 
+Remember: BMI = mass / height ** 2 = mass / (height * height). (mass in kg and height in meter)
+
+1. For each of them, create an object with properties for their full name, mass, and height (Mark Miller and John Smith)
+2. Create a 'calcBMI' method on each object to calculate the BMI (the same method on both objects). Store the BMI value to 
+a property, and also return it from the method.
+3. Log to the console who has the higher BMI, together with the full name and the respective BMI. Example: "John Smith's 
+BMI (28.3) is higher than Mark Miller's (23.9)!"
+
+TEST DATA: Marks weights 78 kg and is 1.69 m tall. John weights 92 kg and is 1.95 m tall.
+
+GOOD LUCK 😀
+*/
+
+const mark = {
+  firstName: "Mark Miller",
+  mass: 78,
+  height: 1.69,
+
+  calcBMI: function(){
+    this.BMI = this.mass / this.height ** 2;
+    return this.BMI;
+  },
+};
+
+const john = {
+  firstName: "John Smith",
+  mass: 92,
+  height: 1.95,
+
+  calcBMI: function(){
+    this.BMI = this.mass / this.height ** 2;
+    return this.BMI;
+  },
+};
+
+let personWithLessBMI, personWithMoreBMI;
+
+personWithMoreBMI = mark.calcBMI() > john.calcBMI() ? mark : john;
+personWithLessBMI = personWithMoreBMI == mark ? john : mark;
+
+console.log(`${personWithMoreBMI.firstName}'s BMI (${personWithMoreBMI.BMI}) is higher than ${personWithLessBMI.firstName}'s BMI (${personWithLessBMI.BMI})`);
