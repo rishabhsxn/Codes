@@ -74,3 +74,26 @@ document.querySelector(".check").addEventListener("click", function(){
     }
 
 })
+
+// Again Button - Reset the game
+document.querySelector(".again").addEventListener("click", function(){
+    // regenerate a new secret number
+    secretNumber = Math.trunc(Math.random()*20) + 1;
+
+    // reset Score variable and message to 20
+    score = 20
+    document.querySelector(".score").textContent = score;
+
+    // reset message to "Start guessing..."
+    document.querySelector(".message").textContent = "Start guessing...";
+
+    // clear the input field
+    document.querySelector(".guess").value = "";
+
+    // reset the Guess Number to Question mark (?) and width to 15rem
+    document.querySelector(".number").textContent = "?";
+    document.querySelector(".number").style.width = "15rem";
+
+    // restore the original background color
+    document.querySelector("body").style.backgroundColor = "#222";
+})
