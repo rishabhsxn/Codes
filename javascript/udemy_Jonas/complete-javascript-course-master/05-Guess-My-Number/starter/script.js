@@ -15,7 +15,7 @@
 
 
 // generate Secret number (random number)
-const secretNumber = Math.trunc(Math.random()*20) + 1;
+let secretNumber = Math.trunc(Math.random()*20) + 1;
 
 let score = 20;
 /* it is called a state variable, the data should also be present in the code, not just in the DOM */
