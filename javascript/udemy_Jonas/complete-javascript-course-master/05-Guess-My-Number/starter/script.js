@@ -20,6 +20,9 @@ let secretNumber = Math.trunc(Math.random()*20) + 1;
 let score = 20;
 /* it is called a state variable, the data should also be present in the code, not just in the DOM */
 
+// initial highscore = 0
+let highscore = 0;
+
 // ------------- Adding Event handler for the button ---------------
 
 /* The check button have two class name "btn check", since btn was also used for another button,
@@ -43,6 +46,12 @@ document.querySelector(".check").addEventListener("click", function(){
         
         // reveal the secret number
         document.querySelector(".number").textContent = secretNumber;
+
+        // Update the highscore if new score is greater than highscore
+        if(score > highscore){
+            highscore = score;
+            document.querySelector(".highscore").textContent = highscore;
+        }
 
         // CSS manipulation -> it does not change the content of the css file, but place inline attributes in the html
         document.querySelector("body").style.backgroundColor = "#60b347";
