@@ -37,8 +37,14 @@ document.querySelector(".check").addEventListener("click", function(){
     if(!guess){
         document.querySelector(".message").textContent = "⛔️ No Number!";
     }
+    /* If the guess is correct, make the background Green, and double the width of holder where initially 
+    question mark (?) was present */
     else if(guess === secretNumber){
         document.querySelector(".message").textContent = "🎉 Correct Number!";
+
+        // CSS manipulation -> it does not change the content of the css file, but place inline attributes in the html
+        document.querySelector("body").style.backgroundColor = "#60b347";
+        document.querySelector(".number").style.width = "30rem";
     }
     /* when the guess is incorrect, decrease the score by 1 -> this should happen when score is above 1
     if the score becomes 1, make score 0 and print appropriate message */
