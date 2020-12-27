@@ -18,6 +18,9 @@
 const secretNumber = Math.trunc(Math.random()*20) + 1;
 document.querySelector(".number").textContent = secretNumber;
 
+let score = 20;
+/* it is called a state variable, the data should also be present in the code, not just in the DOM */
+
 // ------------- Adding Event handler for the button ---------------
 
 /* The check button have two class name "btn check", since btn was also used for another button,
@@ -37,11 +40,29 @@ document.querySelector(".check").addEventListener("click", function(){
     else if(guess === secretNumber){
         document.querySelector(".message").textContent = "🎉 Correct Number!";
     }
+    /* when the guess is incorrect, decrease the score by 1 -> this should happen when score is above 1
+    if the score becomes 1, make score 0 and print appropriate message */
     else if(guess > secretNumber){
-        document.querySelector(".message").textContent = "📈 Too high!";
+        if(score > 1){
+            document.querySelector(".message").textContent = "📈 Too high!";
+            score--;
+            document.querySelector(".score").textContent = score;
+        }
+        else{
+            document.querySelector(".message").textContent = "💥 You lost the game!";
+            document.querySelector(".score").textContent = 0;
+        }
     }
     else{
-        document.querySelector(".message").textContent = "📉 Too low!";
+        if(score > 1){
+            document.querySelector(".message").textContent = "📉 Too low!";
+            score--;
+            document.querySelector(".score").textContent = score;
+        }
+        else{
+            document.querySelector(".message").textContent = "💥 You lost the game!";
+            document.querySelector(".score").textContent = 0;
+        }
     }
 
 })
