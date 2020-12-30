@@ -24,3 +24,7 @@ for(let i=0; i<btn_showModal.length; i++)
     btn_showModal[i].addEventListener("click", showModal)
 
 btn_closeModal.addEventListener("click", closeModal)
+
+
+// add event listener to overlay, so that on clicking on it, it closes the modal
+overlay.addEventListener("click", closeModal);
