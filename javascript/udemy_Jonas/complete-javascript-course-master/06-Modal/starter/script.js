@@ -19,6 +19,17 @@ const closeModal = function(){
     overlay.classList.add("hidden");
 }
 
+const closeModalOnEscape = function(eventObject){
+    // console.log(eventObject);
+    // check if the key pressed is Escape and the modal is already visible
+    if(eventObject.key === "Escape" && !modal.classList.contains("hidden"))
+        closeModal();
+}
+
+// add event listener for the escape key, this is a global event so the event should be added to the doucment object
+document.addEventListener("keydown", closeModalOnEscape)
+
+
 // add eventlistner to the buttons
 for(let i=0; i<btn_showModal.length; i++)
     btn_showModal[i].addEventListener("click", showModal)
