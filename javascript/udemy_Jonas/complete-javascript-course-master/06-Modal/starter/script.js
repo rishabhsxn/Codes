@@ -10,11 +10,13 @@ const btn_closeModal = document.querySelector(".close-modal");
 
 // functions
 const showModal = function(){
-    console.log("Show Modal button pressed")
+    modal.classList.remove("hidden");
+    overlay.classList.remove("hidden");
 }
 
 const closeModal = function(){
-    console.log("Close Modal button pressed")
+    modal.classList.add("hidden");
+    overlay.classList.add("hidden");
 }
 
 // add eventlistner to the buttons
