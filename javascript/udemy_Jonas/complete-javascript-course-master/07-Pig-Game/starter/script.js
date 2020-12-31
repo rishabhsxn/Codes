@@ -11,11 +11,11 @@ const btn_hold = document.querySelector(".btn--hold");
 const btn_newGame = document.querySelector(".btn--new");
 
 // scores
-const player1_score = document.getElementById("#score--0");
-const player1_currentScore = document.getElementById("#current--0");
+const player1_score = document.getElementById("score--0");
+const player1_currentScore = document.getElementById("current--0");
 
-const player2_score = document.getElementById("#score--1");
-const player2_currentScore = document.getElementById("#current--1");
+const player2_score = document.getElementById("score--1");
+const player2_currentScore = document.getElementById("current--1");
 
 
 
