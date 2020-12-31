@@ -23,3 +23,23 @@ const player2_currentScore = document.querySelector("#current--1");
 player1_score.textContent = 0;
 player2_score.textContent = 0;
 diceImage.style.display = "none";
+
+
+// functions
+const rollDice = function(){
+
+}
+
+const hold = function(){
+
+}
+
+const newGame = function(){
+
+}
+
+
+// add event listeners to all buttons
+btn_rollDice.addEventListener("click", rollDice);
+btn_hold.addEventListener("click", hold);
+btn_newGame.addEventListener("click", newGame);
