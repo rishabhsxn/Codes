@@ -22,7 +22,7 @@ const player2_currentScore = document.getElementById("current--1");
 // set the game to initial stage i.e. score = 0 and no dice visible
 player1_score.textContent = 0;
 player2_score.textContent = 0;
-diceImage.style.display = "none";
+diceImage.classList.add("hidden");
 
 
 // functions
