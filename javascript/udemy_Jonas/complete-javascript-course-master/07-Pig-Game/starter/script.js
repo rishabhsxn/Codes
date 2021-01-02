@@ -3,7 +3,7 @@
 // global variables
 let activePlayer, currentScore;
 const score = [0, 0];
-let isPlaying = true;
+let isPlaying;
 
 // select the elements to manipulate
 const diceImage = document.querySelector(".dice");
@@ -16,12 +16,31 @@ const btn_newGame = document.querySelector(".btn--new");
 
 
 
-// set the game to initial stage i.e. score = 0 and no dice visible
-document.getElementById("score--0").textContent = 0;
-document.getElementById("score--1").textContent = 0;
-diceImage.classList.add("hidden");
-activePlayer = 0;
-currentScore = 0;
+const init = function(){
+    // set isPlaying to true
+    isPlaying = true;
+
+    // reset Total score of both players (variable and visually)
+    score[0] = score[1] = 0;
+    document.getElementById("score--0").textContent = 0;
+    document.getElementById("score--1").textContent = 0;
+
+    // reset CurrentScore of both players (variable and visually)
+    currentScore = 0;
+    document.getElementById("current--0").textContent = 0;
+    document.getElementById("current--0").textContent = 0;
+
+    // set activePlayer=0 and visually
+    activePlayer = 0;
+    player1_Element.classList.add("player--active");
+    player2_Element.classList.remove("player--active");
+
+    // make dice invisible
+    diceImage.classList.add("hidden");
+}
+
+// initialize the game
+init();
 
 
 // functions
@@ -81,27 +100,7 @@ const hold = function(){
 const newGame = function(){
     // remove player--winner class
     document.querySelector(`.player--${activePlayer}`).classList.remove("player--winner");
-
-    // reset Total score of both players (variable and visually)
-    score[0] = score[1] = 0;
-    document.getElementById("score--0").textContent = 0;
-    document.getElementById("score--1").textContent = 0;
-
-    // reset CurrentScore of both players (variable and visually)
-    currentScore = 0;
-    document.getElementById("current--0").textContent = 0;
-    document.getElementById("current--0").textContent = 0;
-
-    // make dice invisible
-    diceImage.classList.add("hidden");
-
-    // set isPlaying to true
-    isPlaying = true;
-
-    // set activePlayer=0 and visually
-    activePlayer = 0;
-    player1_Element.classList.add("player--active");
-    player2_Element.classList.remove("player--active");
+    init();
 }
 
 
