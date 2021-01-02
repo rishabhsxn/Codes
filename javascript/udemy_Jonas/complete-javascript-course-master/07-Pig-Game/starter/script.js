@@ -79,7 +79,29 @@ const hold = function(){
 }
 
 const newGame = function(){
+    // remove player--winner class
+    document.querySelector(`.player--${activePlayer}`).classList.remove("player--winner");
 
+    // reset Total score of both players (variable and visually)
+    score[0] = score[1] = 0;
+    document.getElementById("score--0").textContent = 0;
+    document.getElementById("score--1").textContent = 0;
+
+    // reset CurrentScore of both players (variable and visually)
+    currentScore = 0;
+    document.getElementById("current--0").textContent = 0;
+    document.getElementById("current--0").textContent = 0;
+
+    // make dice invisible
+    diceImage.classList.add("hidden");
+
+    // set isPlaying to true
+    isPlaying = true;
+
+    // set activePlayer=0 and visually
+    activePlayer = 0;
+    player1_Element.classList.add("player--active");
+    player2_Element.classList.remove("player--active");
 }
 
 
