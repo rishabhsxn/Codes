@@ -2,6 +2,7 @@
 
 // global variables
 let activePlayer, currentScore;
+const score = [0, 0];
 
 // select the elements to manipulate
 const diceImage = document.querySelector(".dice");
@@ -49,6 +50,26 @@ const rollDice = function(){
 }
 
 const hold = function(){
+    // add the currentScore to totalScore of activePlayer (variable and visually)
+    score[activePlayer] += currentScore;
+    document.getElementById(`score--${activePlayer}`).textContent = score[activePlayer];
+
+    // make currentScore=0 (variable and visually)
+    currentScore = 0;
+    document.getElementById(`current--${activePlayer}`).textContent = currentScore;
+
+    // check if the total score of active player is >= 100, he wins 
+    if(score[activePlayer] >= 20){
+        document.querySelector(`.player--${activePlayer}`).classList.add("player--winner");
+        player1_Element.classList.remove("player--active");
+        player2_Element.classList.remove("player--active");
+    }
+    // toggle player if no win yet
+    else{
+        activePlayer = activePlayer === 0 ? 1 : 0;
+        player1_Element.classList.toggle("player--active");
+        player2_Element.classList.toggle("player--active");
+    }
 
 }
 
