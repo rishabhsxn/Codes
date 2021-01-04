@@ -122,49 +122,71 @@
 // jane.fun();
 
 
-// ----------------------- PITFALLS OF THIS IN ARROW FUNCTIONS -------------------------
+// // ----------------------- PITFALLS OF THIS -------------------------
 
-var firstName = "John";     // this will add firstName as a property of window object
+// var firstName = "John";     // this will add firstName as a property of window object
 
-const rishabh = {
-    firstName: "Rishabh",
-    birthYear: 1998,
+// const rishabh = {
+//     firstName: "Rishabh",
+//     birthYear: 1998,
 
-    greet: () => {
-        console.log(this);
-        console.log(`Hey ${this.firstName}`);   // this points to the windows object
-    },
+//     greet: () => {
+//         console.log(this);
+//         console.log(`Hey ${this.firstName}`);   // this points to the windows object
+//     },
 
-    calcAge: function(){
-        const age = 2021 - this.birthYear;
-        this.age = age;
+//     calcAge: function(){
+//         const age = 2021 - this.birthYear;
+//         this.age = age;
 
 
-        /* this is like a simple function expression, so this keyword will point to undefined 
-        Solution #1: use additional variable to store this */
-        const self = this;
-        const isAdult = function(){
-            // console.log(this);  // undefined
-            console.log(self);
-            if(self.age >= 18)
-                console.log("Adult");
-            else
-                console.log("Not Adult");
-        }
-        isAdult();
+//         /* this is like a simple function expression, so this keyword will point to undefined 
+//         Solution #1: use additional variable to store this */
+//         const self = this;
+//         const isAdult = function(){
+//             // console.log(this);  // undefined
+//             console.log(self);
+//             if(self.age >= 18)
+//                 console.log("Adult");
+//             else
+//                 console.log("Not Adult");
+//         }
+//         isAdult();
 
-        /* Solution #2: Use arrow function instead of function expression. It will inherit this from the 
-        parent function: calcAge() */
-        const isAdultArrow = () => {
-            console.log(this);
-            if(this.age >= 18)
-                console.log("Adult");
-            else
-                console.log("Not Adult");
-        }
-        isAdultArrow();
-    }
-}
+//         /* Solution #2: Use arrow function instead of function expression. It will inherit this from the 
+//         parent function: calcAge() */
+//         const isAdultArrow = () => {
+//             console.log(this);
+//             if(this.age >= 18)
+//                 console.log("Adult");
+//             else
+//                 console.log("Not Adult");
+//         }
+//         isAdultArrow();
+//     }
+// }
 
-rishabh.greet();    // avoid using Arrow functions in objects as use of this can create unknown bugs
-rishabh.calcAge();
+// rishabh.greet();    // avoid using Arrow functions in objects as use of this can create unknown bugs
+// rishabh.calcAge();
+
+
+
+// // -------------------------- ARGUMENTS OBJECT --------------------------------
+
+// const addExpr = function(a, b){
+//     let sum = a + b;
+//     for(let i=2; i<arguments.length; i++)   // arguments object contains all the parameters passed while calling
+//         sum += arguments[i];
+//     return sum;
+// }
+
+// console.log(addExpr(2, 3));
+// console.log(addExpr(1, 2, 3, 4, 5));    // IMPORTANT: we can even pass more parameters than originally defined
+
+
+// // Arrow functions do not have access to arguments object
+// const addArrow = (a, b) => {
+//     // console.log(arguments);
+//     return a + b;
+// }
+// console.log(addArrow(1, 2));
