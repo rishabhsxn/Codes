@@ -171,22 +171,22 @@
 
 
 
-// // -------------------------- ARGUMENTS OBJECT --------------------------------
+// -------------------------- ARGUMENTS OBJECT --------------------------------
 
-// const addExpr = function(a, b){
-//     let sum = a + b;
-//     for(let i=2; i<arguments.length; i++)   // arguments object contains all the parameters passed while calling
-//         sum += arguments[i];
-//     return sum;
-// }
+const addExpr = function(a, b){
+    let sum = a + b;
+    for(let i=2; i<arguments.length; i++)   // arguments object contains all the parameters passed while calling
+        sum += arguments[i];
+    return sum;
+}
 
-// console.log(addExpr(2, 3));
-// console.log(addExpr(1, 2, 3, 4, 5));    // IMPORTANT: we can even pass more parameters than originally defined
+console.log(addExpr(2, 3));
+console.log(addExpr(1, 2, 3, 4, 5));    // IMPORTANT: we can even pass more parameters than originally defined
 
 
-// // Arrow functions do not have access to arguments object
-// const addArrow = (a, b) => {
-//     // console.log(arguments);
-//     return a + b;
-// }
-// console.log(addArrow(1, 2));
+// Arrow functions do not have access to arguments object
+const addArrow = (a, b) => {
+    // console.log(arguments);
+    return a + b;
+}
+console.log(addArrow(1, 2));
