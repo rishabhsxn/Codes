@@ -81,42 +81,90 @@
 
 
 
-// ------------------------- THIS KEYWORD -------------------------------
+// // ------------------------- THIS KEYWORD -------------------------------
 
-// Outside of functions
-console.log("Outside any function, this:", this)       // points to the global Window object 
-
-
-// Inside a simple function expression
-const fun = function(){
-    console.log("Inside simple function expression, this:", this);      // undefined
-}
-fun();
+// // Outside of functions
+// console.log("Outside any function, this:", this)       // points to the global Window object 
 
 
-// inside an Arrow function
-const funArrow = () => {
-    console.log("Inside arrow function, this:", this);      // lexical this: gets value from parent. In this case, window object
-}
-funArrow();
+// // Inside a simple function expression
+// const fun = function(){
+//     console.log("Inside simple function expression, this:", this);      // undefined
+// }
+// fun();
 
 
-// inside an object's method
+// // inside an Arrow function
+// const funArrow = () => {
+//     console.log("Inside arrow function, this:", this);      // lexical this: gets value from parent. In this case, window object
+// }
+// funArrow();
+
+
+// // inside an object's method
+// const rishabh = {
+//     name: "Rishabh Saxena",
+//     job: "Software Engineer",
+
+//     fun: function(){
+//         console.log("Inside a method of an object, this:", this);   // points to the object itself
+//     }
+// }
+// rishabh.fun();
+
+
+// // Points to the calling object
+// const jane = {
+//     name: "Jane Doe",
+//     job: "Dummy persion"
+// }
+// jane.fun = rishabh.fun;
+// jane.fun();
+
+
+// ----------------------- PITFALLS OF THIS IN ARROW FUNCTIONS -------------------------
+
+var firstName = "John";     // this will add firstName as a property of window object
+
 const rishabh = {
-    name: "Rishabh Saxena",
-    job: "Software Engineer",
+    firstName: "Rishabh",
+    birthYear: 1998,
 
-    fun: function(){
-        console.log("Inside a method of an object, this:", this);   // points to the object itself
+    greet: () => {
+        console.log(this);
+        console.log(`Hey ${this.firstName}`);   // this points to the windows object
+    },
+
+    calcAge: function(){
+        const age = 2021 - this.birthYear;
+        this.age = age;
+
+
+        /* this is like a simple function expression, so this keyword will point to undefined 
+        Solution #1: use additional variable to store this */
+        const self = this;
+        const isAdult = function(){
+            // console.log(this);  // undefined
+            console.log(self);
+            if(self.age >= 18)
+                console.log("Adult");
+            else
+                console.log("Not Adult");
+        }
+        isAdult();
+
+        /* Solution #2: Use arrow function instead of function expression. It will inherit this from the 
+        parent function: calcAge() */
+        const isAdultArrow = () => {
+            console.log(this);
+            if(this.age >= 18)
+                console.log("Adult");
+            else
+                console.log("Not Adult");
+        }
+        isAdultArrow();
     }
 }
-rishabh.fun();
 
-
-// Points to the calling object
-const jane = {
-    name: "Jane Doe",
-    job: "Dummy persion"
-}
-jane.fun = rishabh.fun;
-jane.fun();
+rishabh.greet();    // avoid using Arrow functions in objects as use of this can create unknown bugs
+rishabh.calcAge();
