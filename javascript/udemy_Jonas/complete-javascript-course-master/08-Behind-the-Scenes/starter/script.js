@@ -171,22 +171,48 @@
 
 
 
-// -------------------------- ARGUMENTS OBJECT --------------------------------
+// // -------------------------- ARGUMENTS OBJECT --------------------------------
 
-const addExpr = function(a, b){
-    let sum = a + b;
-    for(let i=2; i<arguments.length; i++)   // arguments object contains all the parameters passed while calling
-        sum += arguments[i];
-    return sum;
+// const addExpr = function(a, b){
+//     let sum = a + b;
+//     for(let i=2; i<arguments.length; i++)   // arguments object contains all the parameters passed while calling
+//         sum += arguments[i];
+//     return sum;
+// }
+
+// console.log(addExpr(2, 3));
+// console.log(addExpr(1, 2, 3, 4, 5));    // IMPORTANT: we can even pass more parameters than originally defined
+
+
+// // Arrow functions do not have access to arguments object
+// const addArrow = (a, b) => {
+//     // console.log(arguments);
+//     return a + b;
+// }
+// console.log(addArrow(1, 2));
+
+
+
+// ----------------------------- PRIMITIVES VS OBJECTS -----------------------------------
+
+
+let age = 20;
+let oldAge = age;
+age = 22;
+
+/* modification in age does not change oldAge, because new memory is allocated for age's new value and age is
+made to point to that new memory */
+console.log(age, oldAge);
+
+
+const me = {
+    age: 22
 }
 
-console.log(addExpr(2, 3));
-console.log(addExpr(1, 2, 3, 4, 5));    // IMPORTANT: we can even pass more parameters than originally defined
+const friend = me;
+friend.age = 20;        // this will also change me.age
 
-
-// Arrow functions do not have access to arguments object
-const addArrow = (a, b) => {
-    // console.log(arguments);
-    return a + b;
-}
-console.log(addArrow(1, 2));
+/* For objects (reference type), the modification is made in the object in heap. me and friend will point to same
+reference value which points to the memory in heap.
+This is why const objects are not immutable */
+console.log(me, friend);
