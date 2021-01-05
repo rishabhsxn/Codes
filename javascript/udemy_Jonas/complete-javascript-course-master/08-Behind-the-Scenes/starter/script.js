@@ -193,26 +193,44 @@
 
 
 
-// ----------------------------- PRIMITIVES VS OBJECTS -----------------------------------
+// // ----------------------------- PRIMITIVES VS OBJECTS -----------------------------------
 
 
-let age = 20;
-let oldAge = age;
-age = 22;
+// let age = 20;
+// let oldAge = age;
+// age = 22;
 
-/* modification in age does not change oldAge, because new memory is allocated for age's new value and age is
-made to point to that new memory */
-console.log(age, oldAge);
+// /* modification in age does not change oldAge, because new memory is allocated for age's new value and age is
+// made to point to that new memory */
+// console.log(age, oldAge);
 
 
-const me = {
-    age: 22
+// const me = {
+//     age: 22
+// }
+
+// const friend = me;
+// friend.age = 20;        // this will also change me.age
+
+// /* For objects (reference type), the modification is made in the object in heap. me and friend will point to same
+// reference value which points to the memory in heap.
+// This is why const objects are not immutable */
+// console.log(me, friend);
+
+
+
+//------------------------------------ SHALLOW COPY ----------------------------------------------
+
+const jane = {
+    lastName: "Doe",
+    family: ["Mary", "Bob"]
 }
 
-const friend = me;
-friend.age = 20;        // this will also change me.age
+/* this creates a copy object, but the family array(object inside object) is not re-created - SHALLOW COPY */
+const marriedJane = Object.assign({}, jane);    
+marriedJane.lastName = "Davis";
+marriedJane.family.push("John");    // this will also change the family array of jane, which is not desirable
+marriedJane.family.push("Josh");
 
-/* For objects (reference type), the modification is made in the object in heap. me and friend will point to same
-reference value which points to the memory in heap.
-This is why const objects are not immutable */
-console.log(me, friend);
+console.log(jane);
+console.log(marriedJane);
