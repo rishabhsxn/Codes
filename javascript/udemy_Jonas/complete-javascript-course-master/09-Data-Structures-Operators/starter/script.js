@@ -33,9 +33,9 @@ const restaurant = {
   //   console.log(`Order Received: ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be deliverd to ${address} at ${time}`);
   // },
 
-  orderPasta: function(ingredient1, ingredient2, ingredient3){
-    console.log(`Your pasta is ready with ${ingredient1}, ${ingredient2} and ${ingredient3}`);
-  }
+  // orderPasta: function(ingredient1, ingredient2, ingredient3){
+  //   console.log(`Your pasta is ready with ${ingredient1}, ${ingredient2} and ${ingredient3}`);
+  // },
 };
 
 
@@ -109,33 +109,70 @@ const restaurant = {
 
 
 
-// ---------------------------- SPREAD OPERATOR -----------------------------
-const arr = [7, 8, 9];
-/* it unpacks the array into individual comma separated values.
-It doesn't affect the original array */
-const newArr = [...arr, 10, 11];
+// // ---------------------------- SPREAD OPERATOR -----------------------------
+// const arr = [7, 8, 9];
+// /* it unpacks the array into individual comma separated values.
+// It doesn't affect the original array */
+// const newArr = [...arr, 10, 11];
 
-console.log(newArr);
-console.log(...newArr);
-
-
-/* copy array -> This creates a new array, but if there was an array inside mainMenu, the inside array
-would not be re-created.  i.e. SHALLOW COPY */
-const mainMenuCopy = [...restaurant.mainMenu];
-console.log(mainMenuCopy);
+// console.log(newArr);
+// console.log(...newArr);
 
 
-// merging two arrays
-const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
-console.log(menu);
+// /* copy array -> This creates a new array, but if there was an array inside mainMenu, the inside array
+// would not be re-created.  i.e. SHALLOW COPY */
+// const mainMenuCopy = [...restaurant.mainMenu];
+// console.log(mainMenuCopy);
 
 
-// function call for multiple parameters
-const ingredients = [prompt("For you pizza, enter Ingredient 1: "), prompt("Ingredient 2: "), prompt("Ingredient 3: ")];
-restaurant.orderPasta(...ingredients);
+// // merging two arrays
+// const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// console.log(menu);
 
-// Since 2018, the spread operator also work on objects even though they are not iterables
-const restaurantCopy = {...restaurant, founder: "Rishabh"};   // SHALLOW COPY
-restaurantCopy.mainMenu.push("Roti");
-console.log(restaurant.mainMenu);
-console.log(restaurantCopy.mainMenu);
+
+// // function call for multiple parameters
+// const ingredients = [prompt("For you pizza, enter Ingredient 1: "), prompt("Ingredient 2: "), prompt("Ingredient 3: ")];
+// restaurant.orderPasta(...ingredients);
+
+// // Since 2018, the spread operator also work on objects even though they are not iterables
+// const restaurantCopy = {...restaurant, founder: "Rishabh"};   // SHALLOW COPY
+// restaurantCopy.mainMenu.push("Roti");
+// console.log(restaurant.mainMenu);
+// console.log(restaurantCopy.mainMenu);
+
+
+
+// ------------------------------------ REST PATTERN -------------------------------------
+
+/* It's syntax is similar to Spread operator. But, it's functionality is opposite.
+It compresses the comma separated values into one variable 
+
+When ... is on RIGHT of =, it is SPREAD operator
+when ... is on LEFT of =, it is REST PATTERN */
+
+// 1a) Used with Destructuring Arrays
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(others);
+
+// 1b) used with Destructuring Objects
+const {sat, ...weekdays} = restaurant.openingHours;
+console.log(weekdays);
+
+
+// 2) Receiving variable no. of parameters in Functions
+const add = function(...numbers){
+  let sum = 0;
+  for(let i=0; i<numbers.length; i++)
+    sum += numbers[i];
+  console.log(sum);
+}
+add(1, 2);
+add(1, 5, 7, 2, 6);
+
+
+// using Spread and Rest together
+const [starterDish, mainDish, ...otherDishes] = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(starterDish, mainDish, otherDishes);
+
+const x = [20, 30, 40];
+add(...x);
