@@ -142,37 +142,73 @@ const restaurant = {
 
 
 
-// ------------------------------------ REST PATTERN -------------------------------------
+// // ------------------------------------ REST PATTERN -------------------------------------
 
-/* It's syntax is similar to Spread operator. But, it's functionality is opposite.
-It compresses the comma separated values into one variable 
+// /* It's syntax is similar to Spread operator. But, it's functionality is opposite.
+// It compresses the comma separated values into one variable 
 
-When ... is on RIGHT of =, it is SPREAD operator
-when ... is on LEFT of =, it is REST PATTERN */
+// When ... is on RIGHT of =, it is SPREAD operator
+// when ... is on LEFT of =, it is REST PATTERN */
 
-// 1a) Used with Destructuring Arrays
-const [a, b, ...others] = [1, 2, 3, 4, 5];
-console.log(others);
+// // 1a) Used with Destructuring Arrays
+// const [a, b, ...others] = [1, 2, 3, 4, 5];
+// console.log(others);
 
-// 1b) used with Destructuring Objects
-const {sat, ...weekdays} = restaurant.openingHours;
-console.log(weekdays);
-
-
-// 2) Receiving variable no. of parameters in Functions
-const add = function(...numbers){
-  let sum = 0;
-  for(let i=0; i<numbers.length; i++)
-    sum += numbers[i];
-  console.log(sum);
-}
-add(1, 2);
-add(1, 5, 7, 2, 6);
+// // 1b) used with Destructuring Objects
+// const {sat, ...weekdays} = restaurant.openingHours;
+// console.log(weekdays);
 
 
-// using Spread and Rest together
-const [starterDish, mainDish, ...otherDishes] = [...restaurant.starterMenu, ...restaurant.mainMenu];
-console.log(starterDish, mainDish, otherDishes);
+// // 2) Receiving variable no. of parameters in Functions
+// const add = function(...numbers){
+//   let sum = 0;
+//   for(let i=0; i<numbers.length; i++)
+//     sum += numbers[i];
+//   console.log(sum);
+// }
+// add(1, 2);
+// add(1, 5, 7, 2, 6);
 
-const x = [20, 30, 40];
-add(...x);
+
+// // using Spread and Rest together
+// const [starterDish, mainDish, ...otherDishes] = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// console.log(starterDish, mainDish, otherDishes);
+
+// const x = [20, 30, 40];
+// add(...x);
+
+
+
+//------------------------------------- SHORT CIRCUITING -------------------------------------
+/* && and || can    a) Operate on any data type    b) return any data type    c) Short circuit */
+
+// -------------- OR ----------------
+/* || returns the first truthy value and will not evaluate further. If no such value is present,
+it will return last falsy value */
+console.log(3 || "Rishabh");
+console.log('' || "Rishabh");
+console.log(true || 0);
+console.log(0 || '' || 5 || true || false);
+console.log(undefined || 0 || '' || null);
+
+restaurant.numGuests = 0;
+// if there is no property "numGuests" in restaurant object, then store it in guests otherwise store 10
+const guests = restaurant.numGuests ? restaurant.numGuests : 10;
+// alternative:
+let guests2 = restaurant.numGuests || 10;
+console.log(guests2);
+// PROBLEM: if the guests were 0, then also 10 will be stored, but right answer is 0
+// SOLUTION: use Nullish Coelescing Operator (??) instead of OR. It considers only Nullish values (0 not included)
+guests2 = restaurant.numGuests ?? 10;
+console.log(guests2);
+
+
+// --------------- AND -----------------
+/* && returns the first falsy value and will not evaluated further. If no falsy value is present,
+it will return the last truthy value. */
+console.log(0 && "Rishabh");
+console.log(7 && "Rishabh");
+console.log("Hello" && 23 && null && "Rishabh");
+
+// if orderPizza property is present, then call it
+restaurant.orderPizza && restaurant.orderPizza("Mushrooms", "Spinach");
