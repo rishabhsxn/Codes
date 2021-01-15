@@ -179,36 +179,52 @@ const restaurant = {
 
 
 
-//------------------------------------- SHORT CIRCUITING -------------------------------------
-/* && and || can    a) Operate on any data type    b) return any data type    c) Short circuit */
+// //------------------------------------- SHORT CIRCUITING -------------------------------------
+// /* && and || can    a) Operate on any data type    b) return any data type    c) Short circuit */
 
-// -------------- OR ----------------
-/* || returns the first truthy value and will not evaluate further. If no such value is present,
-it will return last falsy value */
-console.log(3 || "Rishabh");
-console.log('' || "Rishabh");
-console.log(true || 0);
-console.log(0 || '' || 5 || true || false);
-console.log(undefined || 0 || '' || null);
+// // -------------- OR ----------------
+// /* || returns the first truthy value and will not evaluate further. If no such value is present,
+// it will return last falsy value */
+// console.log(3 || "Rishabh");
+// console.log('' || "Rishabh");
+// console.log(true || 0);
+// console.log(0 || '' || 5 || true || false);
+// console.log(undefined || 0 || '' || null);
 
-restaurant.numGuests = 0;
-// if there is no property "numGuests" in restaurant object, then store it in guests otherwise store 10
-const guests = restaurant.numGuests ? restaurant.numGuests : 10;
-// alternative:
-let guests2 = restaurant.numGuests || 10;
-console.log(guests2);
-// PROBLEM: if the guests were 0, then also 10 will be stored, but right answer is 0
-// SOLUTION: use Nullish Coelescing Operator (??) instead of OR. It considers only Nullish values (0 not included)
-guests2 = restaurant.numGuests ?? 10;
-console.log(guests2);
+// restaurant.numGuests = 0;
+// // if there is no property "numGuests" in restaurant object, then store it in guests otherwise store 10
+// const guests = restaurant.numGuests ? restaurant.numGuests : 10;
+// // alternative:
+// let guests2 = restaurant.numGuests || 10;
+// console.log(guests2);
+// // PROBLEM: if the guests were 0, then also 10 will be stored, but right answer is 0
+// // SOLUTION: use Nullish Coelescing Operator (??) instead of OR. It considers only Nullish values (0 not included)
+// guests2 = restaurant.numGuests ?? 10;
+// console.log(guests2);
 
 
-// --------------- AND -----------------
-/* && returns the first falsy value and will not evaluated further. If no falsy value is present,
-it will return the last truthy value. */
-console.log(0 && "Rishabh");
-console.log(7 && "Rishabh");
-console.log("Hello" && 23 && null && "Rishabh");
+// // --------------- AND -----------------
+// /* && returns the first falsy value and will not evaluated further. If no falsy value is present,
+// it will return the last truthy value. */
+// console.log(0 && "Rishabh");
+// console.log(7 && "Rishabh");
+// console.log("Hello" && 23 && null && "Rishabh");
 
-// if orderPizza property is present, then call it
-restaurant.orderPizza && restaurant.orderPizza("Mushrooms", "Spinach");
+// // if orderPizza property is present, then call it
+// restaurant.orderPizza && restaurant.orderPizza("Mushrooms", "Spinach");
+
+
+
+// ---------------------------- FOR OF LOOP --------------------------------
+/* We can use continue and break in this loop also. */
+const menu = [...restaurant.mainMenu, ...restaurant.starterMenu];
+for(const item of menu)
+  console.log(item);
+
+// for getting index
+for(const item of menu.entries())
+  console.log(`Index: ${item[0]},   Value: ${item[1]}`);
+
+// or use destructuring for better version
+for(const [index, value] of menu.entries())
+  console.log(`${index}: ${value}`);
