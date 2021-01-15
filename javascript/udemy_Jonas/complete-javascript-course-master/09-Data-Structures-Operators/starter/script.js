@@ -215,16 +215,47 @@ const restaurant = {
 
 
 
-// ---------------------------- FOR OF LOOP --------------------------------
-/* We can use continue and break in this loop also. */
-const menu = [...restaurant.mainMenu, ...restaurant.starterMenu];
-for(const item of menu)
-  console.log(item);
+// // ---------------------------- FOR OF LOOP --------------------------------
+// /* We can use continue and break in this loop also. */
+// const menu = [...restaurant.mainMenu, ...restaurant.starterMenu];
+// for(const item of menu)
+//   console.log(item);
 
-// for getting index
-for(const item of menu.entries())
-  console.log(`Index: ${item[0]},   Value: ${item[1]}`);
+// // for getting index
+// for(const item of menu.entries())
+//   console.log(`Index: ${item[0]},   Value: ${item[1]}`);
 
-// or use destructuring for better version
-for(const [index, value] of menu.entries())
-  console.log(`${index}: ${value}`);
+// // or use destructuring for better version
+// for(const [index, value] of menu.entries())
+//   console.log(`${index}: ${value}`);
+
+
+
+// --------------------------- ENHANCED OBJECT LITERALS --------------------------
+
+const menu = {
+  starter: "Chicken Wings",
+  main: "Chicken Curry"
+};
+
+const manager = "manager";
+
+const hotelMenu = {
+  name: "ABC",
+  // ENHANCEMENT #1: instead of writing menu: menu, we can write only menu
+  menu,
+
+  // ENHANCEMENT #2: instead of writing methods as name: function(p1, p2){}, write as:
+  order(category){
+    if(category===0)
+      return menu.starter;
+
+    return menu.main;
+  },
+
+  // ENHANCEMENT #3: We can evaluate property names in the object itself
+  [`${manager}`+"Name"]: "Rishabh"
+
+};
+
+console.log(hotelMenu);
