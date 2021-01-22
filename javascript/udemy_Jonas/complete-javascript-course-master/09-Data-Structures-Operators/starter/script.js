@@ -330,32 +330,59 @@ GOOD LUCK 😀
 */
 
 
-// 1
-const {players: [players1, players2] } = game;
+// // 1
+// const {players: [players1, players2] } = game;
 
-// 2
-const [gk, ...fieldPlayers] = players1;
+// // 2
+// const [gk, ...fieldPlayers] = players1;
 
-// 3
-const allPlayers = [...players1, ...players2];
+// // 3
+// const allPlayers = [...players1, ...players2];
 
-// 4
-const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+// // 4
+// const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
 
-// 5
-const {odds: {team1, x:draw, team2}} = game;
+// // 5
+// const {odds: {team1, x:draw, team2}} = game;
 
-// 6
-const printGoals = function(...names){
-  for(const x of names){
-    console.log(x);
-  }
-  console.log(`Total Goals: ${names.length}`);
-};
+// // 6
+// const printGoals = function(...names){
+//   for(const x of names){
+//     console.log(x);
+//   }
+//   console.log(`Total Goals: ${names.length}`);
+// };
 
-printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
-printGoals(...game.scored);
+// printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
+// printGoals(...game.scored);
 
-// 7
-team1 < team2 && console.log("Team 1 is more likely to win!");
-team2 < team1 && console.log("Team 2 is more likely to win!");
+// // 7
+// team1 < team2 && console.log("Team 1 is more likely to win!");
+// team2 < team1 && console.log("Team 2 is more likely to win!");
+
+
+
+// ------------------------------ OPTIONAL CHAINING ----------------------------
+
+/* Use when we have a deeply nested object, with a lot of optional properties/methods.
+Instead of using if else blocks, use optional chaining. Immediately, undefined is returned when
+a property in the chain doesn't exist (nullish) 
+
+Optional chaining and Nullish Coalescing were introduced together and were designed to be used together. */
+
+// console.log(restaurant.openingHours.mon.open);    // gives an error because mon doesn't exist
+console.log(restaurant.openingHours.mon?.open);
+
+// example
+const days = ['mon', 'feb', 'wed', 'thu', 'fri', 'sat', 'sun'];
+for(const day of days){
+  console.log(`On ${day}, restaurant open at ${restaurant.openingHours[day]?.open ?? 'closed'}`);
+}
+
+// works with methods also
+console.log(restaurant.order?.(2, 5) ?? "Method does not exist");
+
+// Also works with Arrays
+const users = [{name: "Rishabh", job: "Software Developer"}];
+console.log(users[0]?.name ?? "User 0 does not exist");
+console.log(users[1]?.name ?? "User 1 does not exist");
