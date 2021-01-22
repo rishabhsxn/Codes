@@ -362,27 +362,46 @@ GOOD LUCK 😀
 
 
 
-// ------------------------------ OPTIONAL CHAINING ----------------------------
+// // ------------------------------ OPTIONAL CHAINING ----------------------------
 
-/* Use when we have a deeply nested object, with a lot of optional properties/methods.
-Instead of using if else blocks, use optional chaining. Immediately, undefined is returned when
-a property in the chain doesn't exist (nullish) 
+// /* Use when we have a deeply nested object, with a lot of optional properties/methods.
+// Instead of using if else blocks, use optional chaining. Immediately, undefined is returned when
+// a property in the chain doesn't exist (nullish) 
 
-Optional chaining and Nullish Coalescing were introduced together and were designed to be used together. */
+// Optional chaining and Nullish Coalescing were introduced together and were designed to be used together. */
 
-// console.log(restaurant.openingHours.mon.open);    // gives an error because mon doesn't exist
-console.log(restaurant.openingHours.mon?.open);
+// // console.log(restaurant.openingHours.mon.open);    // gives an error because mon doesn't exist
+// console.log(restaurant.openingHours.mon?.open);
 
-// example
-const days = ['mon', 'feb', 'wed', 'thu', 'fri', 'sat', 'sun'];
-for(const day of days){
-  console.log(`On ${day}, restaurant open at ${restaurant.openingHours[day]?.open ?? 'closed'}`);
+// // example
+// const days = ['mon', 'feb', 'wed', 'thu', 'fri', 'sat', 'sun'];
+// for(const day of days){
+//   console.log(`On ${day}, restaurant open at ${restaurant.openingHours[day]?.open ?? 'closed'}`);
+// }
+
+// // works with methods also
+// console.log(restaurant.order?.(2, 5) ?? "Method does not exist");
+
+// // Also works with Arrays
+// const users = [{name: "Rishabh", job: "Software Developer"}];
+// console.log(users[0]?.name ?? "User 0 does not exist");
+// console.log(users[1]?.name ?? "User 1 does not exist");
+
+
+
+// ------------------------------ LOOPING OBJECTS --------------------------------
+
+const openingHours = restaurant.openingHours;
+
+// Looping keys
+for(const day of Object.keys(openingHours)){
+  console.log(day);
 }
 
-// works with methods also
-console.log(restaurant.order?.(2, 5) ?? "Method does not exist");
-
-// Also works with Arrays
-const users = [{name: "Rishabh", job: "Software Developer"}];
-console.log(users[0]?.name ?? "User 0 does not exist");
-console.log(users[1]?.name ?? "User 1 does not exist");
+// looping values
+for(const value of Object.values(openingHours))
+  console.log(value);
+  
+// looping keys and values simultaneously
+for(const [day, {open: o, close: c}] of Object.entries(openingHours))
+  console.log(`Restaurant open on ${day} at ${o} and close at ${c}`);
