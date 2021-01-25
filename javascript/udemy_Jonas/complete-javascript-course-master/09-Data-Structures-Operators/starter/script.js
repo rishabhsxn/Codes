@@ -461,31 +461,70 @@ GOOD LUCK 😀
 
 
 
-// ------------------------------------ SETS ------------------------------------------
+// // ------------------------------------ SETS ------------------------------------------
 
-// create 
-const staff = new Set(['Chef', 'Manager', 'Chef', 'Waiter', 'Waiter']);
-console.log(staff);
+// // create 
+// const staff = new Set(['Chef', 'Manager', 'Chef', 'Waiter', 'Waiter']);
+// console.log(staff);
 
-// manipulation
-staff.add('Cook');
-staff.add('Cook');
-console.log(staff);
+// // manipulation
+// staff.add('Cook');
+// staff.add('Cook');
+// console.log(staff);
 
-staff.delete('Waiter');
-console.log(staff);
+// staff.delete('Waiter');
+// console.log(staff);
 
-console.log(staff.has("Waiter"));
+// console.log(staff.has("Waiter"));
 
-// iterable
-for(const member of staff)
-  console.log(member);
+// // iterable
+// for(const member of staff)
+//   console.log(member);
 
-console.log(new Set("Rishabh"));
+// console.log(new Set("Rishabh"));
 
-// Use case: Remove Duplicates from an Array(or iterable)
-const arr = [1, 2, 2, 3, 3, 3, 4];
-const arrUnique = [...new Set(arr)];
-console.log(arrUnique);
-// Use case: find unique values from an iterable
-console.log(new Set("rishabh").size);
+// // Use case: Remove Duplicates from an Array(or iterable)
+// const arr = [1, 2, 2, 3, 3, 3, 4];
+// const arrUnique = [...new Set(arr)];
+// console.log(arrUnique);
+// // Use case: find unique values from an iterable
+// console.log(new Set("rishabh").size);
+
+
+
+// ------------------------------------ MAPS ------------------------------------------
+
+const rest = new Map();
+
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(2, 'Lisbon, Portugal'));
+
+/* Set method returns the updated map, so we can chain multiple set calls */
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are Open!')
+  .set(false, 'We are Closed!');
+
+
+console.log(rest.get('name'));
+
+// IMPORTANT: Clever use of Boolean as a key
+const time = 8;
+console.log(rest.get(time > rest.get('open' && time < rest.get('close'))));
+
+
+// we can even use array or object as a key
+rest.set([1, 2], "Test");
+console.log(rest);
+
+/* IMPORTANT: this will not retrieve the value, because this array is not same as key (Address is different).
+To use array as key, save it in a variable, then store and retrieve using that variable */
+console.log(rest.get([1, 2]));
+
+
+// even DOM elements can be used as keys
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
