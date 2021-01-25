@@ -408,52 +408,84 @@ GOOD LUCK 😀
 
 
 
-// ---------------------------------- CODING CHALLENGE #2 -----------------------------------
+// // ---------------------------------- CODING CHALLENGE #2 -----------------------------------
 
-/* 
-Let's continue with our football betting app!
+// /* 
+// Let's continue with our football betting app!
 
-1. Loop over the game.scored array and print each player name to the console, along with the goal number 
-(Example: "Goal 1: Lewandowski")
-2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, 
-you can go check if you don't remember)
-3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
-      Odd of victory Bayern Munich: 1.33
-      Odd of draw: 3.25
-      Odd of victory Borrussia Dortmund: 6.5
-Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds 
-and the game objects have the same property names 😉
+// 1. Loop over the game.scored array and print each player name to the console, along with the goal number 
+// (Example: "Goal 1: Lewandowski")
+// 2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, 
+// you can go check if you don't remember)
+// 3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+//       Odd of victory Bayern Munich: 1.33
+//       Odd of draw: 3.25
+//       Odd of victory Borrussia Dortmund: 6.5
+// Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds 
+// and the game objects have the same property names 😉
 
-BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the 
-number of goals as the value. In this game, it will look like this:
-      {
-        Gnarby: 1,
-        Hummels: 1,
-        Lewandowski: 2
-      }
+// BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the 
+// number of goals as the value. In this game, it will look like this:
+//       {
+//         Gnarby: 1,
+//         Hummels: 1,
+//         Lewandowski: 2
+//       }
 
-GOOD LUCK 😀
-*/
+// GOOD LUCK 😀
+// */
 
-// 1
-for(const [goalNumber, playerName] of game.scored.entries())
-  console.log(`Goal ${goalNumber+1}: ${playerName}`);
+// // 1
+// for(const [goalNumber, playerName] of game.scored.entries())
+//   console.log(`Goal ${goalNumber+1}: ${playerName}`);
 
-// 2
-let sumOdd = 0;
-const odds = Object.values(game.odds);
-for(const odd of odds)
-  sumOdd += odd;
-const avgOdd = sumOdd/odds.length;
-console.log(`Average Odd: ${avgOdd}`);
+// // 2
+// let sumOdd = 0;
+// const odds = Object.values(game.odds);
+// for(const odd of odds)
+//   sumOdd += odd;
+// const avgOdd = sumOdd/odds.length;
+// console.log(`Average Odd: ${avgOdd}`);
 
-// 3
-for(const [team, odd] of Object.entries(game.odds))
-  console.log(`Odd of ${game[team] ? `Victory ${game[team]}` : "Draw"}: ${odd}`);
+// // 3
+// for(const [team, odd] of Object.entries(game.odds))
+//   console.log(`Odd of ${game[team] ? `Victory ${game[team]}` : "Draw"}: ${odd}`);
 
-// Bonus
-const scorers = {};
-for(const playerName of game.scored)
-  scorers[playerName] ? scorers[playerName]++ : scorers[playerName] = 1;
+// // Bonus
+// const scorers = {};
+// for(const playerName of game.scored)
+//   scorers[playerName] ? scorers[playerName]++ : scorers[playerName] = 1;
 
-console.log(scorers);
+// console.log(scorers);
+
+
+
+
+// ------------------------------------ SETS ------------------------------------------
+
+// create 
+const staff = new Set(['Chef', 'Manager', 'Chef', 'Waiter', 'Waiter']);
+console.log(staff);
+
+// manipulation
+staff.add('Cook');
+staff.add('Cook');
+console.log(staff);
+
+staff.delete('Waiter');
+console.log(staff);
+
+console.log(staff.has("Waiter"));
+
+// iterable
+for(const member of staff)
+  console.log(member);
+
+console.log(new Set("Rishabh"));
+
+// Use case: Remove Duplicates from an Array(or iterable)
+const arr = [1, 2, 2, 3, 3, 3, 4];
+const arrUnique = [...new Set(arr)];
+console.log(arrUnique);
+// Use case: find unique values from an iterable
+console.log(new Set("rishabh").size);
