@@ -492,39 +492,73 @@ GOOD LUCK 😀
 
 
 
-// ------------------------------------ MAPS ------------------------------------------
+// // ------------------------------------ MAPS ------------------------------------------
 
-const rest = new Map();
+// const rest = new Map();
 
-rest.set('name', 'Classico Italiano');
-rest.set(1, 'Firenze, Italy');
-console.log(rest.set(2, 'Lisbon, Portugal'));
+// rest.set('name', 'Classico Italiano');
+// rest.set(1, 'Firenze, Italy');
+// console.log(rest.set(2, 'Lisbon, Portugal'));
 
-/* Set method returns the updated map, so we can chain multiple set calls */
-rest
-  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
-  .set('open', 11)
-  .set('close', 23)
-  .set(true, 'We are Open!')
-  .set(false, 'We are Closed!');
-
-
-console.log(rest.get('name'));
-
-// IMPORTANT: Clever use of Boolean as a key
-const time = 8;
-console.log(rest.get(time > rest.get('open' && time < rest.get('close'))));
+// /* Set method returns the updated map, so we can chain multiple set calls */
+// rest
+//   .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+//   .set('open', 11)
+//   .set('close', 23)
+//   .set(true, 'We are Open!')
+//   .set(false, 'We are Closed!');
 
 
-// we can even use array or object as a key
-rest.set([1, 2], "Test");
-console.log(rest);
+// console.log(rest.get('name'));
 
-/* IMPORTANT: this will not retrieve the value, because this array is not same as key (Address is different).
-To use array as key, save it in a variable, then store and retrieve using that variable */
-console.log(rest.get([1, 2]));
+// // IMPORTANT: Clever use of Boolean as a key
+// const time = 8;
+// console.log(rest.get(time > rest.get('open' && time < rest.get('close'))));
 
 
-// even DOM elements can be used as keys
-rest.set(document.querySelector('h1'), 'Heading');
-console.log(rest);
+// // we can even use array or object as a key
+// rest.set([1, 2], "Test");
+// console.log(rest);
+
+// /* IMPORTANT: this will not retrieve the value, because this array is not same as key (Address is different).
+// To use array as key, save it in a variable, then store and retrieve using that variable */
+// console.log(rest.get([1, 2]));
+
+
+// // even DOM elements can be used as keys
+// rest.set(document.querySelector('h1'), 'Heading');
+// console.log(rest);
+
+
+// IMPORTANT: Efficient way to create Map, when there are large number of entries
+const quiz = new Map([
+  ['question', 'Which is the best programming language?'],
+  [1, 'Python'],
+  [2, 'C'],
+  [3, 'JavaScript'],
+  [4, 'Rust'],
+  ['correct', 3],
+  [true, 'Correct Answer!'],
+  [false, 'Try Again!']
+]);
+
+// due to this syntax, we can easily CONVERT OBJECTS TO MAPS
+const m = new Map(Object.entries(restaurant))
+console.log(m);
+
+// we can get the array of array back from map
+const arrArr = [...quiz];
+console.log(arrArr);
+
+let questionStr = quiz.get('question');
+
+// for of loop
+for(const [key, value] of quiz)
+  if(typeof key === 'number')
+    questionStr = questionStr + '\n' + `${key}: ${value}`;
+
+questionStr += '\n Your Answer:';
+
+const answer = Number(prompt(questionStr));
+console.log(answer);
+console.log(quiz.get(answer === quiz.get('correct')));
