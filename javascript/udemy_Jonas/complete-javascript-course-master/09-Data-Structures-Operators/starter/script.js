@@ -530,35 +530,86 @@ GOOD LUCK 😀
 // console.log(rest);
 
 
-// IMPORTANT: Efficient way to create Map, when there are large number of entries
-const quiz = new Map([
-  ['question', 'Which is the best programming language?'],
-  [1, 'Python'],
-  [2, 'C'],
-  [3, 'JavaScript'],
-  [4, 'Rust'],
-  ['correct', 3],
-  [true, 'Correct Answer!'],
-  [false, 'Try Again!']
+// // IMPORTANT: Efficient way to create Map, when there are large number of entries
+// const quiz = new Map([
+//   ['question', 'Which is the best programming language?'],
+//   [1, 'Python'],
+//   [2, 'C'],
+//   [3, 'JavaScript'],
+//   [4, 'Rust'],
+//   ['correct', 3],
+//   [true, 'Correct Answer!'],
+//   [false, 'Try Again!']
+// ]);
+
+// // due to this syntax, we can easily CONVERT OBJECTS TO MAPS
+// const m = new Map(Object.entries(restaurant))
+// console.log(m);
+
+// // we can get the array of array back from map
+// const arrArr = [...quiz];
+// console.log(arrArr);
+
+// let questionStr = quiz.get('question');
+
+// // for of loop
+// for(const [key, value] of quiz)
+//   if(typeof key === 'number')
+//     questionStr = questionStr + '\n' + `${key}: ${value}`;
+
+// questionStr += '\n Your Answer:';
+
+// const answer = Number(prompt(questionStr));
+// console.log(answer);
+// console.log(quiz.get(answer === quiz.get('correct')));
+
+
+
+// ----------------------------------- CODING CHALLENGE #3 -------------------------------------
+
+/* 
+Let's continue with our football betting app! This time, we have a map with a log of the events that happened during 
+the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football 
+game has 90 minutes plus some extra time).
+
+1. Create an array 'events' of the different game events that happened (no duplicates)
+2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from 
+the game events log.
+3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game 
+has 90 minutes)
+4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) 
+of the game, like this:
+  [FIRST HALF] 17: ⚽️ GOAL
+
+GOOD LUCK 😀
+*/
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
 ]);
 
-// due to this syntax, we can easily CONVERT OBJECTS TO MAPS
-const m = new Map(Object.entries(restaurant))
-console.log(m);
+// 1
+const events = [...new Set(gameEvents.values())];
+console.log(events);
 
-// we can get the array of array back from map
-const arrArr = [...quiz];
-console.log(arrArr);
+// 2
+gameEvents.delete(64);
+console.log(gameEvents);
 
-let questionStr = quiz.get('question');
+// 3
+const time = [...gameEvents.keys()].pop();
+console.log(`An event happened, on average, every ${time/gameEvents.size} minutes`);
 
-// for of loop
-for(const [key, value] of quiz)
-  if(typeof key === 'number')
-    questionStr = questionStr + '\n' + `${key}: ${value}`;
-
-questionStr += '\n Your Answer:';
-
-const answer = Number(prompt(questionStr));
-console.log(answer);
-console.log(quiz.get(answer === quiz.get('correct')));
+// 4
+for(const [key, value] of gameEvents)
+  console.log(`${key<45 ? '[FIRST HALF]' : '[SECOND HALF]'} ${key}: ${value}`);
