@@ -617,130 +617,209 @@ GOOD LUCK 😀
 
 
 
-// ------------------------------------ WORKING WITH STRINGS -----------------------------------------
+// // ------------------------------------ WORKING WITH STRINGS -----------------------------------------
 
-const airline = 'TAP Air Portugal';
-const plane = 'A320';
+// const airline = 'TAP Air Portugal';
+// const plane = 'A320';
 
-console.log(plane[0]);
-console.log('B737'[1]);
-console.log(airline.length);
-console.log('B737'.length);
+// console.log(plane[0]);
+// console.log('B737'[1]);
+// console.log(airline.length);
+// console.log('B737'.length);
 
-console.log(airline.indexOf('r'));
-console.log(airline.lastIndexOf('r'));
-console.log(airline.indexOf('Portugal'));   // case sensitive
+// console.log(airline.indexOf('r'));
+// console.log(airline.lastIndexOf('r'));
+// console.log(airline.indexOf('Portugal'));   // case sensitive
 
-console.log(airline.slice(4));
-console.log(airline.slice(0, 3));
-console.log(airline.slice(-3));
-console.log(airline.slice(1, -3));    // boundary from both sides
+// console.log(airline.slice(4));
+// console.log(airline.slice(0, 3));
+// console.log(airline.slice(-3));
+// console.log(airline.slice(1, -3));    // boundary from both sides
 
-console.log(airline.slice(0, airline.indexOf(' ')));    // first word
-console.log(airline.slice(airline.lastIndexOf(' ') + 1));   // last word
-
-
-const checkMiddleSeat = function(seatNumber){
-  // B and E are middle seats. Letter will be present at last of seatNumber
-  const s = seatNumber.slice(-1);
-
-  if(s === 'B' || s === 'E')
-    console.log('You got middle seat!');
-  else
-    console.log('You got lucky :D');
-}
-
-checkMiddleSeat('18E');
-checkMiddleSeat('7B');
-checkMiddleSeat('12C');
+// console.log(airline.slice(0, airline.indexOf(' ')));    // first word
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1));   // last word
 
 
-// FIX NAME CAPITALIZATION
-const fixCapitalization = function(name){
-  const lowerName = name.toLowerCase();
-  const correctName = lowerName[0].toUpperCase() + lowerName.slice(1);
-  return correctName;
+// const checkMiddleSeat = function(seatNumber){
+//   // B and E are middle seats. Letter will be present at last of seatNumber
+//   const s = seatNumber.slice(-1);
+
+//   if(s === 'B' || s === 'E')
+//     console.log('You got middle seat!');
+//   else
+//     console.log('You got lucky :D');
+// }
+
+// checkMiddleSeat('18E');
+// checkMiddleSeat('7B');
+// checkMiddleSeat('12C');
+
+
+// // FIX NAME CAPITALIZATION
+// const fixCapitalization = function(name){
+//   const lowerName = name.toLowerCase();
+//   const correctName = lowerName[0].toUpperCase() + lowerName.slice(1);
+//   return correctName;
+// };
+
+// const passenger = "rIshABh";    // convert to: Rishabh
+// console.log(fixCapitalization(passenger));
+
+
+// // NORMALIZE EMAIL    '  riSHAbh98@gMaiL.io  \n'   to 'rishabh98@gmail.io'
+// const normalizeEmail = function(email){
+//   const normalizedEmail = email.toLowerCase().trim();
+//   return normalizedEmail;
+// }
+
+// const loginEmail = '  riSHAbh98@gMaiL.io  \n';
+// console.log(normalizeEmail(loginEmail));
+
+
+// // REPLACING
+// const priceGB = '288,97£';
+// const priceUS = priceGB.replace('£', '$').replace(',', '.');
+// console.log(priceUS);
+
+// const announcement = 'All passengers come to boarding door 23. Boarding door 23!';
+// // replace both 'door' with 'gate'
+// console.log(announcement.replaceAll('door', 'gate'));
+// // or use Regex
+// console.log(announcement.replace(/door/g, 'gate'));
+
+
+// // BOOLEANS
+// const planeName = 'Airbus A320neo';
+// console.log(planeName.includes('A320'));
+// console.log(planeName.includes('Airb'));
+// console.log(planeName.includes('Boeing'));
+
+// if(planeName.startsWith('Airbus') && planeName.endsWith('neo'))
+//   console.log('Part of the new Airbus family')
+
+
+// // SPLIT and JOIN
+// console.log('a+very+nice+string'.split('+'));
+
+// const [firstName, lastName] = 'Rishabh Saxena'.split(' ');
+// const fullName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');    // IMPORTANT
+// console.log(fullName);
+
+// const capitalizeName = function(name){
+//   name = name.toLowerCase();
+//   const words = name.split(' ');
+//   for(let i=0; i<words.length; i++)
+//     words[i] = words[i][0].toUpperCase() + words[i].slice(1);
+
+//   return words.join(' ');
+// };
+
+// console.log(capitalizeName('risHAbh saxena'));
+// console.log(capitalizeName('jessica aNN smith davis'));
+
+
+// // PADDING
+// const message = 'Go to gate 23!';
+// const targetLength = 25;
+// const targetLength2 = 30;
+// console.log(message.padStart(targetLength, '+').padEnd(targetLength2, '-'));
+
+// // show only last 4 digits and hide other part using *
+// const maskCreditCard = function(number){
+//   const str = number + '';    // int to string
+//   return str.slice(-4).padStart(str.length, '*');
+// };
+
+// console.log(maskCreditCard(4444555566667777));
+// console.log(maskCreditCard('11112222333344445678'));
+
+
+// // REPEAT
+// console.log('Hi! '.repeat(5));
+
+// const planesInLine = function(n){
+//   console.log(`There are ${n} planes waiting in line - ${'✈'.repeat(n)}`);
+// }
+
+// planesInLine(3);
+// planesInLine(5);
+// planesInLine(10);
+
+
+
+
+// ---------------------------------- CODING CHALLENGE #4------------------------------------------
+
+/* 
+Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+
+The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
+
+THIS TEST DATA (pasted to textarea)
+underscore_case
+ first_name
+Some_Variable 
+  calculate_AGE
+delayed_departure
+
+SHOULD PRODUCE THIS OUTPUT (5 separate console.log outputs)
+underscoreCase      ✅
+firstName           ✅✅
+someVariable        ✅✅✅
+calculateAge        ✅✅✅✅
+delayedDeparture    ✅✅✅✅✅
+
+HINT 1: Remember which character defines a new line in the textarea 😉
+HINT 2: The solution only needs to work for a variable made out of 2 words, like a_b
+HINT 3: Start without worrying about the ✅. Tackle that only after you have the variable name conversion working 😉
+HINT 4: This challenge is difficult on purpose, so start watching the solution in case you're stuck. Then pause and continue!
+
+Afterwards, test with your own test data!
+
+GOOD LUCK 😀
+*/
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+
+// function to convert a word (a_b) to camelCase (aB)
+const convertToCamelCase = function(text){
+  const trimmedLowerCaseText = text.trim().toLowerCase();
+  const [firstWord, secondWord] = trimmedLowerCaseText.split('_');
+  const camelCasedText = firstWord + secondWord[0].toUpperCase() + secondWord.slice(1);
+  return camelCasedText;
 };
 
-const passenger = "rIshABh";    // convert to: Rishabh
-console.log(fixCapitalization(passenger));
+// function to convert user text to camelCase words and print in required format
+const convertAndformatOutput = function(text){
+  // store words separately from each line
+  const words = text.split('\n');
 
+  let longestStringLength = 0;
+  const camelCasedWords = [];
 
-// NORMALIZE EMAIL    '  riSHAbh98@gMaiL.io  \n'   to 'rishabh98@gmail.io'
-const normalizeEmail = function(email){
-  const normalizedEmail = email.toLowerCase().trim();
-  return normalizedEmail;
+  for(const word of words){
+    const camelCasedWord = convertToCamelCase(word);
+    camelCasedWords.push(camelCasedWord);
+
+    // find length of the longest string
+    if(camelCasedWord.length > longestStringLength)
+      longestStringLength = camelCasedWord.length;
+  }
+
+  const targetLength = longestStringLength + 5;
+
+  // print words with ticks
+  for(const [index, word] of camelCasedWords.entries())
+    console.log(word.padEnd(targetLength, ' ') + '✅'.repeat(index+1));
 }
 
-const loginEmail = '  riSHAbh98@gMaiL.io  \n';
-console.log(normalizeEmail(loginEmail));
 
-
-// REPLACING
-const priceGB = '288,97£';
-const priceUS = priceGB.replace('£', '$').replace(',', '.');
-console.log(priceUS);
-
-const announcement = 'All passengers come to boarding door 23. Boarding door 23!';
-// replace both 'door' with 'gate'
-console.log(announcement.replaceAll('door', 'gate'));
-// or use Regex
-console.log(announcement.replace(/door/g, 'gate'));
-
-
-// BOOLEANS
-const planeName = 'Airbus A320neo';
-console.log(planeName.includes('A320'));
-console.log(planeName.includes('Airb'));
-console.log(planeName.includes('Boeing'));
-
-if(planeName.startsWith('Airbus') && planeName.endsWith('neo'))
-  console.log('Part of the new Airbus family')
-
-
-// SPLIT and JOIN
-console.log('a+very+nice+string'.split('+'));
-
-const [firstName, lastName] = 'Rishabh Saxena'.split(' ');
-const fullName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');    // IMPORTANT
-console.log(fullName);
-
-const capitalizeName = function(name){
-  name = name.toLowerCase();
-  const words = name.split(' ');
-  for(let i=0; i<words.length; i++)
-    words[i] = words[i][0].toUpperCase() + words[i].slice(1);
-
-  return words.join(' ');
-};
-
-console.log(capitalizeName('risHAbh saxena'));
-console.log(capitalizeName('jessica aNN smith davis'));
-
-
-// PADDING
-const message = 'Go to gate 23!';
-const targetLength = 25;
-const targetLength2 = 30;
-console.log(message.padStart(targetLength, '+').padEnd(targetLength2, '-'));
-
-// show only last 4 digits and hide other part using *
-const maskCreditCard = function(number){
-  const str = number + '';    // int to string
-  return str.slice(-4).padStart(str.length, '*');
-};
-
-console.log(maskCreditCard(4444555566667777));
-console.log(maskCreditCard('11112222333344445678'));
-
-
-// REPEAT
-console.log('Hi! '.repeat(5));
-
-const planesInLine = function(n){
-  console.log(`There are ${n} planes waiting in line - ${'✈'.repeat(n)}`);
-}
-
-planesInLine(3);
-planesInLine(5);
-planesInLine(10);
+// Add click event listener to the button
+const okButton = document.querySelector('button');
+okButton.addEventListener('click', function(){
+  // get text from the textarea
+  const text = document.querySelector('textarea').value;
+  convertAndformatOutput(text);
+});
