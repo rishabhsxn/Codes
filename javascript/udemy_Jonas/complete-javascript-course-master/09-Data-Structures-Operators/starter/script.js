@@ -565,51 +565,182 @@ GOOD LUCK 😀
 
 
 
-// ----------------------------------- CODING CHALLENGE #3 -------------------------------------
+// // ----------------------------------- CODING CHALLENGE #3 -------------------------------------
 
-/* 
-Let's continue with our football betting app! This time, we have a map with a log of the events that happened during 
-the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football 
-game has 90 minutes plus some extra time).
+// /* 
+// Let's continue with our football betting app! This time, we have a map with a log of the events that happened during 
+// the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football 
+// game has 90 minutes plus some extra time).
 
-1. Create an array 'events' of the different game events that happened (no duplicates)
-2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from 
-the game events log.
-3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game 
-has 90 minutes)
-4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) 
-of the game, like this:
-  [FIRST HALF] 17: ⚽️ GOAL
+// 1. Create an array 'events' of the different game events that happened (no duplicates)
+// 2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from 
+// the game events log.
+// 3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game 
+// has 90 minutes)
+// 4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) 
+// of the game, like this:
+//   [FIRST HALF] 17: ⚽️ GOAL
 
-GOOD LUCK 😀
-*/
+// GOOD LUCK 😀
+// */
 
-const gameEvents = new Map([
-  [17, '⚽️ GOAL'],
-  [36, '🔁 Substitution'],
-  [47, '⚽️ GOAL'],
-  [61, '🔁 Substitution'],
-  [64, '🔶 Yellow card'],
-  [69, '🔴 Red card'],
-  [70, '🔁 Substitution'],
-  [72, '🔁 Substitution'],
-  [76, '⚽️ GOAL'],
-  [80, '⚽️ GOAL'],
-  [92, '🔶 Yellow card'],
-]);
+// const gameEvents = new Map([
+//   [17, '⚽️ GOAL'],
+//   [36, '🔁 Substitution'],
+//   [47, '⚽️ GOAL'],
+//   [61, '🔁 Substitution'],
+//   [64, '🔶 Yellow card'],
+//   [69, '🔴 Red card'],
+//   [70, '🔁 Substitution'],
+//   [72, '🔁 Substitution'],
+//   [76, '⚽️ GOAL'],
+//   [80, '⚽️ GOAL'],
+//   [92, '🔶 Yellow card'],
+// ]);
 
-// 1
-const events = [...new Set(gameEvents.values())];
-console.log(events);
+// // 1
+// const events = [...new Set(gameEvents.values())];
+// console.log(events);
 
-// 2
-gameEvents.delete(64);
-console.log(gameEvents);
+// // 2
+// gameEvents.delete(64);
+// console.log(gameEvents);
 
-// 3
-const time = [...gameEvents.keys()].pop();
-console.log(`An event happened, on average, every ${time/gameEvents.size} minutes`);
+// // 3
+// const time = [...gameEvents.keys()].pop();
+// console.log(`An event happened, on average, every ${time/gameEvents.size} minutes`);
 
-// 4
-for(const [key, value] of gameEvents)
-  console.log(`${key<45 ? '[FIRST HALF]' : '[SECOND HALF]'} ${key}: ${value}`);
+// // 4
+// for(const [key, value] of gameEvents)
+//   console.log(`${key<45 ? '[FIRST HALF]' : '[SECOND HALF]'} ${key}: ${value}`);
+
+
+
+
+// ------------------------------------ WORKING WITH STRINGS -----------------------------------------
+
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log('B737'[1]);
+console.log(airline.length);
+console.log('B737'.length);
+
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('Portugal'));   // case sensitive
+
+console.log(airline.slice(4));
+console.log(airline.slice(0, 3));
+console.log(airline.slice(-3));
+console.log(airline.slice(1, -3));    // boundary from both sides
+
+console.log(airline.slice(0, airline.indexOf(' ')));    // first word
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));   // last word
+
+
+const checkMiddleSeat = function(seatNumber){
+  // B and E are middle seats. Letter will be present at last of seatNumber
+  const s = seatNumber.slice(-1);
+
+  if(s === 'B' || s === 'E')
+    console.log('You got middle seat!');
+  else
+    console.log('You got lucky :D');
+}
+
+checkMiddleSeat('18E');
+checkMiddleSeat('7B');
+checkMiddleSeat('12C');
+
+
+// FIX NAME CAPITALIZATION
+const fixCapitalization = function(name){
+  const lowerName = name.toLowerCase();
+  const correctName = lowerName[0].toUpperCase() + lowerName.slice(1);
+  return correctName;
+};
+
+const passenger = "rIshABh";    // convert to: Rishabh
+console.log(fixCapitalization(passenger));
+
+
+// NORMALIZE EMAIL    '  riSHAbh98@gMaiL.io  \n'   to 'rishabh98@gmail.io'
+const normalizeEmail = function(email){
+  const normalizedEmail = email.toLowerCase().trim();
+  return normalizedEmail;
+}
+
+const loginEmail = '  riSHAbh98@gMaiL.io  \n';
+console.log(normalizeEmail(loginEmail));
+
+
+// REPLACING
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+console.log(priceUS);
+
+const announcement = 'All passengers come to boarding door 23. Boarding door 23!';
+// replace both 'door' with 'gate'
+console.log(announcement.replaceAll('door', 'gate'));
+// or use Regex
+console.log(announcement.replace(/door/g, 'gate'));
+
+
+// BOOLEANS
+const planeName = 'Airbus A320neo';
+console.log(planeName.includes('A320'));
+console.log(planeName.includes('Airb'));
+console.log(planeName.includes('Boeing'));
+
+if(planeName.startsWith('Airbus') && planeName.endsWith('neo'))
+  console.log('Part of the new Airbus family')
+
+
+// SPLIT and JOIN
+console.log('a+very+nice+string'.split('+'));
+
+const [firstName, lastName] = 'Rishabh Saxena'.split(' ');
+const fullName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');    // IMPORTANT
+console.log(fullName);
+
+const capitalizeName = function(name){
+  name = name.toLowerCase();
+  const words = name.split(' ');
+  for(let i=0; i<words.length; i++)
+    words[i] = words[i][0].toUpperCase() + words[i].slice(1);
+
+  return words.join(' ');
+};
+
+console.log(capitalizeName('risHAbh saxena'));
+console.log(capitalizeName('jessica aNN smith davis'));
+
+
+// PADDING
+const message = 'Go to gate 23!';
+const targetLength = 25;
+const targetLength2 = 30;
+console.log(message.padStart(targetLength, '+').padEnd(targetLength2, '-'));
+
+// show only last 4 digits and hide other part using *
+const maskCreditCard = function(number){
+  const str = number + '';    // int to string
+  return str.slice(-4).padStart(str.length, '*');
+};
+
+console.log(maskCreditCard(4444555566667777));
+console.log(maskCreditCard('11112222333344445678'));
+
+
+// REPEAT
+console.log('Hi! '.repeat(5));
+
+const planesInLine = function(n){
+  console.log(`There are ${n} planes waiting in line - ${'✈'.repeat(n)}`);
+}
+
+planesInLine(3);
+planesInLine(5);
+planesInLine(10);
