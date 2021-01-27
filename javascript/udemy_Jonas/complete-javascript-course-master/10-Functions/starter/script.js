@@ -66,24 +66,46 @@
 
 
 
-// -------------------------------- HIGHER-ORDER FUNCTIONS ------------------------------------
+// // -------------------------------- HIGHER-ORDER FUNCTIONS ------------------------------------
 
-const oneWord = function(str){
-    return str.replaceAll(' ', '').toLowerCase();
+// const oneWord = function(str){
+//     return str.replaceAll(' ', '').toLowerCase();
+// }
+
+// const upperFirstWord = function(str){
+//     const [first, ...others] = str.split(' ');
+//     return [first.toUpperCase(), ...others].join(' ');
+// }
+
+// // Higher order function - a function is passed as argument
+// const transformer = function(str, fn){
+//     console.log(`Original String: ${str}`);
+//     console.log(`Transformed String: ${fn(str)}`);
+//     console.log(`Transformed by function: ${fn.name}`);     // functions have property - name
+// }
+
+// // the passed functions are called Callbacks because these are called by the higher-order function anytime later
+// transformer('JavaScript is the best language!', upperFirstWord);
+// transformer('JavaScript is the best language!', oneWord);
+
+
+// FUNCTION RETURNING FUNCTION
+/* This works because of closure */
+
+const greet = function(greetingMessage){
+    return function(name){
+        console.log(`${greetingMessage} ${name}!`);
+    }
 }
 
-const upperFirstWord = function(str){
-    const [first, ...others] = str.split(' ');
-    return [first.toUpperCase(), ...others].join(' ');
-}
+const greeterHey = greet('Hey');
 
-// Higher order function - a function is passed as argument
-const transformer = function(str, fn){
-    console.log(`Original String: ${str}`);
-    console.log(`Transformed String: ${fn(str)}`);
-    console.log(`Transformed by function: ${fn.name}`);     // functions have property - name
-}
+greeterHey('Rishabh');
+greeterHey('Sanyam');
 
-// the passed functions are called Callbacks because these are called by the higher-order function anytime later
-transformer('JavaScript is the best language!', upperFirstWord);
-transformer('JavaScript is the best language!', oneWord);
+// or
+greet('Hey')('Alpana');
+
+// arrow syntax
+const greetArr = (greetingMessage) => function(name){ console.log(`${greetingMessage} ${name}!`)};
+greetArr('Hi')('Rishabh');
