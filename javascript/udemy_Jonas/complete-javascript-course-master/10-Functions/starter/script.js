@@ -89,23 +89,72 @@
 // transformer('JavaScript is the best language!', oneWord);
 
 
-// FUNCTION RETURNING FUNCTION
-/* This works because of closure */
+// // FUNCTION RETURNING FUNCTION
+// /* This works because of closure */
 
-const greet = function(greetingMessage){
-    return function(name){
-        console.log(`${greetingMessage} ${name}!`);
-    }
-}
+// const greet = function(greetingMessage){
+//     return function(name){
+//         console.log(`${greetingMessage} ${name}!`);
+//     }
+// }
 
-const greeterHey = greet('Hey');
+// const greeterHey = greet('Hey');
 
-greeterHey('Rishabh');
-greeterHey('Sanyam');
+// greeterHey('Rishabh');
+// greeterHey('Sanyam');
 
-// or
-greet('Hey')('Alpana');
+// // or
+// greet('Hey')('Alpana');
 
-// arrow syntax
-const greetArr = (greetingMessage) => function(name){ console.log(`${greetingMessage} ${name}!`)};
-greetArr('Hi')('Rishabh');
+// // arrow syntax
+// const greetArr = (greetingMessage) => function(name){ console.log(`${greetingMessage} ${name}!`)};
+// greetArr('Hi')('Rishabh');
+
+
+
+// ------------------------------------- CALL(), APPLY() & BIND() --------------------------------------
+
+/* These methods are part of the function objects and are used to manually set the this keyword of that 
+function */
+
+const lufthansa = {
+    airline: 'Lufthansa',
+    iataCode: 'LH',
+    bookings: [],
+
+    book(flightNum, name){
+        // console.log("Value of THIS:", this);
+        console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+        this.bookings.push({flight: `${this.iataCode}${flightNum}`, name});
+    },
+};
+
+lufthansa.book(240, 'Rishabh Saxena');
+lufthansa.book(240, 'Sanyam Saxena');
+
+
+/* they opened a new airline. 
+Now we need a similar book function but don't want to write it again (bad practice) */
+const euroWings = {
+    airline: 'EuroWings',
+    iataCode: 'EW',
+    bookings:[],
+};
+
+// store the book function from Lufthansa in a variable
+const book = lufthansa.book;
+
+/* IMPORTANT: It won't run because it's this keyword is pointing to undefined because it is now just a regular 
+function call (strict mode). It is not a method anymore. */
+// book(120, 'Rishabh Saxena');
+
+// Now, we have to explicitly tell JavaScript, the value of this. We have 3 options - call(), apply() and bind()
+
+book.call(euroWings, 120, 'John Doe');      // (this value, arguments for the function call)
+
+const arr = [120, 'Jane Doe'];
+book.apply(euroWings, arr);
+
+/* apply is similar to call() except it takes arguments as Array. 
+It is not much used as we can achieve similar behaviour with call() using spread operator ->  call(___, ...arr)  */
+book.call(lufthansa, ...arr);
