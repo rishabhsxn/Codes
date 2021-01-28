@@ -141,6 +141,12 @@ const euroWings = {
     bookings:[],
 };
 
+const swiss = {
+    airline: 'Swiss',
+    iataCode: 'SW',
+    bookings: [],
+};
+
 // store the book function from Lufthansa in a variable
 const book = lufthansa.book;
 
@@ -158,3 +164,47 @@ book.apply(euroWings, arr);
 /* apply is similar to call() except it takes arguments as Array. 
 It is not much used as we can achieve similar behaviour with call() using spread operator ->  call(___, ...arr)  */
 book.call(lufthansa, ...arr);
+
+
+// BIND()
+// this will not call function, instead return new function with this set to euroWings
+const bookEW = book.bind(euroWings);
+const bookSW = book.bind(swiss);
+const bookLH = book.bind(lufthansa);
+
+bookEW(11, 'Rishabh Doe');
+bookSW(11, 'Rishabh Doe');
+bookLH(11, 'Rishabh Doe');
+
+const bookEW_22 = book.bind(euroWings, 22);     // PARTIAL APPLICATION
+bookEW_22('Poojan');
+
+
+// USE CASE of bind(): when using an object's method with Event Listener
+lufthansa.planes = 300;
+lufthansa.buyPlanes = function(){
+    console.log('THIS:', this)
+    this.planes++;
+    console.log('Planes:', this.planes);
+}
+
+// document.querySelector('.buy').addEventListener('click', lufthansa.buyPlanes);      // this points to Button element
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlanes.bind(lufthansa));
+
+
+// USE CASE of bind(): Partial Application, even when we don't care about the value of this keywords
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// when we require a tax all the time
+const addVAT = addTax.bind(null, 0.23);     // similar to const addVAT = value => value + value * 0.23;
+console.log(addVAT(200));
+/* We can achieve this with default parameters also, but this is different as we get an altogether 
+new function */
+
+
+// we can achieve similar results with function returning function
+const addTax2 = rate => function(value){ return value + value * rate};
+
+const addVAT2 = addTax2(0.23);
+console.log(addVAT2(200));
