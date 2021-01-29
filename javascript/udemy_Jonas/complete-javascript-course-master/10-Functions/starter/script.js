@@ -112,99 +112,190 @@
 
 
 
-// ------------------------------------- CALL(), APPLY() & BIND() --------------------------------------
+// // ------------------------------------- CALL(), APPLY() & BIND() --------------------------------------
 
-/* These methods are part of the function objects and are used to manually set the this keyword of that 
-function */
+// /* These methods are part of the function objects and are used to manually set the this keyword of that 
+// function */
 
-const lufthansa = {
-    airline: 'Lufthansa',
-    iataCode: 'LH',
-    bookings: [],
+// const lufthansa = {
+//     airline: 'Lufthansa',
+//     iataCode: 'LH',
+//     bookings: [],
 
-    book(flightNum, name){
-        // console.log("Value of THIS:", this);
-        console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
-        this.bookings.push({flight: `${this.iataCode}${flightNum}`, name});
-    },
+//     book(flightNum, name){
+//         // console.log("Value of THIS:", this);
+//         console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+//         this.bookings.push({flight: `${this.iataCode}${flightNum}`, name});
+//     },
+// };
+
+// lufthansa.book(240, 'Rishabh Saxena');
+// lufthansa.book(240, 'Sanyam Saxena');
+
+
+// /* they opened a new airline. 
+// Now we need a similar book function but don't want to write it again (bad practice) */
+// const euroWings = {
+//     airline: 'EuroWings',
+//     iataCode: 'EW',
+//     bookings:[],
+// };
+
+// const swiss = {
+//     airline: 'Swiss',
+//     iataCode: 'SW',
+//     bookings: [],
+// };
+
+// // store the book function from Lufthansa in a variable
+// const book = lufthansa.book;
+
+// /* IMPORTANT: It won't run because it's this keyword is pointing to undefined because it is now just a regular 
+// function call (strict mode). It is not a method anymore. */
+// // book(120, 'Rishabh Saxena');
+
+// // Now, we have to explicitly tell JavaScript, the value of this. We have 3 options - call(), apply() and bind()
+
+// book.call(euroWings, 120, 'John Doe');      // (this value, arguments for the function call)
+
+// const arr = [120, 'Jane Doe'];
+// book.apply(euroWings, arr);
+
+// /* apply is similar to call() except it takes arguments as Array. 
+// It is not much used as we can achieve similar behaviour with call() using spread operator ->  call(___, ...arr)  */
+// book.call(lufthansa, ...arr);
+
+
+// // BIND()
+// // this will not call function, instead return new function with this set to euroWings
+// const bookEW = book.bind(euroWings);
+// const bookSW = book.bind(swiss);
+// const bookLH = book.bind(lufthansa);
+
+// bookEW(11, 'Rishabh Doe');
+// bookSW(11, 'Rishabh Doe');
+// bookLH(11, 'Rishabh Doe');
+
+// const bookEW_22 = book.bind(euroWings, 22);     // PARTIAL APPLICATION
+// bookEW_22('Poojan');
+
+
+// // USE CASE of bind(): when using an object's method with Event Listener
+// lufthansa.planes = 300;
+// lufthansa.buyPlanes = function(){
+//     console.log('THIS:', this)
+//     this.planes++;
+//     console.log('Planes:', this.planes);
+// }
+
+// // document.querySelector('.buy').addEventListener('click', lufthansa.buyPlanes);      // this points to Button element
+// document.querySelector('.buy').addEventListener('click', lufthansa.buyPlanes.bind(lufthansa));
+
+
+// // USE CASE of bind(): Partial Application, even when we don't care about the value of this keywords
+// const addTax = (rate, value) => value + value * rate;
+// console.log(addTax(0.1, 200));
+
+// // when we require a tax all the time
+// const addVAT = addTax.bind(null, 0.23);     // similar to const addVAT = value => value + value * 0.23;
+// console.log(addVAT(200));
+// /* We can achieve this with default parameters also, but this is different as we get an altogether 
+// new function */
+
+
+// // we can achieve similar results with function returning function
+// const addTax2 = rate => function(value){ return value + value * rate};
+
+// const addVAT2 = addTax2(0.23);
+// console.log(addVAT2(200));
+
+
+
+
+// ----------------------------------- CODING CHALLENGE #1 ---------------------------------------------
+/* 
+Let's build a simple poll app!
+
+A poll has a question, an array of options from which people can choose, and an array with the number of replies for 
+each option. This data is stored in the starter object below.
+
+Here are your tasks:
+
+1. Create a method called 'registerNewAnswer' on the 'poll' object. The method does 2 things:
+  1.1. Display a prompt window for the user to input the number of the selected option. The prompt should look like this:
+        What is your favourite programming language?
+        0: JavaScript
+        1: Python
+        2: Rust
+        3: C++
+        (Write option number)
+  
+  1.2. Based on the input number, update the answers array. For example, if the option is 3, increase the value AT 
+  POSITION 3 of the array by 1. Make sure to check if the input is a number and if the number makes sense (e.g answer 
+  52 wouldn't make sense, right?)
+
+2. Call this method whenever the user clicks the "Answer poll" button.
+
+3. Create a method 'displayResults' which displays the poll results. The method takes a string as an input (called 'type'), 
+which can be either 'string' or 'array'. If type is 'array', simply display the results array as it is, using console.log(). 
+This should be the default option. If type is 'string', display a string like "Poll results are 13, 2, 4, 1". 
+
+4. Run the 'displayResults' method at the end of each 'registerNewAnswer' method call.
+
+HINT: Use many of the tools you learned about in this and the last section 😉
+
+BONUS: Use the 'displayResults' method to display the 2 arrays in the test data. Use both the 'array' and the 'string' 
+option. Do NOT put the arrays in the poll object! So what should the this keyword look like in this situation?
+
+BONUS TEST DATA 1: [5, 2, 3]
+BONUS TEST DATA 2: [1, 5, 3, 9, 6, 1]
+
+GOOD LUCK 😀
+*/
+
+const poll = {
+    question: 'What is your favourite programming language?',
+    options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+
+    // this generates [0, 0, 0, 0].
+    answers: new Array(4).fill(0),
 };
 
-lufthansa.book(240, 'Rishabh Saxena');
-lufthansa.book(240, 'Sanyam Saxena');
-
-
-/* they opened a new airline. 
-Now we need a similar book function but don't want to write it again (bad practice) */
-const euroWings = {
-    airline: 'EuroWings',
-    iataCode: 'EW',
-    bookings:[],
-};
-
-const swiss = {
-    airline: 'Swiss',
-    iataCode: 'SW',
-    bookings: [],
-};
-
-// store the book function from Lufthansa in a variable
-const book = lufthansa.book;
-
-/* IMPORTANT: It won't run because it's this keyword is pointing to undefined because it is now just a regular 
-function call (strict mode). It is not a method anymore. */
-// book(120, 'Rishabh Saxena');
-
-// Now, we have to explicitly tell JavaScript, the value of this. We have 3 options - call(), apply() and bind()
-
-book.call(euroWings, 120, 'John Doe');      // (this value, arguments for the function call)
-
-const arr = [120, 'Jane Doe'];
-book.apply(euroWings, arr);
-
-/* apply is similar to call() except it takes arguments as Array. 
-It is not much used as we can achieve similar behaviour with call() using spread operator ->  call(___, ...arr)  */
-book.call(lufthansa, ...arr);
-
-
-// BIND()
-// this will not call function, instead return new function with this set to euroWings
-const bookEW = book.bind(euroWings);
-const bookSW = book.bind(swiss);
-const bookLH = book.bind(lufthansa);
-
-bookEW(11, 'Rishabh Doe');
-bookSW(11, 'Rishabh Doe');
-bookLH(11, 'Rishabh Doe');
-
-const bookEW_22 = book.bind(euroWings, 22);     // PARTIAL APPLICATION
-bookEW_22('Poojan');
-
-
-// USE CASE of bind(): when using an object's method with Event Listener
-lufthansa.planes = 300;
-lufthansa.buyPlanes = function(){
-    console.log('THIS:', this)
-    this.planes++;
-    console.log('Planes:', this.planes);
+// 3
+poll.displayResults = function(type='array'){
+    if(type === 'array')
+        console.log(this.answers);
+    else if(type === 'string')
+        console.log(`Poll results are ${this.answers.join(', ')}`)
 }
 
-// document.querySelector('.buy').addEventListener('click', lufthansa.buyPlanes);      // this points to Button element
-document.querySelector('.buy').addEventListener('click', lufthansa.buyPlanes.bind(lufthansa));
+// 1
+poll.registerNewAnswer = function(){
+    let questionStr = `${this.question}\n${this.options.join('\n')}\n(Write option number)`;
+    const input = Number(prompt(questionStr));
+    
+    console.log(input);
+    typeof input === 'number' && input > -1 && input < this.answers.length && this.answers[input]++;
+
+    // 4
+    this.displayResults();
+    this.displayResults('string');
+}
+
+// 2
+document.querySelector('.poll').addEventListener('click', poll.registerNewAnswer.bind(poll));
 
 
-// USE CASE of bind(): Partial Application, even when we don't care about the value of this keywords
-const addTax = (rate, value) => value + value * rate;
-console.log(addTax(0.1, 200));
+// bonus
+const testData1 = {
+    answers: [5, 2, 3],
+};
+const testData2 = {
+    answers: [1, 5, 3, 9, 6, 1],
+}
 
-// when we require a tax all the time
-const addVAT = addTax.bind(null, 0.23);     // similar to const addVAT = value => value + value * 0.23;
-console.log(addVAT(200));
-/* We can achieve this with default parameters also, but this is different as we get an altogether 
-new function */
+poll.displayResults.call(testData1);
+poll.displayResults.call(testData1, 'string');
 
-
-// we can achieve similar results with function returning function
-const addTax2 = rate => function(value){ return value + value * rate};
-
-const addVAT2 = addTax2(0.23);
-console.log(addVAT2(200));
+poll.displayResults.call(testData2);
+poll.displayResults.call(testData2, 'string');
