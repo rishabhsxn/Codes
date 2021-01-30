@@ -302,25 +302,48 @@
 
 
 
-// ---------------------------- IMMEDIATELY INVOKED FUNCTION EXPRESSIONS ------------------------------
+// // ---------------------------- IMMEDIATELY INVOKED FUNCTION EXPRESSIONS ------------------------------
 
-// It is a pattern not a feature of JS
+// // It is a pattern not a feature of JS
 
-// we want a one-time use only function OR data hiding
+// // we want a one-time use only function OR data hiding
 
-(function(){
-    console.log('This will run only once');
-    const privateVar = 10;      // data hiding
-})();
+// (function(){
+//     console.log('This will run only once');
+//     const privateVar = 10;      // data hiding
+// })();
 
-// console.log(privateVar);    // not accessible outside
+// // console.log(privateVar);    // not accessible outside
 
-// arrow function version
-(() => console.log('This will also only run once'))();
+// // arrow function version
+// (() => console.log('This will also only run once'))();
 
 
-// it is not anymore used for data hiding, because we can do it in more simple way 
-{
-    const privateNumber = 10;
+// // it is not anymore used for data hiding, because we can do it in more simple way 
+// {
+//     const privateNumber = 10;
+// }
+// // console.log(privateNumber);     // not accessible
+
+
+
+
+// ---------------------------------- CLOSURE -------------------------------------------
+
+const secureBooking = function(){
+    let passengerCount = 0;
+
+    return function(){
+        passengerCount++;
+        console.log('Passengers:', passengerCount);
+    }
 }
-// console.log(privateNumber);     // not accessible
+
+const booker = secureBooking();
+
+// the booker function have access to passengerCount through closure
+booker();   
+booker();
+booker();
+
+console.dir(booker);    // to observe the closure property
