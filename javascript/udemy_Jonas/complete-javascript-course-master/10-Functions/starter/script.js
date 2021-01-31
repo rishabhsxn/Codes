@@ -328,72 +328,100 @@
 
 
 
-// ---------------------------------- CLOSURE -------------------------------------------
+// // ---------------------------------- CLOSURE -------------------------------------------
 
-const secureBooking = function(){
-    let passengerCount = 0;
+// const secureBooking = function(){
+//     let passengerCount = 0;
 
-    return function(){
-        passengerCount++;
-        console.log('Passengers:', passengerCount);
-    }
-}
+//     return function(){
+//         passengerCount++;
+//         console.log('Passengers:', passengerCount);
+//     }
+// }
 
-const booker = secureBooking();
+// const booker = secureBooking();
 
-// the booker function have access to passengerCount through closure
-booker();   
-booker();
-booker();
+// // the booker function have access to passengerCount through closure
+// booker();   
+// booker();
+// booker();
 
-console.dir(booker);    // to observe the closure property
-
-
-// more examples of closure - 
-// 1. It is not necessary to return a function from another function
-
-let f;
-
-const g = function(){
-    const a = 23;
-
-    f = function(){
-        console.log(a*2);
-    };
-};
-
-const h = function(){
-    const b = 777;
-
-    f = function(){
-        console.log(b*2);
-    };
-};
-
-g();
-f();
-console.dir(f);
-
-// f is re-assigned - Closure will also be overwritten
-h();
-f();
-console.dir(f);
+// console.dir(booker);    // to observe the closure property
 
 
-// 2. Timer
-const boardPassengers = function(n, wait){
-    const perGroup = n/3;
+// // more examples of closure - 
+// // 1. It is not necessary to return a function from another function
 
-    /* The callback function passed to setTimeOut executes after sometime (independent of boardPassenger),
-    but is still able to access it's variables because of closure */
-    setTimeout(function(){
-        console.log(`We are now boarding all ${n} passsengers`);
-        console.log(`There are 3 groups, each with ${perGroup} passengers`);
-    }, wait*1000);
+// let f;
 
-    console.log(`Will start boarding in ${wait} seconds`);
-};
+// const g = function(){
+//     const a = 23;
 
-const perGroup = 1000;      // this global scope variable have less priority over closure
+//     f = function(){
+//         console.log(a*2);
+//     };
+// };
 
-boardPassengers(180, 3);
+// const h = function(){
+//     const b = 777;
+
+//     f = function(){
+//         console.log(b*2);
+//     };
+// };
+
+// g();
+// f();
+// console.dir(f);
+
+// // f is re-assigned - Closure will also be overwritten
+// h();
+// f();
+// console.dir(f);
+
+
+// // 2. Timer
+// const boardPassengers = function(n, wait){
+//     const perGroup = n/3;
+
+//     /* The callback function passed to setTimeOut executes after sometime (independent of boardPassenger),
+//     but is still able to access it's variables because of closure */
+//     setTimeout(function(){
+//         console.log(`We are now boarding all ${n} passsengers`);
+//         console.log(`There are 3 groups, each with ${perGroup} passengers`);
+//     }, wait*1000);
+
+//     console.log(`Will start boarding in ${wait} seconds`);
+// };
+
+// const perGroup = 1000;      // this global scope variable have less priority over closure
+
+// boardPassengers(180, 3);
+
+
+
+//--------------------------------- CODING CHALLENGE #2 --------------------------------
+
+/* 
+This is more of a thinking challenge than a coding challenge 🤓
+
+Take the IIFE below and at the end of the function, attach an event listener that changes the color of the selected 
+h1 element ('header') to blue, each time the BODY element is clicked. Do NOT select the h1 element again!
+
+And now explain to YOURSELF (or someone around you) WHY this worked! Take all the time you need. Think about WHEN 
+exactly the callback function is executed, and what that means for the variables involved in this example.
+
+GOOD LUCK 😀
+*/
+
+(function(){
+    const header = document.querySelector('h1');
+    header.style.color = 'red';
+
+    document.querySelector('body').addEventListener('click', function(){
+        header.style.color = 'blue';
+    })
+})();
+
+/* Explanation: After the execution of IIFE, the callback which is attached to the body's eventListener
+carries around the header variable in it's closure and that is how it can access it and change the color. */
