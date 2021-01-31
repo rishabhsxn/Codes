@@ -374,15 +374,18 @@ g();
 f();
 console.dir(f);
 
-// f is re-assigned
+// f is re-assigned - Closure will also be overwritten
 h();
 f();
 console.dir(f);
+
 
 // 2. Timer
 const boardPassengers = function(n, wait){
     const perGroup = n/3;
 
+    /* The callback function passed to setTimeOut executes after sometime (independent of boardPassenger),
+    but is still able to access it's variables because of closure */
     setTimeout(function(){
         console.log(`We are now boarding all ${n} passsengers`);
         console.log(`There are 3 groups, each with ${perGroup} passengers`);
@@ -391,6 +394,6 @@ const boardPassengers = function(n, wait){
     console.log(`Will start boarding in ${wait} seconds`);
 };
 
-const perGroup = 1000;
+const perGroup = 1000;      // this global scope variable have less priority over closure
 
 boardPassengers(180, 3);
