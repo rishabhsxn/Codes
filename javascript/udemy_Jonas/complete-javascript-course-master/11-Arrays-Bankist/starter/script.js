@@ -107,21 +107,27 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(letters);
 
 
-// FOR EACH LOOP
-for(const [i, mov] of movements.entries()){
-  if(mov > 0)
-    console.log(`Movement #${i+1}: You Deposited ${mov}`);
-  else
-    console.log(`Movement #${i+1}: You Withdrew ${Math.abs(mov)}`);
-}
+// // FOR EACH LOOP
+// for(const [i, mov] of movements.entries()){
+//   if(mov > 0)
+//     console.log(`Movement #${i+1}: You Deposited ${mov}`);
+//   else
+//     console.log(`Movement #${i+1}: You Withdrew ${Math.abs(mov)}`);
+// }
 
-console.log('-----------------------------------------------------');
+// console.log('-----------------------------------------------------');
 
-movements.forEach(function(mov, i, arr){
-  if(mov > 0)
-    console.log(`Movement #${i+1}: You Deposited ${mov}`);
-  else
-    console.log(`Movement #${i+1}: You Withdrew ${Math.abs(mov)}`);
-})
+// movements.forEach(function(mov, i, arr){
+//   if(mov > 0)
+//     console.log(`Movement #${i+1}: You Deposited ${mov}`);
+//   else
+//     console.log(`Movement #${i+1}: You Withdrew ${Math.abs(mov)}`);
+// })
 
-// IMPORTANT: continue & break doesn't work in the forEach loop
+// // IMPORTANT: continue & break doesn't work in the forEach loop
+
+
+// FOR EACH LOOP WITH MAPS AND SETS
+currencies.forEach(function(value, key, map){
+  console.log(`${key}: ${value}`);
+});
