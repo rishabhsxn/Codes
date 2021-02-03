@@ -131,3 +131,14 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 currencies.forEach(function(value, key, map){
   console.log(`${key}: ${value}`);
 });
+
+
+// SET
+/* For the sake of keeping forEach loop function's parameter same in all three data structures,
+there is also a 2nd parameter in case of SET which is same as 'value' 
+
+_ in JavaScript means a Throwable/Unnecessary Variable */
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+currenciesUnique.forEach(function(value, _, set){
+  console.log(value);
+});
