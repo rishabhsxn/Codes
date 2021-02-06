@@ -73,16 +73,23 @@
 // console.log(movementsDescription);
 
 
-// ---------------------------- ARRAY DATA TRANSFORMATION: FILTER -----------------------------------
+// // ---------------------------- ARRAY DATA TRANSFORMATION: FILTER -----------------------------------
+
+// // we have to return a boolean value for the elements (return true for elements to be included)
+// const deposits = movements.filter(function(mov){
+//     return mov > 0;
+// });
+
+// const withdrawals = movements.filter(mov => mov < 0)
+
+// console.log(deposits);
+// console.log(withdrawals);
+
+
+// ---------------------------- ARRAY DATA TRANSFORMATION: REDUCE -----------------------------------
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-// we have to return a boolean value for the elements (return true for elements to be included)
-const deposits = movements.filter(function(mov){
-    return mov > 0;
-});
-
-const withdrawals = movements.filter(mov => mov < 0)
-
-console.log(deposits);
-console.log(withdrawals);
+// reduce(CALLBACK_WITH_ACCESS_TO_ACCUMULATOR, INITIAL_VALUE_OF_ACCUMULATOR)
+const balance = movements.reduce((acc, mov) => acc + mov, 0);
+console.log(balance);
