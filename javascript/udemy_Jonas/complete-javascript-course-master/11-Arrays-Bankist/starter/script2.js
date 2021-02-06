@@ -52,23 +52,37 @@
 
 
 
-// ---------------------------- ARRAY DATA TRANSFORMATION: MAPS -----------------------------------
+// // ---------------------------- ARRAY DATA TRANSFORMATION: MAPS -----------------------------------
+
+
+// const euroToUsd = 1.1;
+
+// // const movementsUSD = movements.map(function(mov){
+// //     return mov * euroToUsd;
+// // });
+
+// const movementsUSD = movements.map(mov => mov * euroToUsd);
+
+// console.log(movements);
+// console.log(movementsUSD);
+
+// const movementsDescription = movements.map(
+//     (mov, i) => `Movement #${i+1}: You ${mov > 0 ? 'Deposited' : 'Withdrew'} $${Math.abs(mov)}`
+// );
+
+// console.log(movementsDescription);
+
+
+// ---------------------------- ARRAY DATA TRANSFORMATION: FILTER -----------------------------------
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const euroToUsd = 1.1;
+// we have to return a boolean value for the elements (return true for elements to be included)
+const deposits = movements.filter(function(mov){
+    return mov > 0;
+});
 
-// const movementsUSD = movements.map(function(mov){
-//     return mov * euroToUsd;
-// });
+const withdrawals = movements.filter(mov => mov < 0)
 
-const movementsUSD = movements.map(mov => mov * euroToUsd);
-
-console.log(movements);
-console.log(movementsUSD);
-
-const movementsDescription = movements.map(
-    (mov, i) => `Movement #${i+1}: You ${mov > 0 ? 'Deposited' : 'Withdrew'} $${Math.abs(mov)}`
-);
-
-console.log(movementsDescription);
+console.log(deposits);
+console.log(withdrawals);
