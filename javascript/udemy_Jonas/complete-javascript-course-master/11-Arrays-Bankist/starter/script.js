@@ -82,3 +82,12 @@ const displayMovements = function(movements){
 }
 
 displayMovements(account1.movements);
+
+
+// Compute UserName for all users
+const createUsernames = function(accounts){
+  accounts.forEach(function(acc){
+    acc.username = acc.owner.toLowerCase().split(' ').map( word => word[0]).join('');
+  });
+}
+createUsernames(accounts);
