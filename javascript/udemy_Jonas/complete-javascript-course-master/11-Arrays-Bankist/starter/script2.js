@@ -92,4 +92,10 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // reduce(CALLBACK_WITH_ACCESS_TO_ACCUMULATOR, INITIAL_VALUE_OF_ACCUMULATOR)
 const balance = movements.reduce((acc, mov) => acc + mov, 0);
-console.log(balance);
+console.log(typeof balance);
+
+
+// finding max element using reduce()
+let [first] = movements;
+const maxMov = movements.reduce((acc, mov) => Math.max(acc, mov), first);
+console.log(maxMov);
