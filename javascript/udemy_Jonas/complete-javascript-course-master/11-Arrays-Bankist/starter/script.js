@@ -92,6 +92,33 @@ const calcPrintBalance = function(movements){
 calcPrintBalance(account1.movements);
 
 
+// Generate Summary of account: IN, OUT & INTEREST
+const calcDisplaySummary = function(movements){
+  // incoming
+  const totalIncoming = movements
+    .filter(mov => mov > 0)
+    .reduce( (acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${totalIncoming}€`;
+
+  // outgoing
+  const totalOutgoing = movements
+    .filter(mov => mov < 0)
+    .reduce( (acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(totalOutgoing)}€`;
+
+  // interest: 1.2% interest on each deposit and Interest amount should be atleast 1
+  const interestRate = 1.2;
+  const totalInterest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => deposit*interestRate/100)
+    .filter(interest => interest >= 1)
+    .reduce( (acc, interest) => acc + interest, 0);
+  labelSumInterest.textContent = `${totalInterest}€`;
+
+};
+calcDisplaySummary(account1.movements);
+
+
 // Compute UserName for all users
 const createUsernames = function(accounts){
   accounts.forEach(function(acc){
