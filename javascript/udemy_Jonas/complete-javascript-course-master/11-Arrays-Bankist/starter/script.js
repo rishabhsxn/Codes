@@ -113,7 +113,7 @@ const calcDisplaySummary = function(movements){
     .map(deposit => deposit*interestRate/100)
     .filter(interest => interest >= 1)
     .reduce( (acc, interest) => acc + interest, 0);
-  labelSumInterest.textContent = `${totalInterest}€`;
+  labelSumInterest.textContent = `${totalInterest.toFixed(2)}€`;
 
 };
 calcDisplaySummary(account1.movements);
