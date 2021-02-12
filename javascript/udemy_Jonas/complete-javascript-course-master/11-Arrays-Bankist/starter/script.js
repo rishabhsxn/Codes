@@ -125,6 +125,19 @@ const createUsernames = function(accounts){
 createUsernames(accounts);
 
 
+// UPDATE UI
+const updateUI = function(acc){
+  // Display Movements
+  displayMovements(acc.movements);
+
+  // Display Balance
+  calcPrintBalance(acc);
+
+  // Display Summary
+  calcDisplaySummary(acc);
+}
+
+
 // Login functionality
 let currentAccount;
 btnLogin.addEventListener('click', function(event){
@@ -146,14 +159,7 @@ btnLogin.addEventListener('click', function(event){
     labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
     containerApp.style.opacity = 100;
 
-    // Display Movements
-    displayMovements(currentAccount.movements);
-
-    // Display Balance
-    calcPrintBalance(currentAccount);
-
-    // Display Summary
-    calcDisplaySummary(currentAccount);
+    updateUI(currentAccount);
   }
 });
 
@@ -186,9 +192,7 @@ btnTransfer.addEventListener('click', function(event){
     recipientAcc.movements.push(amount);
 
     // update the UI (movements, balance & summary)
-    displayMovements(currentAccount.movements);
-    calcPrintBalance(currentAccount);
-    calcDisplaySummary(currentAccount);
+    updateUI(currentAccount);
   }
   else
     console.log('Transfer Invalid!');
