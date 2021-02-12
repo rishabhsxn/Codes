@@ -83,9 +83,10 @@ const displayMovements = function(movements){
 
 
 // Calculate and display balance
-const calcPrintBalance = function(movements){
-  const balance = movements.reduce( (acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance}€` ;
+const calcPrintBalance = function(account){
+  // add balance to the account
+  account.balance = account.movements.reduce( (acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${account.balance}€` ;
 };
 
 
@@ -149,7 +150,7 @@ btnLogin.addEventListener('click', function(event){
     displayMovements(currentAccount.movements);
 
     // Display Balance
-    calcPrintBalance(currentAccount.movements);
+    calcPrintBalance(currentAccount);
 
     // Display Summary
     calcDisplaySummary(currentAccount);
