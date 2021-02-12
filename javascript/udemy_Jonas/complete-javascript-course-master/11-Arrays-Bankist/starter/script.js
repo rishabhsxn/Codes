@@ -79,17 +79,14 @@ const displayMovements = function(movements){
 
     containerMovements.insertAdjacentHTML('afterbegin', movHtml);   // more alternatives available
   })
-}
-
-displayMovements(account1.movements);
+};
 
 
 // Calculate and display balance
 const calcPrintBalance = function(movements){
   const balance = movements.reduce( (acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${balance}€` ;
-}
-calcPrintBalance(account1.movements);
+};
 
 
 // Generate Summary of account: IN, OUT & INTEREST
@@ -116,7 +113,6 @@ const calcDisplaySummary = function(movements){
   labelSumInterest.textContent = `${totalInterest.toFixed(2)}€`;
 
 };
-calcDisplaySummary(account1.movements);
 
 
 // Compute UserName for all users
@@ -126,3 +122,36 @@ const createUsernames = function(accounts){
   });
 }
 createUsernames(accounts);
+
+
+// Login functionality
+let currentAccount;
+btnLogin.addEventListener('click', function(event){
+  /* IMPORTANT: As the button is inside a Form - 1) Automatic page refresh on submission    2) Enter key for submission */
+
+  // remove automatic refresh
+  event.preventDefault();
+  
+  // match Username and PIN
+  currentAccount = accounts.find( acc => acc.username === inputLoginUsername.value);
+  
+  if(currentAccount?.pin === Number(inputLoginPin.value)){
+    // clear input fields & remove focus from PIN input
+    inputLoginUsername.value = '';
+    inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    // Display Welcome Message & UI
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+    containerApp.style.opacity = 100;
+
+    // Display Movements
+    displayMovements(currentAccount.movements);
+
+    // Display Balance
+    calcPrintBalance(currentAccount.movements);
+
+    // Display Summary
+    calcDisplaySummary(currentAccount.movements);
+  }
+});
