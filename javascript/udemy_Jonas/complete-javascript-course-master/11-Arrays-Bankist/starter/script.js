@@ -90,22 +90,22 @@ const calcPrintBalance = function(movements){
 
 
 // Generate Summary of account: IN, OUT & INTEREST
-const calcDisplaySummary = function(movements){
+const calcDisplaySummary = function(account){
   // incoming
-  const totalIncoming = movements
+  const totalIncoming = account.movements
     .filter(mov => mov > 0)
     .reduce( (acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${totalIncoming}€`;
 
   // outgoing
-  const totalOutgoing = movements
+  const totalOutgoing = account.movements
     .filter(mov => mov < 0)
     .reduce( (acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(totalOutgoing)}€`;
 
-  // interest: 1.2% interest on each deposit and Interest amount should be atleast 1
-  const interestRate = 1.2;
-  const totalInterest = movements
+  // interest: interest on each deposit and Interest amount should be atleast 1
+  const interestRate = account.interestRate;
+  const totalInterest = account.movements
     .filter(mov => mov > 0)
     .map(deposit => deposit*interestRate/100)
     .filter(interest => interest >= 1)
@@ -134,7 +134,7 @@ btnLogin.addEventListener('click', function(event){
   
   // match Username and PIN
   currentAccount = accounts.find( acc => acc.username === inputLoginUsername.value);
-  
+
   if(currentAccount?.pin === Number(inputLoginPin.value)){
     // clear input fields & remove focus from PIN input
     inputLoginUsername.value = '';
@@ -152,6 +152,6 @@ btnLogin.addEventListener('click', function(event){
     calcPrintBalance(currentAccount.movements);
 
     // Display Summary
-    calcDisplaySummary(currentAccount.movements);
+    calcDisplaySummary(currentAccount);
   }
 });
