@@ -143,14 +143,22 @@
 
 
 
-// --------------------------------- CHAINING map(), filter() & reduce() -------------------------------
+// // --------------------------------- CHAINING map(), filter() & reduce() -------------------------------
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const euroToUsd = 1.1;
+
+// /* Chaining couldn't be continued after reduce() method because it doesn't return an array */
+// const totalDepositsUSD = movements
+//     .filter( mov => mov > 0)
+//     .map( depAmt => depAmt*euroToUsd)
+//     .reduce( (acc, mov) => acc + mov, 0);
+
+// console.log(totalDepositsUSD);
+
+
+
+// ----------------------------------- FIND() ------------------------------------
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const euroToUsd = 1.1;
 
-/* Chaining couldn't be continued after reduce() method because it doesn't return an array */
-const totalDepositsUSD = movements
-    .filter( mov => mov > 0)
-    .map( depAmt => depAmt*euroToUsd)
-    .reduce( (acc, mov) => acc + mov, 0);
-
-console.log(totalDepositsUSD);
+const firstWithdrawal = movements.find( mov => mov < 0);
+console.log(firstWithdrawal);
