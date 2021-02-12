@@ -156,3 +156,40 @@ btnLogin.addEventListener('click', function(event){
     calcDisplaySummary(currentAccount);
   }
 });
+
+
+
+// TRANSFER FUNCTIONALITY
+btnTransfer.addEventListener('click', function(event){
+  event.preventDefault();
+
+  const amount = Number(inputTransferAmount.value);
+  const recipientAcc = accounts.find( acc => acc.username === inputTransferTo.value);
+  console.log('Recipient:', recipientAcc);
+
+  // clear input fields
+  inputTransferTo.value = inputTransferAmount.value = '';
+  inputTransferAmount.blur();
+
+  /* Check validity of transfer:
+  a) Amount should be greater than zero
+  b) Recipient account should exist
+  c) Current account's balance should be greater than transfer amount
+  d) Self transfer should not be allowed */
+  
+  if(amount > 0 && recipientAcc && currentAccount.balance >= amount && recipientAcc.username !== currentAccount.username){
+    console.log('Transfer Valid');
+    // add negative movement in current account
+    currentAccount.movements.push(-amount);
+
+    // add positive movement in recipient account
+    recipientAcc.movements.push(amount);
+
+    // update the UI (movements, balance & summary)
+    displayMovements(currentAccount.movements);
+    calcPrintBalance(currentAccount);
+    calcDisplaySummary(currentAccount);
+  }
+  else
+    console.log('Transfer Invalid!');
+});
