@@ -197,3 +197,26 @@ btnTransfer.addEventListener('click', function(event){
   else
     console.log('Transfer Invalid!');
 });
+
+
+// Deleting Account Functionality
+btnClose.addEventListener('click', function(event){
+  event.preventDefault();
+  
+  /* check:
+  1) If the entered username is same as the current account's username
+  2) Pin */
+  if(inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin){
+    // Find the currentAccount's index in accounts array and delete it
+    const index = accounts.findIndex(acc => acc.username === inputCloseUsername.value);
+    accounts.splice(index, 1);
+
+    // clear the input fields so that it is empty for other account login
+    inputCloseUsername.value = inputClosePin.value = '';
+
+    // Hide the UI
+    containerApp.style.opacity = 0;
+  }
+  else
+    console.log('Username or PIN is Incorrect!');
+});
