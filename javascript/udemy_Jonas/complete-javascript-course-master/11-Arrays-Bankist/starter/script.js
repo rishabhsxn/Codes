@@ -199,6 +199,28 @@ btnTransfer.addEventListener('click', function(event){
 });
 
 
+// Request Loan functionality
+btnLoan.addEventListener('click', function(event){
+  event.preventDefault();
+
+  const requestedAmount = Number(inputLoanAmount.value);
+  // for granting loan, check if there is a deposit of atleast 10% of the requested amount
+  if(requestedAmount > 0 && currentAccount.movements.some( mov => mov >= 0.1*requestedAmount)){
+    // add loan to the movements
+    currentAccount.movements.push(requestedAmount);
+
+    // update UI - movements, balance & summary
+    updateUI(currentAccount);
+  }
+  else
+    console.log('Loan can\'t be granted!!');
+
+  // empty loan input field
+  inputLoanAmount.value = '';
+
+});
+
+
 // Deleting Account Functionality
 btnClose.addEventListener('click', function(event){
   event.preventDefault();
