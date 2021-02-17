@@ -63,12 +63,13 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 
 // Add Movements to the list
-const displayMovements = function(movements){
+const displayMovements = function(movements, sort=false){
   // empty the container before adding movements
   containerMovements.innerHTML = '';
 
+  const movs = sort ? movements.slice().sort( (a, b) => a - b) : movements;
 
-  movements.forEach(function(mov, i){
+  movs.forEach(function(mov, i){
     // create strings of html code
     const movType = mov > 0 ? 'deposit' : 'withdrawal'
     const movHtml = `
@@ -81,6 +82,14 @@ const displayMovements = function(movements){
   })
 };
 
+// sorting movements functionality
+let sorted = false;
+btnSort.addEventListener('click', function(event){
+  event.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+  console.log(sorted);
+})
 
 // Calculate and display balance
 const calcPrintBalance = function(account){
@@ -160,6 +169,9 @@ btnLogin.addEventListener('click', function(event){
     containerApp.style.opacity = 100;
 
     updateUI(currentAccount);
+
+    // set the 'sorted' variable to false
+    sorted = false;
   }
 });
 
