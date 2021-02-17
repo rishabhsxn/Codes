@@ -228,17 +228,42 @@
 
 
 
-// ------------------------------------------- SORT() ------------------------------------------
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// // ------------------------------------------- SORT() ------------------------------------------
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-// sort() mutates the original array
+// // sort() mutates the original array
 
-/* IMPORTANT: By default, the sort method converts everything to string and then sort.
-So, it will not work correctlt with numbers.
-For Numbers, use a callback in sort */
-console.log(movements.sort());
+// /* IMPORTANT: By default, the sort method converts everything to string and then sort.
+// So, it will not work correctlt with numbers.
+// For Numbers, use a callback in sort */
+// console.log(movements.sort());
 
-/* return > 0 -------> current, next  (keep order)
-   return < 0 -------> next, current  (switch order) */
-console.log(movements.sort( (current, next) => current - next));    // ascending
-console.log(movements.sort( (current, next) => next - current));    // descending
+// /* return > 0 -------> current, next  (keep order)
+//    return < 0 -------> next, current  (switch order) */
+// console.log(movements.sort( (current, next) => current - next));    // ascending
+// console.log(movements.sort( (current, next) => next - current));    // descending
+
+
+
+
+// ------------------------------- FILL() & FROM() -----------------------------------------
+
+// fill()
+const x = new Array(6);
+console.log(x);
+
+x.fill(2);
+console.log(x);
+
+x.fill(0, 2);
+console.log(x);
+
+x.fill(1, 2, 4);
+console.log(x);
+
+// from()
+const y = Array.from({length: 7}, () => 1)
+console.log(y);
+
+const z = Array.from({length: 6}, (_, i) => i + 1);
+console.log(z);
