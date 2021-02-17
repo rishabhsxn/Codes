@@ -157,8 +157,20 @@
 
 
 
-// ----------------------------------- FIND() ------------------------------------
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// // ----------------------------------- FIND() ------------------------------------
 
-const firstWithdrawal = movements.find( mov => mov < 0);
-console.log(firstWithdrawal);
+// const firstWithdrawal = movements.find( mov => mov < 0);
+// console.log(firstWithdrawal);
+
+
+
+// --------------------------------- SOME() & EVERY() ---------------------------------
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements2 = [200, 450, 3000, 70, 1300];
+
+const depositsFun = mov => mov > 0;
+
+console.log(movements.some(depositsFun));
+
+console.log(movements.every(depositsFun));
+console.log(movements2.every(depositsFun));
