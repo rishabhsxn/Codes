@@ -183,35 +183,35 @@
 // console.log(arr.flat(2));
 
 // // Data
-// const account1 = {
-//     owner: 'Jonas Schmedtmann',
-//     movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
-//     interestRate: 1.2, // %
-//     pin: 1111,
-// };
+const account1 = {
+    owner: 'Jonas Schmedtmann',
+    movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+    interestRate: 1.2, // %
+    pin: 1111,
+};
   
-// const account2 = {
-//     owner: 'Jessica Davis',
-//     movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-//     interestRate: 1.5,
-//     pin: 2222,
-// };
+const account2 = {
+    owner: 'Jessica Davis',
+    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+    interestRate: 1.5,
+    pin: 2222,
+};
 
-// const account3 = {
-//     owner: 'Steven Thomas Williams',
-//     movements: [200, -200, 340, -300, -20, 50, 400, -460],
-//     interestRate: 0.7,
-//     pin: 3333,
-// };
+const account3 = {
+    owner: 'Steven Thomas Williams',
+    movements: [200, -200, 340, -300, -20, 50, 400, -460],
+    interestRate: 0.7,
+    pin: 3333,
+};
 
-// const account4 = {
-//     owner: 'Sarah Smith',
-//     movements: [430, 1000, 700, 50, 90],
-//     interestRate: 1,
-//     pin: 4444,
-// };
+const account4 = {
+    owner: 'Sarah Smith',
+    movements: [430, 1000, 700, 50, 90],
+    interestRate: 1,
+    pin: 4444,
+};
 
-// const accounts = [account1, account2, account3, account4];
+const accounts = [account1, account2, account3, account4];
 
 // // get all movements in a single array
 // const allAccountMovements = accounts
@@ -246,24 +246,78 @@
 
 
 
-// ------------------------------- FILL() & FROM() -----------------------------------------
+// // ------------------------------- FILL() & FROM() -----------------------------------------
 
-// fill()
-const x = new Array(6);
-console.log(x);
+// // fill()
+// const x = new Array(6);
+// console.log(x);
 
-x.fill(2);
-console.log(x);
+// x.fill(2);
+// console.log(x);
 
-x.fill(0, 2);
-console.log(x);
+// x.fill(0, 2);
+// console.log(x);
 
-x.fill(1, 2, 4);
-console.log(x);
+// x.fill(1, 2, 4);
+// console.log(x);
 
-// from()
-const y = Array.from({length: 7}, () => 1)
-console.log(y);
+// // from()
+// const y = Array.from({length: 7}, () => 1)
+// console.log(y);
 
-const z = Array.from({length: 6}, (_, i) => i + 1);
-console.log(z);
+// const z = Array.from({length: 6}, (_, i) => i + 1);
+// console.log(z);
+
+
+
+// -------------------------------------- PRACTICE ----------------------------------------
+
+// 1. Sum of all deposits in the bank
+const bankDepositSum = accounts
+    .flatMap(acc => acc.movements)
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+console.log(bankDepositSum);
+
+
+// 2. Find no. of deposits atleast of 1000
+// const numDeposits1000 = accounts
+//     .flatMap(acc => acc.movements)
+//     .filter(mov => mov > 1000)
+//     .length;
+
+const numDeposits1000 = accounts
+    .flatMap(acc => acc.movements)
+    .reduce((count, mov) => mov >= 1000 ? ++count : count, 0);
+console.log(numDeposits1000);
+
+
+// 3. Create an object containing sumDeposits & sumWithdrawals using the reduce method
+const sums = accounts
+    .flatMap(acc => acc.movements)
+    .reduce((obj, mov) => {
+        if(mov > 0)
+            obj.sumDeposits += mov;
+        else
+            obj.sumWithdrawals += Math.abs(mov);
+        
+        return obj;
+        
+    }, {sumDeposits: 0, sumWithdrawals: 0});
+console.log(sums);
+
+
+// 4. Convert a string to Title Case. ex- this is a nice title -> This Is a Nice Title
+const convertTitleCase = function(title){
+    const exceptions = ['a', 'an', 'the', 'but', 'or', 'on', 'in', 'with'];
+    const words = title.toLowerCase().split(' ');
+
+    return words
+        .map(word => exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
