@@ -238,8 +238,8 @@ const accounts = [account1, account2, account3, account4];
 // For Numbers, use a callback in sort */
 // console.log(movements.sort());
 
-// /* return > 0 -------> current, next  (keep order)
-//    return < 0 -------> next, current  (switch order) */
+// /* return < 0 -------> current, next  (keep order)
+//    return > 0 -------> next, current  (switch order) */
 // console.log(movements.sort( (current, next) => current - next));    // ascending
 // console.log(movements.sort( (current, next) => next - current));    // descending
 
