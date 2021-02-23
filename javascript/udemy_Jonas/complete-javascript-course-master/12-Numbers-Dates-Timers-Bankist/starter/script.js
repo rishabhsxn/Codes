@@ -91,7 +91,7 @@ const displayMovements = function(movements, sort=false){
     const movHtml = `
     <div class="movements__row">
       <div class="movements__type movements__type--${movType}">${i+1} ${movType}</div>
-      <div class="movements__value">${mov}€</div>
+      <div class="movements__value">${mov.toFixed(2)}€</div>
     </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', movHtml);   // more alternatives available
@@ -111,7 +111,7 @@ btnSort.addEventListener('click', function(event){
 const calcPrintBalance = function(account){
   // add balance to the account
   account.balance = account.movements.reduce( (acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${account.balance}€` ;
+  labelBalance.textContent = `${account.balance.toFixed(2)}€` ;
 };
 
 
@@ -121,13 +121,13 @@ const calcDisplaySummary = function(account){
   const totalIncoming = account.movements
     .filter(mov => mov > 0)
     .reduce( (acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${totalIncoming}€`;
+  labelSumIn.textContent = `${totalIncoming.toFixed(2)}€`;
 
   // outgoing
   const totalOutgoing = account.movements
     .filter(mov => mov < 0)
     .reduce( (acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(totalOutgoing)}€`;
+  labelSumOut.textContent = `${Math.abs(totalOutgoing).toFixed(2)}€`;
 
   // interest: interest on each deposit and Interest amount should be atleast 1
   const interestRate = account.interestRate;
