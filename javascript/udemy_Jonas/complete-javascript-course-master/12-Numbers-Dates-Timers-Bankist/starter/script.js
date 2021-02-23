@@ -231,7 +231,8 @@ btnTransfer.addEventListener('click', function(event){
 btnLoan.addEventListener('click', function(event){
   event.preventDefault();
 
-  const requestedAmount = Number(inputLoanAmount.value);
+  // take the floor value of requested Amount (no need of conversion, because floor() do automatic type coercion)
+  const requestedAmount = Math.floor(inputLoanAmount.value);
   // for granting loan, check if there is a deposit of atleast 10% of the requested amount
   if(requestedAmount > 0 && currentAccount.movements.some( mov => mov >= 0.1*requestedAmount)){
     // add loan to the movements
