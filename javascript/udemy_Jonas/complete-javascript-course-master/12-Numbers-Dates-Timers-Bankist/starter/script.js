@@ -210,6 +210,15 @@ btnLogin.addEventListener('click', function(event){
 
     updateUI(currentAccount);
 
+    // display Current Date & Time under 'Current Balance' label
+    const currentDate = new Date();
+    const day = `${currentDate.getDate()}`.padStart(2, '0');
+    const month = `${currentDate.getMonth() + 1}`.padStart(2, '0');   // months start from 0 in JS
+    const year = `${currentDate.getFullYear()}`;
+    const hour = `${currentDate.getHours()}`.padStart(2, '0');
+    const minutes = `${currentDate.getMinutes()}`.padStart(2, '0');
+    labelDate.textContent = `${day}/${month}/${year},  ${hour}:${minutes}`;
+
     // set the 'sorted' variable to false
     sorted = false;
   }
