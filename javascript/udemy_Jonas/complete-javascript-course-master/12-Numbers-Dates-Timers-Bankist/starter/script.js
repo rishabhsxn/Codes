@@ -89,9 +89,9 @@ const calcFormattedDate = function(date){
   if(daysPassed <= 7 ) return `${daysPassed} days ago`;
 
   // if more than 7 days, return date in format dd/mm/yyyy
-  const day = `${date.getUTCDate()}`.padStart(2, '0');
-  const month = `${date.getUTCMonth() + 1}`.padStart(2, '0');   // months start from 0 in JS
-  const year = `${date.getUTCFullYear()}`;
+  const day = `${date.getDate()}`.padStart(2, '0');
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');   // months start from 0 in JS
+  const year = `${date.getFullYear()}`;
   return `${day}/${month}/${year}`;
 }
 
