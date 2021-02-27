@@ -90,7 +90,6 @@ const calcFormattedDate = function(date){
 
   // if more than 7 days, return date in format dd/mm/yyyy
   const day = `${date.getUTCDate()}`.padStart(2, '0');
-  console.log(day);
   const month = `${date.getUTCMonth() + 1}`.padStart(2, '0');   // months start from 0 in JS
   const year = `${date.getUTCFullYear()}`;
   return `${day}/${month}/${year}`;
@@ -238,11 +237,16 @@ btnTransfer.addEventListener('click', function(event){
   
   if(amount > 0 && recipientAcc && currentAccount.balance >= amount && recipientAcc.username !== currentAccount.username){
     console.log('Transfer Valid');
-    // add negative movement in current account
+    // current date
+    const currentDateTime = new Date().toISOString();
+    
+    // add negative movement & Date in current account
     currentAccount.movements.push(-amount);
+    currentAccount.movementsDates.push(currentDateTime);
 
-    // add positive movement in recipient account
+    // add positive movement & Date in recipient account
     recipientAcc.movements.push(amount);
+    recipientAcc.movementsDates.push(currentDateTime);
 
     // update the UI (movements, balance & summary)
     updateUI(currentAccount);
