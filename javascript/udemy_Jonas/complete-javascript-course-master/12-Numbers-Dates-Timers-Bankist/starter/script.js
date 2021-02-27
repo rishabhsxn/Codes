@@ -78,19 +78,44 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 
+// calculate the formatted date based on current date
+const calcFormattedDate = function(date){
+  const currentDate = new Date();
+  const daysPassed = Math.round((currentDate - date)/(1000*60*60*24));    
+  // subtraction is done between timestamp (miliseconds) of each date
+
+  if(daysPassed === 0) return 'Today';
+  if(daysPassed === 1) return 'Yesterday';
+  if(daysPassed <= 7 ) return `${daysPassed} days ago`;
+
+  // if more than 7 days, return date in format dd/mm/yyyy
+  const day = `${date.getUTCDate()}`.padStart(2, '0');
+  console.log(day);
+  const month = `${date.getUTCMonth() + 1}`.padStart(2, '0');   // months start from 0 in JS
+  const year = `${date.getUTCFullYear()}`;
+  return `${day}/${month}/${year}`;
+}
+
 // Add Movements to the list
-const displayMovements = function(movements, sort=false){
+const displayMovements = function(account, sort=false){
   // empty the container before adding movements
   containerMovements.innerHTML = '';
 
+  const movements = account.movements;
   const movs = sort ? movements.slice().sort( (a, b) => a - b) : movements;
 
   movs.forEach(function(mov, i){
     // create strings of html code
     const movType = mov > 0 ? 'deposit' : 'withdrawal'
+
+    // date
+    const movDate = new Date(account.movementsDates[i]);
+    const formattedDate = calcFormattedDate(movDate);
+
     const movHtml = `
     <div class="movements__row">
       <div class="movements__type movements__type--${movType}">${i+1} ${movType}</div>
+      <div class="movements__date">${formattedDate}</div>
       <div class="movements__value">${mov.toFixed(2)}€</div>
     </div>`;
 
@@ -102,7 +127,7 @@ const displayMovements = function(movements, sort=false){
 let sorted = false;
 btnSort.addEventListener('click', function(event){
   event.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(currentAccount, !sorted);
   sorted = !sorted;
   console.log(sorted);
 })
@@ -153,7 +178,7 @@ createUsernames(accounts);
 // UPDATE UI
 const updateUI = function(acc){
   // Display Movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
 
   // Display Balance
   calcPrintBalance(acc);
