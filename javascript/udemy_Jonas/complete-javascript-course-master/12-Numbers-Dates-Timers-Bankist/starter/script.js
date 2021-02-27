@@ -291,13 +291,17 @@ btnLoan.addEventListener('click', function(event){
   const requestedAmount = Math.floor(inputLoanAmount.value);
   // for granting loan, check if there is a deposit of atleast 10% of the requested amount
   if(requestedAmount > 0 && currentAccount.movements.some( mov => mov >= 0.1*requestedAmount)){
-    // add loan to the movements
-    currentAccount.movements.push(requestedAmount);
-    // add date to the movementsDates
-    currentAccount.movementsDates.push(new Date().toISOString());
 
-    // update UI - movements, balance & summary
-    updateUI(currentAccount);
+    // Add a delay to Loan to simulate real life banks
+    setTimeout(function(){
+      // add loan to the movements
+      currentAccount.movements.push(requestedAmount);
+      // add date to the movementsDates
+      currentAccount.movementsDates.push(new Date().toISOString());
+
+      // update UI - movements, balance & summary
+      updateUI(currentAccount);
+    }, 2500);
   }
   else
     console.log('Loan can\'t be granted!!');
