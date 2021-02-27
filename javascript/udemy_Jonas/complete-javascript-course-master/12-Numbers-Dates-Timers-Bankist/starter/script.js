@@ -239,7 +239,7 @@ btnTransfer.addEventListener('click', function(event){
     console.log('Transfer Valid');
     // current date
     const currentDateTime = new Date().toISOString();
-    
+
     // add negative movement & Date in current account
     currentAccount.movements.push(-amount);
     currentAccount.movementsDates.push(currentDateTime);
@@ -266,6 +266,8 @@ btnLoan.addEventListener('click', function(event){
   if(requestedAmount > 0 && currentAccount.movements.some( mov => mov >= 0.1*requestedAmount)){
     // add loan to the movements
     currentAccount.movements.push(requestedAmount);
+    // add date to the movementsDates
+    currentAccount.movementsDates.push(new Date().toISOString());
 
     // update UI - movements, balance & summary
     updateUI(currentAccount);
