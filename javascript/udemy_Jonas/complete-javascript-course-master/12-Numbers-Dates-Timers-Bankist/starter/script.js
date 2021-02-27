@@ -79,7 +79,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 
 // calculate the formatted date based on current date
-const calcFormattedDate = function(date){
+const calcFormattedDate = function(date, locale){
   const currentDate = new Date();
   const daysPassed = Math.round((currentDate - date)/(1000*60*60*24));    
   // subtraction is done between timestamp (miliseconds) of each date
@@ -89,11 +89,12 @@ const calcFormattedDate = function(date){
   if(daysPassed <= 7 ) return `${daysPassed} days ago`;
 
   // if more than 7 days, return date in format dd/mm/yyyy
-  const day = `${date.getDate()}`.padStart(2, '0');
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');   // months start from 0 in JS
-  const year = `${date.getFullYear()}`;
-  return `${day}/${month}/${year}`;
-}
+  return new Intl.DateTimeFormat(locale).format(date);
+  // const day = `${date.getDate()}`.padStart(2, '0');
+  // const month = `${date.getMonth() + 1}`.padStart(2, '0');   // months start from 0 in JS
+  // const year = `${date.getFullYear()}`;
+  // return `${day}/${month}/${year}`;
+};
 
 // Add Movements to the list
 const displayMovements = function(account, sort=false){
@@ -109,7 +110,7 @@ const displayMovements = function(account, sort=false){
 
     // date
     const movDate = new Date(account.movementsDates[i]);
-    const formattedDate = calcFormattedDate(movDate);
+    const formattedDate = calcFormattedDate(movDate, account.locale);
 
     const movHtml = `
     <div class="movements__row">
@@ -212,12 +213,21 @@ btnLogin.addEventListener('click', function(event){
 
     // display Current Date & Time under 'Current Balance' label
     const currentDate = new Date();
-    const day = `${currentDate.getDate()}`.padStart(2, '0');
-    const month = `${currentDate.getMonth() + 1}`.padStart(2, '0');   // months start from 0 in JS
-    const year = `${currentDate.getFullYear()}`;
-    const hour = `${currentDate.getHours()}`.padStart(2, '0');
-    const minutes = `${currentDate.getMinutes()}`.padStart(2, '0');
-    labelDate.textContent = `${day}/${month}/${year},  ${hour}:${minutes}`;
+    const options = {
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    };
+    // const locale = navigator.language;    // to get the user's locale from the browser
+    labelDate.textContent = Intl.DateTimeFormat(currentAccount.locale, options).format(currentDate);
+    // const day = `${currentDate.getDate()}`.padStart(2, '0');
+    // const month = `${currentDate.getMonth() + 1}`.padStart(2, '0');   // months start from 0 in JS
+    // const year = `${currentDate.getFullYear()}`;
+    // const hour = `${currentDate.getHours()}`.padStart(2, '0');
+    // const minutes = `${currentDate.getMinutes()}`.padStart(2, '0');
+    // labelDate.textContent = `${day}/${month}/${year},  ${hour}:${minutes}`;
 
     // set the 'sorted' variable to false
     sorted = false;
