@@ -196,6 +196,38 @@ const updateUI = function(acc){
 }
 
 
+// start & display Logout Timer
+let timer;
+const startLogoutTimer = function(){
+  let time = 600 /* sec */;  
+
+  const timerCallback = function(){
+    const min = String(Math.trunc(time/60)).padStart(2, '0');
+    const sec = String(time % 60).padStart(2, '0');
+
+    // display on UI
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // check if time is 0 -> stop Timer and then LogOut
+    if(time === 0){
+      clearInterval(logOutTimer);
+
+      // hide UI
+      containerApp.style.opacity = 0;
+    }
+
+    // decrease time by 1 sec
+    time--;
+  };
+
+  // 1st call the timer to start it without any delay for the first run
+  timerCallback();
+  const logOutTimer = setInterval(timerCallback, 1000);
+
+  return logOutTimer;
+};
+
+
 // Login functionality
 let currentAccount;
 btnLogin.addEventListener('click', function(event){
@@ -218,6 +250,11 @@ btnLogin.addEventListener('click', function(event){
     containerApp.style.opacity = 100;
 
     updateUI(currentAccount);
+
+    /* If timer from previous login exists, clear it to prevent 2 simultaneous timers. Then, start new LogOut Timer */
+    if(timer)
+      clearInterval(timer);
+    timer = startLogoutTimer();
 
     // display Current Date & Time under 'Current Balance' label
     const currentDate = new Date();
@@ -280,6 +317,11 @@ btnTransfer.addEventListener('click', function(event){
   }
   else
     console.log('Transfer Invalid!');
+
+  // Reset the logoutTimer
+  clearInterval(timer);
+  timer = startLogoutTimer();
+
 });
 
 
@@ -308,6 +350,10 @@ btnLoan.addEventListener('click', function(event){
 
   // empty loan input field
   inputLoanAmount.value = '';
+
+  // Reset the logoutTimer
+  clearInterval(timer);
+  timer = startLogoutTimer();
 
 });
 
