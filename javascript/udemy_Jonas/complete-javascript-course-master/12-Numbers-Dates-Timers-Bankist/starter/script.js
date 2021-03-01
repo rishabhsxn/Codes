@@ -237,9 +237,12 @@ btnLogin.addEventListener('click', function(event){
   event.preventDefault();
   
   // match Username and PIN
-  currentAccount = accounts.find( acc => acc.username === inputLoginUsername.value);
+  const newCurrentAccount = accounts.find( acc => acc.username === inputLoginUsername.value);
 
-  if(currentAccount?.pin === Number(inputLoginPin.value)){
+  if(newCurrentAccount?.pin === Number(inputLoginPin.value)){
+    // this becomes the current User
+    currentAccount = newCurrentAccount;
+
     // clear input fields & remove focus from PIN input
     inputLoginUsername.value = '';
     inputLoginPin.value = '';
