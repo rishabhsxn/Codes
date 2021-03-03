@@ -122,3 +122,29 @@ console.log(logo.dataset.versionNumber);
 
 // IMPORTANT: Don't use below mentioned way because it overwrites all the existing class
 // logo.className = 'Rishabh';
+
+
+
+// ------------------------------- EVENT HANDLERS -------------------------------------
+
+// ways to attach eventHandler
+const h1 = document.querySelector('h1');
+
+// 1 - new way
+const alertH1 = function(){
+    alert('addEventListener: You are reading the Heading!');
+
+    h1.removeEventListener('mouseenter', alertH1);
+};
+h1.addEventListener('mouseenter', alertH1);
+
+// 2 - old way
+h1.onmouseenter = function(){
+    alert('onmouseenter: You are reading the Heading!');
+};
+
+// 3rd way is to add the eventListener in the HTML tag as an attribute - Very Old way
+
+/* IMPORTANT: using addEventListener is the best way because:
+a) you can add multiple eventHandlers (write again with other handler). In 2nd way, all other handlers are overwritten.
+b) We can also remove this event Listener. */
