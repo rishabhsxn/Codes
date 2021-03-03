@@ -51,9 +51,9 @@ So, prepend & append can also be used to shift DOM elements. */
 // if you want to place a DOM element at multiple places, then first make a clone of it.
 // header.prepend(message.cloneNode(true));    // parameter: whether to clone child elements also
 
-// INSERT AS SIBLING ELEMENT
-header.before(message);
-header.after(message);
+// // INSERT AS SIBLING ELEMENT
+// header.before(message);
+// header.after(message);
 
 
 // DELETING
@@ -65,3 +65,60 @@ document
         // before this we could only remove child elements
         message.parentElement.removeChild(message);
     });
+
+
+
+// ----------------------------------------- STYLES ----------------------------------------
+
+message.style.backgroundColor = '#37383d';
+message.style.width = '103%';
+/* These styles are set as Inline styles i.e. they exist only in the DOM, not in the HTML doc.
+Using the style property, we can only retrieve properties that were set by us. We CAN'T retrieve html doc properties. */
+
+// For retrieving HTML doc style properties (Even that were not set by us but by browser)
+console.log(getComputedStyle(message).height);
+
+// using existing property's value to set a new value
+message.style.height = Number.parseFloat(getComputedStyle(message).height) + 30 + 'px';
+
+
+/* Modifying CSS custom variables, variables that are defined in root
+:root {
+    --color-primary: #5ec576;
+    --color-secondary: #ffcb03;
+    --color-tertiary: #ff585f;
+} */
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+
+// -------------------------------------- ATTRIBUTES ----------------------------------------
+// attributes are the properties that are attached with the Html Tags
+
+const logo = document.querySelector('.nav__logo');
+// using the element, we can only read & write standard properties of a tag
+console.log(logo.alt);
+console.log(logo.src);      // returns the absolute path. For relative path use getAttribute(). Same is true for Link (href)
+console.log(logo.className);
+
+logo.alt = 'Beautiful minimalist logo';
+
+// for Non-standard properties
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
+
+
+/* Data Attributes - These are the attributes whose name start with data-_______
+These data attributes are collectively stored in dataset.
+We work with data attributes quite alot when working on the UI, especially when we need to store the data in the 
+UI i.e. in the HTML */
+console.log(logo.dataset.versionNumber);
+
+
+// -------------------------------------- CLASSES ----------------------------------------
+// logo.classList.add();
+// logo.classList.remove();
+// logo.classList.toggle();
+// logo.classList.contains();
+
+// IMPORTANT: Don't use below mentioned way because it overwrites all the existing class
+// logo.className = 'Rishabh';
