@@ -55,3 +55,42 @@ document.querySelector('.btn--scroll-to').addEventListener('click', function(eve
   // new way
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+
+// Implement Page Navigation using Event Delegation (IMPORTANT)
+
+// 1. Page Navigation without Event Delegation
+/* But this solution is inefficient because we are adding the same eventListener to many elements and a lot of copies
+of the same function are created. This will lead to performance degradation if there were many such elements. */
+// document
+//   .querySelectorAll('.nav__link')
+//   .forEach(function(navLink){
+//     navLink.addEventListener('click', function(event){
+//       // prevent sudden jump to html
+//       event.preventDefault();
+
+//       // find to which section we have to scroll
+//       const id = navLink.getAttribute('href');
+
+//       // scroll to the section
+//       document
+//         .querySelector(id)
+//         .scrollIntoView({behavior: 'smooth'});
+      
+//     });
+//   });
+
+// 2. Page Navigation using Event Delegation
+/* We can use the bubbling phase by adding event listener to the parent of all the elements & use the 'target' to implement
+page navigation. We just have to create one event listener. */
+document
+  .querySelector('.nav__links')
+  .addEventListener('click', function(event){
+    event.preventDefault();
+
+    // check if this click event came from any of the 'nav__link' elements
+    if(event.target.classList.contains('nav__link')){
+      const id = event.target.getAttribute('href');
+      document.querySelector(id).scrollIntoView({ behavior: 'smooth'});
+    }
+  });
