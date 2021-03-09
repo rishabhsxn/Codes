@@ -94,3 +94,30 @@ document
       document.querySelector(id).scrollIntoView({ behavior: 'smooth'});
     }
   });
+
+
+// ------------------------- IMPLEMENT TABBED COMPONENT (OPERATIONS SECTION) -----------------------------
+const tabContainer = document.querySelector('.operations__tab-container');
+const tabButtons = document.querySelectorAll('.operations__tab');
+const tabContents = document.querySelectorAll('.operations__content');
+
+// Add Event Listener using Event Delegation
+tabContainer.addEventListener('click', function(event){
+  const clickedTab = event.target.closest('.operations__tab');    // to get the button even when it's span element is clicked
+
+  // if clickedTab is null (when not clicked on button but on somewhere in the container), ignore the click
+  if(!clickedTab) return;   // guard clause
+
+  // Elevate Clicked Tab: Remove 'active' from all tabs & add in the clicked tab
+  tabButtons.forEach( tab => tab.classList.remove('operations__tab--active'));
+  clickedTab.classList.add('operations__tab--active');
+
+  /* Reveal Clicked Tab Content:
+  1. Find id of tab content from button's dataset
+  2. Remove 'active' from all tab-contents & add to the clicked tab */
+  const tabContentId = clickedTab.dataset.tab;
+  tabContents.forEach(tabContent => tabContent.classList.remove('operations__content--active'));
+  document
+    .querySelector(`.operations__content--${tabContentId}`)
+    .classList.add('operations__content--active');
+});
