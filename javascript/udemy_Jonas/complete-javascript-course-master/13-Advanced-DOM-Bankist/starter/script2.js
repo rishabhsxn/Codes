@@ -151,36 +151,67 @@
 
 
 
-// ---------------------------------------- CAPTURING & BUBBLING --------------------------------------------
+// // ---------------------------------------- CAPTURING & BUBBLING --------------------------------------------
 
-// generate random number
-const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+// // generate random number
+// const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-// generate random rgb color
-const randomColor = () => `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+// // generate random rgb color
+// const randomColor = () => `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
 
-// Event Listener on GrandParent
-document.querySelector('.nav').addEventListener('click', function(event){
-    this.style.backgroundColor = randomColor();
-    console.log('At GrandParent, target:', event.target);
+// // Event Listener on GrandParent
+// document.querySelector('.nav').addEventListener('click', function(event){
+//     this.style.backgroundColor = randomColor();
+//     console.log('At GrandParent, target:', event.target);
 
-    // we can also get the current element, which is also where 'this' keyword is pointing
-    // console.log('Currently on:', event.currentTarget);
-}, true);   // Listening to Event in Capturing phase instead of bubbling phase
+//     // we can also get the current element, which is also where 'this' keyword is pointing
+//     // console.log('Currently on:', event.currentTarget);
+// }, true);   // Listening to Event in Capturing phase instead of bubbling phase
 
-// Event Listener on Parent
-document.querySelector('.nav__links').addEventListener('click', function(event){
-    this.style.backgroundColor = randomColor();
-    console.log('At Parent, target:', event.target);
-    // console.log('Currently on:', event.currentTarget);
-});
+// // Event Listener on Parent
+// document.querySelector('.nav__links').addEventListener('click', function(event){
+//     this.style.backgroundColor = randomColor();
+//     console.log('At Parent, target:', event.target);
+//     // console.log('Currently on:', event.currentTarget);
+// });
 
-// Event Listener on Child
-document.querySelector('.nav__link').addEventListener('click', function(event){
-    this.style.backgroundColor = randomColor();
-    console.log('At Child, target:', event.target);
-    // console.log('Currently on:', event.currentTarget);
+// // Event Listener on Child
+// document.querySelector('.nav__link').addEventListener('click', function(event){
+//     this.style.backgroundColor = randomColor();
+//     console.log('At Child, target:', event.target);
+//     // console.log('Currently on:', event.currentTarget);
 
-    // We can also stop the event from Propagation. But it is generally not a good practice
-    // event.stopPropagation();
-});
+//     // We can also stop the event from Propagation. But it is generally not a good practice
+//     // event.stopPropagation();
+// });
+
+
+
+// -------------------------------------- DOM TRAVERSING ----------------------------------------
+const h1 = document.querySelector('h1');
+
+// ---------Going Downwards: Child
+console.log(h1.querySelectorAll('.highlight'));    // search for a child element no matter how deep it is present
+console.log(h1.childNodes);     // return all DIRECT child nodes (text, comments, elements) - NodeList
+console.log(h1.children);       // return only DIRECT element childs - HTMLCollection
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'orangered';
+
+// ---------Going Upwards: Parents
+console.log(h1.parentNode);     // DIRECT parent node
+console.log(h1.parentElement);      // DIRECT parent ELEMENT
+
+h1.closest('header').style.background = 'var(--gradient-secondary)';    /* search for parent no matter how far it is. But returns 
+closest found. It returns the same element on which it is called if that is the element name we passed */
+h1.closest('h1').style.background = 'var(--gradient-primary)';
+
+// ---------Going Sideways: Siblings
+/* In JavaScript we can only select the direct siblings of an element i.e. previous & next */
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+/* To get all the siblings, select the Parent element & get all children */
+console.log(h1.parentElement.children);
