@@ -126,31 +126,24 @@ tabContainer.addEventListener('click', function(event){
 
 /* IMPLEMENT FADE OUT EFFECT ON NAVIGATION BAR MENU LINKS
 All the links except the one on which the mouse is hovering should become blur and when the mouse leaves, all
-links should become normal. */
+links should become normal.
+1. When mouse hover over a link. mouseover is similar to mouseenter except that mouseenter do not bubble
+2. When mouse leaves the link, undo the effect */
 
 const navLinks = document.querySelector('.nav__links');
-// 1. When mouse hover over a link. mouseover is similar to mouseenter except that mouseenter do not bubble
-navLinks.addEventListener('mouseover', function(event){
-  // matching strategy
+const handleHover = function(event){
   if(event.target.classList.contains('nav__link')){
     // get all siblings
     const siblings = event.target.closest('.nav__links').querySelectorAll('.nav__link');
-    // siblings.forEach(function(link){link === event.target || (link.style.opacity = '0.5')})    // difficult way
-    siblings.forEach(function(link){
+
+    // IMPORTANT: In forEach loop we have to use an Arrow function only so that 'this' will get its value from other function
+    siblings.forEach(link => {
       if(link !== event.target)
-        link.style.opacity = 0.5;
+        link.style.opacity = this;
     });
   }
-});
-// 2. When mouse leaves the link, undo the effect
-navLinks.addEventListener('mouseout', function(event){
-  // matching strategy
-  if(event.target.classList.contains('nav__link')){
-    // get all siblings
-    const siblings = event.target.closest('.nav__links').querySelectorAll('.nav__link');
-    siblings.forEach(function(link){
-      if(link !== event.target)
-        link.style.opacity = 1;
-    });
-  }
-});
+};
+
+// IMPORTANT: We have to bind the opacity value to handleHover to pass it as an Argument (not real) in the addEventListener callback
+navLinks.addEventListener('mouseover', handleHover.bind(0.5));
+navLinks.addEventListener('mouseout', handleHover.bind(1));
