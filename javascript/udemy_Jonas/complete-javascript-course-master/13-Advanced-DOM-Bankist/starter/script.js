@@ -121,3 +121,36 @@ tabContainer.addEventListener('click', function(event){
     .querySelector(`.operations__content--${tabContentId}`)
     .classList.add('operations__content--active');
 });
+
+
+
+/* IMPLEMENT FADE OUT EFFECT ON NAVIGATION BAR MENU LINKS
+All the links except the one on which the mouse is hovering should become blur and when the mouse leaves, all
+links should become normal. */
+
+const navLinks = document.querySelector('.nav__links');
+// 1. When mouse hover over a link. mouseover is similar to mouseenter except that mouseenter do not bubble
+navLinks.addEventListener('mouseover', function(event){
+  // matching strategy
+  if(event.target.classList.contains('nav__link')){
+    // get all siblings
+    const siblings = event.target.closest('.nav__links').querySelectorAll('.nav__link');
+    // siblings.forEach(function(link){link === event.target || (link.style.opacity = '0.5')})    // difficult way
+    siblings.forEach(function(link){
+      if(link !== event.target)
+        link.style.opacity = 0.5;
+    });
+  }
+});
+// 2. When mouse leaves the link, undo the effect
+navLinks.addEventListener('mouseout', function(event){
+  // matching strategy
+  if(event.target.classList.contains('nav__link')){
+    // get all siblings
+    const siblings = event.target.closest('.nav__links').querySelectorAll('.nav__link');
+    siblings.forEach(function(link){
+      if(link !== event.target)
+        link.style.opacity = 1;
+    });
+  }
+});
