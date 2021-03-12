@@ -8,6 +8,9 @@ const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
+const section1 = document.querySelector('#section--1');
+const nav = document.querySelector('.nav');
+
 const openModal = function (event) {
   event.preventDefault();
   modal.classList.remove('hidden');
@@ -33,7 +36,6 @@ document.addEventListener('keydown', function (e) {
 
 // Implement Smooth scroll to section 1 on LearnMore button
 document.querySelector('.btn--scroll-to').addEventListener('click', function(event){
-  const section1 = document.querySelector('#section--1');
 
   // // old way
   // // console.log('Button Position:', event.target.getBoundingClientRect())
@@ -147,3 +149,15 @@ const handleHover = function(event){
 // IMPORTANT: We have to bind the opacity value to handleHover to pass it as an Argument (not real) in the addEventListener callback
 navLinks.addEventListener('mouseover', handleHover.bind(0.5));
 navLinks.addEventListener('mouseout', handleHover.bind(1));
+
+
+
+/* IMPLEMENT STICKY NAVIGATION BAR. 
+The navigation bar should become static when page is scrolled past the Section1 start line. */
+const initialYCoordinate = section1.getBoundingClientRect().top;
+window.addEventListener('scroll', function(){
+  if(window.scrollY > initialYCoordinate)
+    nav.classList.add('sticky');
+  else
+    nav.classList.remove('sticky');
+});
