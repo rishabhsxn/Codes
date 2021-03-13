@@ -154,10 +154,33 @@ navLinks.addEventListener('mouseout', handleHover.bind(1));
 
 /* IMPLEMENT STICKY NAVIGATION BAR. 
 The navigation bar should become static when page is scrolled past the Section1 start line. */
-const initialYCoordinate = section1.getBoundingClientRect().top;
-window.addEventListener('scroll', function(){
-  if(window.scrollY > initialYCoordinate)
+// const initialYCoordinate = section1.getBoundingClientRect().top;
+// window.addEventListener('scroll', function(){
+//   if(window.scrollY > initialYCoordinate)
+//     nav.classList.add('sticky');
+//   else
+//     nav.classList.remove('sticky');
+// });
+
+/* This method is not very efficient because scroll event happens very frequenty which could degrade performance 
+So, we will implement sticky Nav bar using the INTERSECTION OBSERVER API (IMPORTANT)*/
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const headerObsCallback = function(entries, observer){
+  const [entry] = entries;
+  if(!entry.isIntersecting)
     nav.classList.add('sticky');
   else
     nav.classList.remove('sticky');
-});
+};
+
+const headerObsOptions = {
+  root: null,     /* null means the Current ViewPort (screen portion). Otherwise, use querySelector. */
+  threshold: 0,   /* ratio of intersection that should trigger the callback. We can pass multiple thresholds which will result 
+  in multiple values in the entries array. Callback will be called on each threshold. */
+  rootMargin: `-${navHeight}px`,
+};
+
+const headerObserver = new IntersectionObserver(headerObsCallback, headerObsOptions);
+headerObserver.observe(header);
