@@ -184,3 +184,34 @@ const headerObsOptions = {
 
 const headerObserver = new IntersectionObserver(headerObsCallback, headerObsOptions);
 headerObserver.observe(header);
+
+
+
+// IMPLEMENT SECTION REVEAL EFFECT: using Intersection Observer API
+
+const sectionObsCallback = function(entries, observer){
+  const [entry] = entries;
+
+  if(!entry.isIntersecting) return;
+
+  // if intersecting, reveal the section and remove the observer
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObsOptions = {
+  root: null,
+  threshold: 0.15,
+};
+
+const sectionObserver = new IntersectionObserver(sectionObsCallback, sectionObsOptions);
+
+// Use the same observer to observe every section
+const sections = document.querySelectorAll('.section');
+sections.forEach(section => {
+  // add section--hidden class to each section, so that they become invisible & shift down little bit
+  section.classList.add('section--hidden');
+  
+  // add observer to each section
+  sectionObserver.observe(section);
+});
