@@ -215,3 +215,37 @@ sections.forEach(section => {
   // add observer to each section
   sectionObserver.observe(section);
 });
+
+
+
+// IMPLEMENT LAZY LOADING IMAGES
+/* In this we first place an image of very low resolution so that the page loads fast. We hide the low resolution image
+using any filter effect like blur. Then, after the user is about to reach the image, we replace it with original
+resolution image. This is very important for page loading efficiency. */
+
+// apply lazy loading to all images that have data-src attribute
+const lazyLoadImages = document.querySelectorAll('img[data-src]');
+
+const lazyImageLoader = function(entries, observer){
+  const [entry] = entries;
+  // console.log(entry);
+
+  if(!entry.isIntersecting) return;
+
+  // when the image is intersecting, load the original image
+  entry.target.src = entry.target.dataset.src;
+  
+  // when the load complete, only then remove the blur filter: USE LOAD EVENT
+  entry.target.addEventListener('load', function(){
+    entry.target.classList.remove('lazy-img');
+  });
+
+  // remove the observer  
+  observer.unobserve(entry.target);
+};
+
+/* 200px rootmargin so that, the original image should start loading when the user is about to reach it. 
+We can further increase it so that the original image starts loading very early. */
+const lazyImageObserver = new IntersectionObserver(lazyImageLoader, {root: null, threshold: 0, rootMargin: '200px'});
+// add observer to each image
+lazyLoadImages.forEach(img => lazyImageObserver.observe(img));
