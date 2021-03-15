@@ -210,7 +210,7 @@ const sectionObserver = new IntersectionObserver(sectionObsCallback, sectionObsO
 const sections = document.querySelectorAll('.section');
 sections.forEach(section => {
   // add section--hidden class to each section, so that they become invisible & shift down little bit
-  // section.classList.add('section--hidden');
+  section.classList.add('section--hidden');
   
   // add observer to each section
   sectionObserver.observe(section);
@@ -264,6 +264,7 @@ const dotsContainer = sliderContainer.querySelector('.dots');
 // sliderContainer.style.overflow = 'visible';
 
 
+// Utility Functions
 const goToSlide = function(slideNumber){
   // transform all slides such that 'slideNumber' becomes the slide in visible area & other slides accordingly placed
   slides.forEach(function(slide, i){
@@ -286,6 +287,8 @@ const activateDot = function(dotNumber){
   dotsContainer.querySelector(`.dots__dot[data-slide="${dotNumber}"]`).classList.add('dots__dot--active');
 };
 
+
+// Initialization
 let currentSlide = 0;
 const firstSlide = 0;
 const lastSlide = slides.length - 1;
@@ -294,7 +297,7 @@ createDots();
 goToSlide(0);
 activateDot(0);
 
-// handlers
+// Event Handlers
 const nextSlide = function(){
   // move all slides in left direction by one place. After the last slide go to 1st
   if(currentSlide === lastSlide)
@@ -318,6 +321,8 @@ const previousSlide = function(){
   activateDot(currentSlide);
 };
 
+
+// Event Listeners
 sliderBtnRight.addEventListener('click', nextSlide);
 sliderBtnLeft.addEventListener('click', previousSlide);
 
