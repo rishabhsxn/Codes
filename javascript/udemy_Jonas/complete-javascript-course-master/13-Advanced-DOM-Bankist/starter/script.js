@@ -321,6 +321,18 @@ const previousSlide = function(){
 sliderBtnRight.addEventListener('click', nextSlide);
 sliderBtnLeft.addEventListener('click', previousSlide);
 
+dotsContainer.addEventListener('click', function(event){
+  // Use event delegation
+  // matching strategy
+  if(!event.target.classList.contains('dots__dot'))   return;
+
+  // find the slide number - Go to that slide & activate dot
+  const slideNumber = Number(event.target.dataset.slide);
+  currentSlide = slideNumber;
+  goToSlide(slideNumber);
+  activateDot(slideNumber);
+});
+
 // use Left & Right Arrow keys to move slides
 document.addEventListener('keydown', function(event){
   if(event.key === 'ArrowRight')  nextSlide();
