@@ -299,5 +299,10 @@ const previousSlide = function(){
 };
 
 sliderBtnRight.addEventListener('click', nextSlide);
-
 sliderBtnLeft.addEventListener('click', previousSlide);
+
+// use Left & Right Arrow keys to move slides
+document.addEventListener('keydown', function(event){
+  if(event.key === 'ArrowRight')  nextSlide();
+  if(event.key === 'ArrowLeft')   previousSlide();
+});
