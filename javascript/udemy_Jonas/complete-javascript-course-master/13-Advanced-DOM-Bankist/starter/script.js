@@ -262,38 +262,42 @@ const slides = sliderContainer.querySelectorAll('.slide');
 // sliderContainer.style.transform = 'scale(0.3)';
 // sliderContainer.style.overflow = 'visible';
 
-slides.forEach(function(slide, i){
-  slide.style.transform = `translateX(${i*100}%)`;
-});
 
+const goToSlide = function(slideNumber){
+  // transform all slides such that 'slideNumber' becomes the slide in visible area & other slides accordingly placed
+  slides.forEach(function(slide, i){
+    slide.style.transform = `translateX(${(i - slideNumber)*100}%)`;
+  });
+};
 
 let currentSlide = 0;
 const firstSlide = 0;
 const lastSlide = slides.length - 1;
 
-sliderBtnRight.addEventListener('click', function(){
-  // move all slides in left direction by one place. After the last slide go to 1st
+goToSlide(0);
 
+// handlers
+const nextSlide = function(){
+  // move all slides in left direction by one place. After the last slide go to 1st
   if(currentSlide === lastSlide)
     currentSlide = firstSlide;
   else
     currentSlide++;
   
   // translateX each slide such that 'currentSlide' gets 0% translateX & other slides accordingly
-  slides.forEach(function(slide, i){
-    slide.style.transform = `translateX(${(i - currentSlide)*100}%)`;
-  });
-});
+  goToSlide(currentSlide);
+};
 
-sliderBtnLeft.addEventListener('click', function(){
+const previousSlide = function(){
   // move all slides in right direction by one place. After 1st slide go to last slide
-
   if(currentSlide === firstSlide)
     currentSlide = lastSlide;
   else
     currentSlide--;
 
-  slides.forEach(function(slide, i){
-    slide.style.transform = `translateX(${(i - currentSlide)*100}%)`;
-  })
-});
+  goToSlide(currentSlide);
+};
+
+sliderBtnRight.addEventListener('click', nextSlide);
+
+sliderBtnLeft.addEventListener('click', previousSlide);
