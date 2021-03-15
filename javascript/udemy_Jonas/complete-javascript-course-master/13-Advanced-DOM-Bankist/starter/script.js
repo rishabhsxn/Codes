@@ -257,6 +257,7 @@ const sliderContainer = document.querySelector('.slider');
 const sliderBtnLeft = document.querySelector('.slider__btn--left');
 const sliderBtnRight = document.querySelector('.slider__btn--right');
 const slides = sliderContainer.querySelectorAll('.slide');
+const dotsContainer = sliderContainer.querySelector('.dots');
 
 // temporary setup
 // sliderContainer.style.transform = 'scale(0.3)';
@@ -270,11 +271,28 @@ const goToSlide = function(slideNumber){
   });
 };
 
+const createDots = function(){
+  // create dots for each slide. Use the slide's index to fill 'data-slide' attribute
+  slides.forEach(function(_, i){
+    dotsContainer.insertAdjacentHTML('beforeend', `<button class="dots__dot" data-slide="${i}"></button>`);
+  });
+};
+
+const activateDot = function(dotNumber){
+  const dots = dotsContainer.querySelectorAll('.dots__dot');
+
+  // remove 'dots__dot--active' class from all dots and then add to the 'dotNumber' dot
+  dots.forEach( dot => dot.classList.remove('dots__dot--active'));
+  dotsContainer.querySelector(`.dots__dot[data-slide="${dotNumber}"]`).classList.add('dots__dot--active');
+};
+
 let currentSlide = 0;
 const firstSlide = 0;
 const lastSlide = slides.length - 1;
 
+createDots();
 goToSlide(0);
+activateDot(0);
 
 // handlers
 const nextSlide = function(){
@@ -286,6 +304,7 @@ const nextSlide = function(){
   
   // translateX each slide such that 'currentSlide' gets 0% translateX & other slides accordingly
   goToSlide(currentSlide);
+  activateDot(currentSlide);
 };
 
 const previousSlide = function(){
@@ -296,6 +315,7 @@ const previousSlide = function(){
     currentSlide--;
 
   goToSlide(currentSlide);
+  activateDot(currentSlide);
 };
 
 sliderBtnRight.addEventListener('click', nextSlide);
