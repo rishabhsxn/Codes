@@ -210,7 +210,7 @@ const sectionObserver = new IntersectionObserver(sectionObsCallback, sectionObsO
 const sections = document.querySelectorAll('.section');
 sections.forEach(section => {
   // add section--hidden class to each section, so that they become invisible & shift down little bit
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
   
   // add observer to each section
   sectionObserver.observe(section);
@@ -249,3 +249,51 @@ We can further increase it so that the original image starts loading very early.
 const lazyImageObserver = new IntersectionObserver(lazyImageLoader, {root: null, threshold: 0, rootMargin: '200px'});
 // add observer to each image
 lazyLoadImages.forEach(img => lazyImageObserver.observe(img));
+
+
+
+// IMPLEMENT SLIDER COMPONENT
+const sliderContainer = document.querySelector('.slider');
+const sliderBtnLeft = document.querySelector('.slider__btn--left');
+const sliderBtnRight = document.querySelector('.slider__btn--right');
+const slides = sliderContainer.querySelectorAll('.slide');
+
+// temporary setup
+// sliderContainer.style.transform = 'scale(0.3)';
+// sliderContainer.style.overflow = 'visible';
+
+slides.forEach(function(slide, i){
+  slide.style.transform = `translateX(${i*100}%)`;
+});
+
+
+let currentSlide = 0;
+const firstSlide = 0;
+const lastSlide = slides.length - 1;
+
+sliderBtnRight.addEventListener('click', function(){
+  // move all slides in left direction by one place. After the last slide go to 1st
+
+  if(currentSlide === lastSlide)
+    currentSlide = firstSlide;
+  else
+    currentSlide++;
+  
+  // translateX each slide such that 'currentSlide' gets 0% translateX & other slides accordingly
+  slides.forEach(function(slide, i){
+    slide.style.transform = `translateX(${(i - currentSlide)*100}%)`;
+  });
+});
+
+sliderBtnLeft.addEventListener('click', function(){
+  // move all slides in right direction by one place. After 1st slide go to last slide
+
+  if(currentSlide === firstSlide)
+    currentSlide = lastSlide;
+  else
+    currentSlide--;
+
+  slides.forEach(function(slide, i){
+    slide.style.transform = `translateX(${(i - currentSlide)*100}%)`;
+  })
+});
