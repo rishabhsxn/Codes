@@ -343,3 +343,12 @@ document.addEventListener('keydown', function(event){
   if(event.key === 'ArrowRight')  nextSlide();
   if(event.key === 'ArrowLeft')   previousSlide();
 });
+
+
+
+// EXTRA
+
+// whenever the page reloads, it will be displayed(scrolled to) from top
+window.onbeforeunload = function(){
+  window.scrollTo(0, 0);
+};
