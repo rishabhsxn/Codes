@@ -16,10 +16,10 @@ const Person = function(firstName, birthYear){
 
     /* METHODS (don't use this technique)
     We can create methods inside constructor function, but it is not efficient, as every instance will carry
-    it around */
+    it around
     this.calcAge = function(){
         return 2021 - this.birthYear;
-    };
+    }; */
 
     // 'this' will be automatically returned
 };
@@ -31,8 +31,35 @@ const rishabh = new Person('Rishabh', 1998);
 3. The created object is linked to prototype
 4. The created object is automatically returned from the constructor function */
 console.log(rishabh);
-console.log(rishabh.calcAge());
 
 const sanyam = new Person('Sanyam', 2000);
 
 console.log(rishabh instanceof Person);
+
+
+// EFFICIENT WAY TO ADD METHODS TO OBJECTS: USING PROTOTYPE
+console.log(Person.prototype);
+Person.prototype.calcAge = function(){
+    return 2021 - this.birthYear;
+};
+
+// we can also add properties
+Person.prototype.species = 'Homo Sapiens';
+
+
+console.log(rishabh.calcAge());
+console.log(sanyam.species);
+
+console.log(rishabh.__proto__);
+console.log(rishabh.__proto__ === Person.prototype);    // true
+console.log(sanyam.__proto__ === rishabh.__proto__);    // true
+
+/* IMPORTANT: It is important to note that Person.prototype is prototype of the instances but NOT of Person constructor
+function itself */
+console.log(Person.prototype.isPrototypeOf(Person));    // false
+console.log(Person.prototype.isPrototypeOf(rishabh));    // false
+
+
+// we can also check, if an object's property is it's own or of it's prototype
+console.log(rishabh.hasOwnProperty('firstName'));    // true
+console.log(rishabh.hasOwnProperty('species'));     // false
