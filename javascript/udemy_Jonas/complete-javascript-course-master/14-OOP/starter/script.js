@@ -57,7 +57,7 @@ console.log(sanyam.__proto__ === rishabh.__proto__);    // true
 /* IMPORTANT: It is important to note that Person.prototype is prototype of the instances but NOT of Person constructor
 function itself */
 console.log(Person.prototype.isPrototypeOf(Person));    // false
-console.log(Person.prototype.isPrototypeOf(rishabh));    // false
+console.log(Person.prototype.isPrototypeOf(rishabh));    // true
 
 
 // we can also check, if an object's property is it's own or of it's prototype
