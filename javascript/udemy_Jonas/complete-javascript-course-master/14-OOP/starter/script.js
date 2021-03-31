@@ -63,3 +63,36 @@ console.log(Person.prototype.isPrototypeOf(rishabh));    // true
 // we can also check, if an object's property is it's own or of it's prototype
 console.log(rishabh.hasOwnProperty('firstName'));    // true
 console.log(rishabh.hasOwnProperty('species'));     // false
+
+
+
+// ----------- PROTOTYPAL INHERITANCE ON BUILT-IN OBJECTS -------------
+
+console.log(rishabh.__proto__.__proto__);       /* Prototype of rishabh.__proto__ is Object.prototype (top of Prototypal Chain) */
+console.log(rishabh.__proto__.__proto__.__proto__);     /* Prototype of Object.prototype is null (top end of Prototypal chain)  */
+
+console.dir(Person.prototype.constructor);  // points to Person()
+
+// arrays
+const ar = [1, 2, 2, 2, 5, 5];
+console.log(ar.__proto__);      // Array.prototype
+console.log(ar.__proto__.__proto__);      // Object.prototype
+
+
+/* we can add new methods/properties to all the arrays, by adding them in Array.prototype
+But it is not a good practice as in future JS releases there may be a function with the same name or multiple developers of the
+team may implement different functions with same name. */
+Array.prototype.unique = function(){
+    return [... new Set(this)];
+};
+
+console.log(ar.unique());
+
+
+/* Dom elements are also objects. Their prototype is the parent in the DOM tree. Inspect by expanding.
+         HTMLHeadingElement -> HTMLElement -> Element -> Node -> EventTarget -> Object -> null        */
+console.dir(document.querySelector('h1').__proto__.__proto__.__proto__.__proto__.__proto__.__proto__.__proto__);
+
+
+// Functions are also Objects, so they also have prototype (bind, call, apply etc)
+console.dir(function(x){ return x + 1});
