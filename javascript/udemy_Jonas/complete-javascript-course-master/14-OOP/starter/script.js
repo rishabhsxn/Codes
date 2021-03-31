@@ -101,44 +101,83 @@
 
 
 
-// ----------------------------------- CODING CHALLENGE #1 --------------------------------------
-/* 
-1. Use a constructor function to implement a Car. A car has a make and a speed property. The speed property is the 
-current speed of the car in km/h;
-2. Implement an 'accelerate' method that will increase the car's speed by 10, and log the new speed to the console;
-3. Implement a 'brake' method that will decrease the car's speed by 5, and log the new speed to the console;
-4. Create 2 car objects and experiment with calling 'accelerate' and 'brake' multiple times on each of them.
+// // ----------------------------------- CODING CHALLENGE #1 --------------------------------------
+// /* 
+// 1. Use a constructor function to implement a Car. A car has a make and a speed property. The speed property is the 
+// current speed of the car in km/h;
+// 2. Implement an 'accelerate' method that will increase the car's speed by 10, and log the new speed to the console;
+// 3. Implement a 'brake' method that will decrease the car's speed by 5, and log the new speed to the console;
+// 4. Create 2 car objects and experiment with calling 'accelerate' and 'brake' multiple times on each of them.
 
-DATA CAR 1: 'BMW' going at 120 km/h
-DATA CAR 2: 'Mercedes' going at 95 km/h
-*/
+// DATA CAR 1: 'BMW' going at 120 km/h
+// DATA CAR 2: 'Mercedes' going at 95 km/h
+// */
 
-// 1
-const Car = function(make, speed){
-    this.make = make;
-    this.speed = speed;     /* km/h */
+// // 1
+// const Car = function(make, speed){
+//     this.make = make;
+//     this.speed = speed;     /* km/h */
+// };
+
+// // 2
+// Car.prototype.accelerate = function(){
+//     this.speed += 10;
+//     console.log(`${this.make}: ${this.speed}`);
+// };
+
+// // 3
+// Car.prototype.brake = function(){
+//     this.speed -= 5;
+//     console.log(`${this.make}: ${this.speed}`);
+// };
+
+// // 4
+// const bmw = new Car('BMW', 120);
+// const mercedes = new Car('Mercedes', 95);
+
+// bmw.accelerate();
+// bmw.accelerate();
+// bmw.brake();
+// bmw.accelerate();
+
+// mercedes.accelerate();
+// mercedes.brake();
+
+
+
+
+// -------------------------------------------- ES6 CLASS ----------------------------------------------
+
+/* ES6 classes work same as constructor function way of implementing Prototypal Inheritance. It's just syntactic sugar. 
+Classes are behind the scenes special Functions. 
+
+1. Classes are NOT hoisted no matter declaration or expression.
+2. Classes are functions, so they can be passed and returned from functions.
+3. All the code inside Class is executed in Strict mode. */
+
+// class expression
+// const Person = class{};
+
+// class declaration
+class Person2{
+    constructor(firstName, birthYear){
+        this.firstName = firstName;
+        this.birthYear = birthYear;
+    };
+
+
+    // functions defined here are also kept in the Prototype
+    calcAge(){
+        return 2021 - this.birthYear;
+    };
+
+    greet(){
+        console.log(`Hello there ${this.firstName}`);
+    };
 };
 
-// 2
-Car.prototype.accelerate = function(){
-    this.speed += 10;
-    console.log(`${this.make}: ${this.speed}`);
-};
 
-// 3
-Car.prototype.brake = function(){
-    this.speed -= 5;
-    console.log(`${this.make}: ${this.speed}`);
-};
+const rishu = new Person2('rishu', 1998);
+console.log(rishu.calcAge());
 
-// 4
-const bmw = new Car('BMW', 120);
-const mercedes = new Car('Mercedes', 95);
-
-bmw.accelerate();
-bmw.accelerate();
-bmw.brake();
-bmw.accelerate();
-
-mercedes.accelerate();
-mercedes.brake();
+console.log(rishu.__proto__ === Person2.prototype);     // true
