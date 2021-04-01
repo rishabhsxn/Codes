@@ -146,38 +146,97 @@
 
 
 
-// -------------------------------------------- ES6 CLASS ----------------------------------------------
+// // -------------------------------------------- ES6 CLASS ----------------------------------------------
 
-/* ES6 classes work same as constructor function way of implementing Prototypal Inheritance. It's just syntactic sugar. 
-Classes are behind the scenes special Functions. 
+// /* ES6 classes work same as constructor function way of implementing Prototypal Inheritance. It's just syntactic sugar. 
+// Classes are behind the scenes special Functions. 
 
-1. Classes are NOT hoisted no matter declaration or expression.
-2. Classes are functions, so they can be passed and returned from functions.
-3. All the code inside Class is executed in Strict mode. */
+// 1. Classes are NOT hoisted no matter declaration or expression.
+// 2. Classes are functions, so they can be passed and returned from functions.
+// 3. All the code inside Class is executed in Strict mode. */
 
-// class expression
-// const Person = class{};
+// // class expression
+// // const Person = class{};
 
-// class declaration
-class Person2{
-    constructor(firstName, birthYear){
-        this.firstName = firstName;
+// // class declaration
+// class Person2{
+//     constructor(firstName, birthYear){
+//         this.firstName = firstName;
+//         this.birthYear = birthYear;
+//     };
+
+
+//     // functions defined here are also kept in the Prototype
+//     calcAge(){
+//         return 2021 - this.birthYear;
+//     };
+
+//     greet(){
+//         console.log(`Hello there ${this.firstName}`);
+//     };
+// };
+
+
+// const rishu = new Person2('rishu', 1998);
+// console.log(rishu.calcAge());
+
+// console.log(rishu.__proto__ === Person2.prototype);     // true
+
+
+
+
+
+
+// ---------------------------------------------- SETTER & GETTER -----------------------------------------------
+
+// on Object
+const account = {
+    owner: 'Rishabh',
+    movements: [200, 530, 120, 400],
+
+    get latest(){
+        return this.movements.slice(-1).pop();
+    },
+
+    set latest(mov){
+        this.movements.push(mov);
+    },
+};
+
+// these are defined as methods, but are used as properties
+console.log(account.latest);
+account.latest = 100;
+
+console.log(account.movements);
+
+
+// on Class
+class Person{
+    constructor(fullName, birthYear){
+        this.fullName = fullName;
         this.birthYear = birthYear;
     };
 
-
-    // functions defined here are also kept in the Prototype
-    calcAge(){
+    // defining getter without setter is allowed
+    get age(){
         return 2021 - this.birthYear;
     };
-
-    greet(){
-        console.log(`Hello there ${this.firstName}`);
+  
+    // data validation & When getter/setter is used for an Existing property name
+    set fullName(name){
+        if(name.includes(' '))
+            this._fullName = name;
+        else
+            alert('This is not a Full Name!');
     };
+
+    get fullName(){
+        return this._fullName;
+    }
 };
 
+const rishabh = new Person('Rishabh Saxena', 1998);
+console.log(rishabh.age);
 
-const rishu = new Person2('rishu', 1998);
-console.log(rishu.calcAge());
-
-console.log(rishu.__proto__ === Person2.prototype);     // true
+const sanyam = new Person('Sanyam Saxena', 2000);
+console.log(sanyam.fullName);
