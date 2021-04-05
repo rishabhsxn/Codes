@@ -243,30 +243,61 @@
 
 
 
-// -------------------------------------------- STATIC METHODS ------------------------------------------------
+// // -------------------------------------------- STATIC METHODS ------------------------------------------------
 
 
-// Constructor function
-const PersonConst = function(firstName, birthYear){
-    this.firstName = firstName;
-    this.birthYear = birthYear;
-};
+// // Constructor function
+// const PersonConst = function(firstName, birthYear){
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+// };
 
-PersonConst.greet = function(){
-    console.log('Hi from a constructor function!');
-};
-PersonConst.greet();
+// PersonConst.greet = function(){
+//     console.log('Hi from a constructor function!');
+// };
+// PersonConst.greet();
 
-// Class
-class PersonCl{
-    constructor(firstName, birthYear){
+// // Class
+// class PersonCl{
+//     constructor(firstName, birthYear){
+//         this.firstName = firstName;
+//         this.birthYear = birthYear;
+//     }
+
+//     static greet(){
+//         console.log('Hi from a class!');
+//     }
+// };
+
+// PersonCl.greet();
+
+
+
+
+
+// ------------------------------------------------ OBJECT.CREATE() ----------------------------------------------------
+
+/* Using Object.create() we can manually create objects from a defined object set as it's prototype.
+It works differently from Constructor function and ES6 Class */
+
+// prototype object
+const PersonProto = {
+    calcAge(){
+        return 2021 - this.birthYear;
+    },
+
+    init(firstName, birthYear){
         this.firstName = firstName;
         this.birthYear = birthYear;
     }
-
-    static greet(){
-        console.log('Hi from a class!');
-    }
 };
 
-PersonCl.greet();
+// create an object using PersonProto as it's prototype
+const poojan = Object.create(PersonProto);
+
+// Instead of manually adding properties, we can create an init() function in the prototype
+// poojan.firstName = 'Poojan';
+// poojan.birthYear = 1999;
+poojan.init('Poojan', 1999);
+
+console.log(poojan.calcAge());
