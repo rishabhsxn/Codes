@@ -187,56 +187,86 @@
 
 
 
-// ---------------------------------------------- SETTER & GETTER -----------------------------------------------
+// // ---------------------------------------------- SETTER & GETTER -----------------------------------------------
 
-// on Object
-const account = {
-    owner: 'Rishabh',
-    movements: [200, 530, 120, 400],
+// // on Object
+// const account = {
+//     owner: 'Rishabh',
+//     movements: [200, 530, 120, 400],
 
-    get latest(){
-        return this.movements.slice(-1).pop();
-    },
+//     get latest(){
+//         return this.movements.slice(-1).pop();
+//     },
 
-    set latest(mov){
-        this.movements.push(mov);
-    },
+//     set latest(mov){
+//         this.movements.push(mov);
+//     },
+// };
+
+// // these are defined as methods, but are used as properties
+// console.log(account.latest);
+// account.latest = 100;
+
+// console.log(account.movements);
+
+
+// // on Class
+// class Person{
+//     constructor(fullName, birthYear){
+//         this.fullName = fullName;
+//         this.birthYear = birthYear;
+//     };
+
+//     // defining getter without setter is allowed
+//     get age(){
+//         return 2021 - this.birthYear;
+//     };
+  
+//     // data validation & When getter/setter is used for an Existing property name
+//     set fullName(name){
+//         if(name.includes(' '))
+//             this._fullName = name;
+//         else
+//             alert('This is not a Full Name!');
+//     };
+
+//     get fullName(){
+//         return this._fullName;
+//     }
+// };
+
+// const rishabh = new Person('Rishabh Saxena', 1998);
+// console.log(rishabh.age);
+
+// const sanyam = new Person('Sanyam Saxena', 2000);
+// console.log(sanyam.fullName);
+
+
+
+// -------------------------------------------- STATIC METHODS ------------------------------------------------
+
+
+// Constructor function
+const PersonConst = function(firstName, birthYear){
+    this.firstName = firstName;
+    this.birthYear = birthYear;
 };
 
-// these are defined as methods, but are used as properties
-console.log(account.latest);
-account.latest = 100;
+PersonConst.greet = function(){
+    console.log('Hi from a constructor function!');
+};
+PersonConst.greet();
 
-console.log(account.movements);
-
-
-// on Class
-class Person{
-    constructor(fullName, birthYear){
-        this.fullName = fullName;
+// Class
+class PersonCl{
+    constructor(firstName, birthYear){
+        this.firstName = firstName;
         this.birthYear = birthYear;
-    };
+    }
 
-    // defining getter without setter is allowed
-    get age(){
-        return 2021 - this.birthYear;
-    };
-  
-    // data validation & When getter/setter is used for an Existing property name
-    set fullName(name){
-        if(name.includes(' '))
-            this._fullName = name;
-        else
-            alert('This is not a Full Name!');
-    };
-
-    get fullName(){
-        return this._fullName;
+    static greet(){
+        console.log('Hi from a class!');
     }
 };
 
-const rishabh = new Person('Rishabh Saxena', 1998);
-console.log(rishabh.age);
-
-const sanyam = new Person('Sanyam Saxena', 2000);
-console.log(sanyam.fullName);
+PersonCl.greet();
