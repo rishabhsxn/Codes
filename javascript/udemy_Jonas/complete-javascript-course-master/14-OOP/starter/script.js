@@ -275,29 +275,81 @@
 
 
 
-// ------------------------------------------------ OBJECT.CREATE() ----------------------------------------------------
+// // ------------------------------------------------ OBJECT.CREATE() ----------------------------------------------------
 
-/* Using Object.create() we can manually create objects from a defined object set as it's prototype.
-It works differently from Constructor function and ES6 Class */
+// /* Using Object.create() we can manually create objects from a defined object set as it's prototype.
+// It works differently from Constructor function and ES6 Class */
 
-// prototype object
-const PersonProto = {
-    calcAge(){
-        return 2021 - this.birthYear;
-    },
+// // prototype object
+// const PersonProto = {
+//     calcAge(){
+//         return 2021 - this.birthYear;
+//     },
 
-    init(firstName, birthYear){
-        this.firstName = firstName;
-        this.birthYear = birthYear;
+//     init(firstName, birthYear){
+//         this.firstName = firstName;
+//         this.birthYear = birthYear;
+//     }
+// };
+
+// // create an object using PersonProto as it's prototype
+// const poojan = Object.create(PersonProto);
+
+// // Instead of manually adding properties, we can create an init() function in the prototype
+// // poojan.firstName = 'Poojan';
+// // poojan.birthYear = 1999;
+// poojan.init('Poojan', 1999);
+
+// console.log(poojan.calcAge());
+
+
+
+
+
+// ------------------------------------------------ CODING CHALLENGE #02 -----------------------------------------------
+/* 
+1. Re-create challenge 1, but this time using an ES6 class;
+2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6);
+3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing 
+the value, by multiplying the input by 1.6);
+4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
+
+DATA CAR 1: 'Ford' going at 120 km/h
+
+GOOD LUCK 😀
+*/
+
+class Car{
+    constructor(make, speed){
+        this.make = make;
+        this.speed = speed;
+    }
+
+    accelerate(){
+        this.speed += 10;
+        console.log(`${this.make} is running at speed of ${this.speed}`);
+    }
+
+    brake(){
+        this.speed -= 5;
+        console.log(`${this.make} is running at speed of ${this.speed}`);
+    }
+
+    get speedUS(){
+        return this.speed/1.6;
+    }
+
+    set speedUS(speed){
+        this.speed = speed * 1.6;
     }
 };
 
-// create an object using PersonProto as it's prototype
-const poojan = Object.create(PersonProto);
+const ford = new Car('Ford', 120);
 
-// Instead of manually adding properties, we can create an init() function in the prototype
-// poojan.firstName = 'Poojan';
-// poojan.birthYear = 1999;
-poojan.init('Poojan', 1999);
+ford.accelerate();
+ford.accelerate();
+ford.brake();
 
-console.log(poojan.calcAge());
+console.log(`${ford.make}'s speed in mi/h: ${ford.speedUS}`);
+ford.speedUS = 50;
+console.log(`${ford.make}'s speed in mi/h: ${ford.speedUS}`);
