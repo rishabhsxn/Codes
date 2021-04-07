@@ -306,50 +306,93 @@
 
 
 
-// ------------------------------------------------ CODING CHALLENGE #02 -----------------------------------------------
-/* 
-1. Re-create challenge 1, but this time using an ES6 class;
-2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6);
-3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing 
-the value, by multiplying the input by 1.6);
-4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
+// // ------------------------------------------------ CODING CHALLENGE #02 -----------------------------------------------
+// /* 
+// 1. Re-create challenge 1, but this time using an ES6 class;
+// 2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6);
+// 3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing 
+// the value, by multiplying the input by 1.6);
+// 4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
 
-DATA CAR 1: 'Ford' going at 120 km/h
+// DATA CAR 1: 'Ford' going at 120 km/h
 
-GOOD LUCK 😀
-*/
+// GOOD LUCK 😀
+// */
 
-class Car{
-    constructor(make, speed){
-        this.make = make;
-        this.speed = speed;
-    }
+// class Car{
+//     constructor(make, speed){
+//         this.make = make;
+//         this.speed = speed;
+//     }
 
-    accelerate(){
-        this.speed += 10;
-        console.log(`${this.make} is running at speed of ${this.speed}`);
-    }
+//     accelerate(){
+//         this.speed += 10;
+//         console.log(`${this.make} is running at speed of ${this.speed}`);
+//     }
 
-    brake(){
-        this.speed -= 5;
-        console.log(`${this.make} is running at speed of ${this.speed}`);
-    }
+//     brake(){
+//         this.speed -= 5;
+//         console.log(`${this.make} is running at speed of ${this.speed}`);
+//     }
 
-    get speedUS(){
-        return this.speed/1.6;
-    }
+//     get speedUS(){
+//         return this.speed/1.6;
+//     }
 
-    set speedUS(speed){
-        this.speed = speed * 1.6;
-    }
+//     set speedUS(speed){
+//         this.speed = speed * 1.6;
+//     }
+// };
+
+// const ford = new Car('Ford', 120);
+
+// ford.accelerate();
+// ford.accelerate();
+// ford.brake();
+
+// console.log(`${ford.make}'s speed in mi/h: ${ford.speedUS}`);
+// ford.speedUS = 50;
+// console.log(`${ford.make}'s speed in mi/h: ${ford.speedUS}`);
+
+
+
+
+// ---------------------------------------- INHERITANCE (Constructor Functions) ----------------------------------------
+
+// Parent cLass
+const Person = function(firstName, birthYear){
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+};
+Person.prototype.calcAge = function(){
+    return 2021 - this.birthYear;
 };
 
-const ford = new Car('Ford', 120);
 
-ford.accelerate();
-ford.accelerate();
-ford.brake();
+// Child Class
+const Student = function(firstName, birthYear, course){
+    /* Call the parent class constructor function with it's this keyword set to the current new empty object (this).
+    Due to this, the Parent constructor will set it's properties in the child object */
+    Person.call(this, firstName, birthYear);
 
-console.log(`${ford.make}'s speed in mi/h: ${ford.speedUS}`);
-ford.speedUS = 50;
-console.log(`${ford.make}'s speed in mi/h: ${ford.speedUS}`);
+    this.course = course;
+};
+// console.log(Student.prototype.__proto__ === Object.prototype)       // true
+/* IMPORTANT: Before adding methods to Student, we need to complete the inheritance, we have to complete the 
+Prototypal Chain i.e. make Person.prototype the prototype of Student.prototype (which is currently Object.prototype) */
+Student.prototype = Object.create(Person.prototype);
+
+/* We have to fix some error manually now. 
+Student.prototype.constructor should point to Student() constructor function, but now it points to Person() */
+Student.prototype.constructor = Student;
+
+
+Student.prototype.introduce = function(){
+    console.log(`Hello! I'm ${this.firstName} and I'm studying ${this.course}`);
+};
+
+
+const rishabh = new Student('Rishabh', 1998, 'Computer Science');
+
+console.log(rishabh.calcAge());     // method inherited from the Parent class Person
+rishabh.introduce();       // method of Student itself
