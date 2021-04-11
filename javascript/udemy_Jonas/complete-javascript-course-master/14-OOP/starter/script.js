@@ -210,38 +210,38 @@
 // console.log(account.movements);
 
 
-// on Class
-class Person{
-    constructor(fullName, birthYear){
-        this.fullName = fullName;
-        this.birthYear = birthYear;
-    };
+// // on Class
+// class Person{
+//     constructor(fullName, birthYear){
+//         this.fullName = fullName;
+//         this.birthYear = birthYear;
+//     };
 
-    // defining getter without setter is allowed
-    get age(){
-        return 2021 - this.birthYear;
-    };
+//     // defining getter without setter is allowed
+//     get age(){
+//         return 2021 - this.birthYear;
+//     };
   
-    // data validation & When getter/setter is used for an Existing property name
-    set fullName(name){
-        if(name.includes(' '))
-            this._fullName = name;
-        else
-            alert('This is not a Full Name!');
-    };
+//     // data validation & When getter/setter is used for an Existing property name
+//     set fullName(name){
+//         if(name.includes(' '))
+//             this._fullName = name;
+//         else
+//             alert('This is not a Full Name!');
+//     };
 
-    get fullName(){
-        return this._fullName;
-    };
+//     get fullName(){
+//         return this._fullName;
+//     };
 
-    calcAge(){
-        return 2021 - this.birthYear;
-    };
+//     calcAge(){
+//         return 2021 - this.birthYear;
+//     };
 
-    greet(){
-        console.log(`Hello there ${this.firstName}`);
-    };
-};
+//     greet(){
+//         console.log(`Hello there ${this.firstName}`);
+//     };
+// };
 
 // const rishabh = new Person('Rishabh Saxena', 1998);
 // console.log(rishabh.age);
@@ -454,23 +454,57 @@ class Person{
 
 
 
-// ---------------------------------------- INHERITANCE (ES6 Class) ----------------------------------------
+// // ---------------------------------------- INHERITANCE (ES6 Class) ----------------------------------------
 
-class Student extends Person{
-    /* IMPORTANT: If NO new properties are required to be initialized in the child, no need to define constructor or call
-    super(), it will be done automatically */
-    constructor(fullName, birthYear, course){
-        super(fullName, birthYear);     // it is mandatory to call super before initializing properties of the child
-        this.course = course;
-    };
+// class Student extends Person{
+//     /* IMPORTANT: If NO new properties are required to be initialized in the child, no need to define constructor or call
+//     super(), it will be done automatically */
+//     constructor(fullName, birthYear, course){
+//         super(fullName, birthYear);     // it is mandatory to call super before initializing properties of the child
+//         this.course = course;
+//     };
 
-    // this function will overwrite the previous implementation
-    greet(){
-        console.log(`Hi there! I'm ${this.fullName}, ${this.calcAge()} yr old and studying ${this.course}.`);
-    };
+//     // this function will overwrite the previous implementation
+//     greet(){
+//         console.log(`Hi there! I'm ${this.fullName}, ${this.calcAge()} yr old and studying ${this.course}.`);
+//     };
+// };
+
+// const john = new Student('John Doe', 1995, 'History');
+
+// console.log(john.calcAge());    // from parent
+// john.greet();
+
+
+
+
+// ---------------------------------------- INHERITANCE (Object.create()) ----------------------------------------
+
+// Parent Prototype
+const PersonProto = {
+    init(firstName, birthYear){
+        this.firstName = firstName;
+        this.birthYear = birthYear;
+    },
+
+    calcAge(){
+        return 2021 - this.birthYear;
+    },
 };
 
-const john = new Student('John Doe', 1995, 'History');
+// Child Prototype
+const StudentProto = Object.create(PersonProto);
+StudentProto.init = function(firstName, birthYear, course){
+    PersonProto.init.call(this, firstName, birthYear);
+    this.course = course;
+};
+StudentProto.introduce = function(){
+    console.log(`My name is ${this.firstName}. I'm ${this.calcAge()} yr old and studying ${this.course}.`);
+};
 
-console.log(john.calcAge());    // from parent
-john.greet();
+// Child Instance
+const ramesh = Object.create(StudentProto);
+ramesh.init('Ramesh', 1980, 'Chemistry');
+
+console.log(ramesh.calcAge());      // from topmost prototype
+ramesh.introduce();     // from closest prototype
