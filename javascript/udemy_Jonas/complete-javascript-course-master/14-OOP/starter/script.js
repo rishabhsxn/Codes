@@ -113,23 +113,23 @@
 // DATA CAR 2: 'Mercedes' going at 95 km/h
 // */
 
-// // 1
-// const Car = function(make, speed){
-//     this.make = make;
-//     this.speed = speed;     /* km/h */
-// };
+// 1
+const Car = function(make, speed){
+    this.make = make;
+    this.speed = speed;     /* km/h */
+};
 
-// // 2
-// Car.prototype.accelerate = function(){
-//     this.speed += 10;
-//     console.log(`${this.make}: ${this.speed}`);
-// };
+// 2
+Car.prototype.accelerate = function(){
+    this.speed += 10;
+    console.log(`${this.make}: ${this.speed}`);
+};
 
-// // 3
-// Car.prototype.brake = function(){
-//     this.speed -= 5;
-//     console.log(`${this.make}: ${this.speed}`);
-// };
+// 3
+Car.prototype.brake = function(){
+    this.speed -= 5;
+    console.log(`${this.make}: ${this.speed}`);
+};
 
 // // 4
 // const bmw = new Car('BMW', 120);
@@ -357,42 +357,87 @@
 
 
 
-// ---------------------------------------- INHERITANCE (Constructor Functions) ----------------------------------------
+// // ---------------------------------------- INHERITANCE (Constructor Functions) ----------------------------------------
 
-// Parent cLass
-const Person = function(firstName, birthYear){
-    this.firstName = firstName;
-    this.birthYear = birthYear;
+// // Parent cLass
+// const Person = function(firstName, birthYear){
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+// };
+// Person.prototype.calcAge = function(){
+//     return 2021 - this.birthYear;
+// };
+
+
+// // Child Class
+// const Student = function(firstName, birthYear, course){
+//     /* Call the parent class constructor function with it's this keyword set to the current new empty object (this).
+//     Due to this, the Parent constructor will set it's properties in the child object */
+//     Person.call(this, firstName, birthYear);
+
+//     this.course = course;
+// };
+// // console.log(Student.prototype.__proto__ === Object.prototype)       // true
+// /* IMPORTANT: Before adding methods to Student, we need to complete the inheritance, we have to complete the 
+// Prototypal Chain i.e. make Person.prototype the prototype of Student.prototype (which is currently Object.prototype) */
+// Student.prototype = Object.create(Person.prototype);
+
+// /* We have to fix some error manually now. 
+// Student.prototype.constructor should point to Student() constructor function, but now it points to Person() */
+// Student.prototype.constructor = Student;
+
+
+// Student.prototype.introduce = function(){
+//     console.log(`Hello! I'm ${this.firstName} and I'm studying ${this.course}`);
+// };
+
+
+// const rishabh = new Student('Rishabh', 1998, 'Computer Science');
+
+// console.log(rishabh.calcAge());     // method inherited from the Parent class Person
+// rishabh.introduce();       // method of Student itself
+
+
+
+
+// --------------------------------------------- CODING CHALLENGE #3 ----------------------------------------------------
+/* 
+1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and 
+current speed, the EV also has the current battery charge in % ('charge' property);
+2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
+3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. 
+Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
+4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). 
+Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 😉
+
+DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+*/
+
+// 1
+const EV = function(make, speed, charge){
+    Car.call(this, make, speed);
+    this.charge = charge;   /* in % */
 };
-Person.prototype.calcAge = function(){
-    return 2021 - this.birthYear;
+
+EV.prototype = Object.create(Car.prototype);
+EV.prototype.constructor = EV;
+
+// 2
+EV.prototype.chargeBattery = function(chargeTo){
+    this.charge = chargeTo;
 };
 
-
-// Child Class
-const Student = function(firstName, birthYear, course){
-    /* Call the parent class constructor function with it's this keyword set to the current new empty object (this).
-    Due to this, the Parent constructor will set it's properties in the child object */
-    Person.call(this, firstName, birthYear);
-
-    this.course = course;
-};
-// console.log(Student.prototype.__proto__ === Object.prototype)       // true
-/* IMPORTANT: Before adding methods to Student, we need to complete the inheritance, we have to complete the 
-Prototypal Chain i.e. make Person.prototype the prototype of Student.prototype (which is currently Object.prototype) */
-Student.prototype = Object.create(Person.prototype);
-
-/* We have to fix some error manually now. 
-Student.prototype.constructor should point to Student() constructor function, but now it points to Person() */
-Student.prototype.constructor = Student;
-
-
-Student.prototype.introduce = function(){
-    console.log(`Hello! I'm ${this.firstName} and I'm studying ${this.course}`);
+// 3 - this function will overwrite the previous implementation of accelerate
+EV.prototype.accelerate = function(){
+    this.speed += 20;
+    this.charge--;
+    console.log(`${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}%`);
 };
 
-
-const rishabh = new Student('Rishabh', 1998, 'Computer Science');
-
-console.log(rishabh.calcAge());     // method inherited from the Parent class Person
-rishabh.introduce();       // method of Student itself
+// 4
+const tesla = new EV('Tesla', 120, 23);
+tesla.accelerate();
+tesla.brake();
+tesla.chargeBattery(90);
