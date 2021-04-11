@@ -113,23 +113,23 @@
 // DATA CAR 2: 'Mercedes' going at 95 km/h
 // */
 
-// 1
-const Car = function(make, speed){
-    this.make = make;
-    this.speed = speed;     /* km/h */
-};
+// // 1
+// const Car = function(make, speed){
+//     this.make = make;
+//     this.speed = speed;     /* km/h */
+// };
 
-// 2
-Car.prototype.accelerate = function(){
-    this.speed += 10;
-    console.log(`${this.make}: ${this.speed}`);
-};
+// // 2
+// Car.prototype.accelerate = function(){
+//     this.speed += 10;
+//     console.log(`${this.make}: ${this.speed}`);
+// };
 
-// 3
-Car.prototype.brake = function(){
-    this.speed -= 5;
-    console.log(`${this.make}: ${this.speed}`);
-};
+// // 3
+// Car.prototype.brake = function(){
+//     this.speed -= 5;
+//     console.log(`${this.make}: ${this.speed}`);
+// };
 
 // // 4
 // const bmw = new Car('BMW', 120);
@@ -210,30 +210,38 @@ Car.prototype.brake = function(){
 // console.log(account.movements);
 
 
-// // on Class
-// class Person{
-//     constructor(fullName, birthYear){
-//         this.fullName = fullName;
-//         this.birthYear = birthYear;
-//     };
+// on Class
+class Person{
+    constructor(fullName, birthYear){
+        this.fullName = fullName;
+        this.birthYear = birthYear;
+    };
 
-//     // defining getter without setter is allowed
-//     get age(){
-//         return 2021 - this.birthYear;
-//     };
+    // defining getter without setter is allowed
+    get age(){
+        return 2021 - this.birthYear;
+    };
   
-//     // data validation & When getter/setter is used for an Existing property name
-//     set fullName(name){
-//         if(name.includes(' '))
-//             this._fullName = name;
-//         else
-//             alert('This is not a Full Name!');
-//     };
+    // data validation & When getter/setter is used for an Existing property name
+    set fullName(name){
+        if(name.includes(' '))
+            this._fullName = name;
+        else
+            alert('This is not a Full Name!');
+    };
 
-//     get fullName(){
-//         return this._fullName;
-//     }
-// };
+    get fullName(){
+        return this._fullName;
+    };
+
+    calcAge(){
+        return 2021 - this.birthYear;
+    };
+
+    greet(){
+        console.log(`Hello there ${this.firstName}`);
+    };
+};
 
 // const rishabh = new Person('Rishabh Saxena', 1998);
 // console.log(rishabh.age);
@@ -400,44 +408,69 @@ Car.prototype.brake = function(){
 
 
 
-// --------------------------------------------- CODING CHALLENGE #3 ----------------------------------------------------
-/* 
-1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and 
-current speed, the EV also has the current battery charge in % ('charge' property);
-2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
-3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. 
-Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
-4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). 
-Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 😉
+// // --------------------------------------------- CODING CHALLENGE #3 ----------------------------------------------------
+// /* 
+// 1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and 
+// current speed, the EV also has the current battery charge in % ('charge' property);
+// 2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
+// 3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. 
+// Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
+// 4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). 
+// Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 😉
 
-DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
+// DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
 
-GOOD LUCK 😀
-*/
+// GOOD LUCK 😀
+// */
 
-// 1
-const EV = function(make, speed, charge){
-    Car.call(this, make, speed);
-    this.charge = charge;   /* in % */
+// // 1
+// const EV = function(make, speed, charge){
+//     Car.call(this, make, speed);
+//     this.charge = charge;   /* in % */
+// };
+
+// EV.prototype = Object.create(Car.prototype);
+// EV.prototype.constructor = EV;
+
+// // 2
+// EV.prototype.chargeBattery = function(chargeTo){
+//     this.charge = chargeTo;
+// };
+
+// // 3 - this function will overwrite the previous implementation of accelerate
+// EV.prototype.accelerate = function(){
+//     this.speed += 20;
+//     this.charge--;
+//     console.log(`${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}%`);
+// };
+
+// // 4
+// const tesla = new EV('Tesla', 120, 23);
+// tesla.accelerate();
+// tesla.brake();
+// tesla.chargeBattery(90);
+
+
+
+
+
+// ---------------------------------------- INHERITANCE (ES6 Class) ----------------------------------------
+
+class Student extends Person{
+    /* IMPORTANT: If NO new properties are required to be initialized in the child, no need to define constructor or call
+    super(), it will be done automatically */
+    constructor(fullName, birthYear, course){
+        super(fullName, birthYear);     // it is mandatory to call super before initializing properties of the child
+        this.course = course;
+    };
+
+    // this function will overwrite the previous implementation
+    greet(){
+        console.log(`Hi there! I'm ${this.fullName}, ${this.calcAge()} yr old and studying ${this.course}.`);
+    };
 };
 
-EV.prototype = Object.create(Car.prototype);
-EV.prototype.constructor = EV;
+const john = new Student('John Doe', 1995, 'History');
 
-// 2
-EV.prototype.chargeBattery = function(chargeTo){
-    this.charge = chargeTo;
-};
-
-// 3 - this function will overwrite the previous implementation of accelerate
-EV.prototype.accelerate = function(){
-    this.speed += 20;
-    this.charge--;
-    console.log(`${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}%`);
-};
-
-// 4
-const tesla = new EV('Tesla', 120, 23);
-tesla.accelerate();
-tesla.brake();
-tesla.chargeBattery(90);
+console.log(john.calcAge());    // from parent
+john.greet();
