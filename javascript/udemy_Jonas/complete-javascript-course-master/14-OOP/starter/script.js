@@ -478,33 +478,91 @@
 
 
 
-// ---------------------------------------- INHERITANCE (Object.create()) ----------------------------------------
+// // ---------------------------------------- INHERITANCE (Object.create()) ----------------------------------------
 
-// Parent Prototype
-const PersonProto = {
-    init(firstName, birthYear){
-        this.firstName = firstName;
-        this.birthYear = birthYear;
-    },
+// // Parent Prototype
+// const PersonProto = {
+//     init(firstName, birthYear){
+//         this.firstName = firstName;
+//         this.birthYear = birthYear;
+//     },
 
-    calcAge(){
-        return 2021 - this.birthYear;
-    },
+//     calcAge(){
+//         return 2021 - this.birthYear;
+//     },
+// };
+
+// // Child Prototype
+// const StudentProto = Object.create(PersonProto);
+// StudentProto.init = function(firstName, birthYear, course){
+//     PersonProto.init.call(this, firstName, birthYear);
+//     this.course = course;
+// };
+// StudentProto.introduce = function(){
+//     console.log(`My name is ${this.firstName}. I'm ${this.calcAge()} yr old and studying ${this.course}.`);
+// };
+
+// // Child Instance
+// const ramesh = Object.create(StudentProto);
+// ramesh.init('Ramesh', 1980, 'Chemistry');
+
+// console.log(ramesh.calcAge());      // from topmost prototype
+// ramesh.introduce();     // from closest prototype
+
+
+
+
+// -------------------------------------------- ENCAPSULATION: Protected -------------------------------------------
+
+/* JavaScript doesn't support truly yet. We only follow a convention so that our fellow developers understand
+that this variable or method is not to be directly accessed from outside the class. */
+
+/* Because of Encapsulation:
+1. We can ensure Data Privacy. We can specify which methods or property can be accessed from outside by defining
+the Public Interface (API).
+2. We can ensure that we can safely change the private method's implementation in the future. Define most of the code
+as private and very less code as public interface. */
+
+class Account{
+    constructor(owner, currency, pin){
+        this.owner = owner;
+        this.currency = currency;
+        this._pin = pin;    // protected
+        this._movements = [];   // protected
+        this.locale = navigator.language;
+
+        console.log(`Thanks for opening an account, ${this.owner}.`);
+    };
+
+    deposit(val){
+        this._movements.push(val);
+    };
+
+    withdraw(val){
+        this.deposit(-val);
+    };
+
+    // protected method
+    _approveLoan(val){
+        // some complex logic
+        return true;
+    };
+
+    requestLoan(val){
+        if(this._approveLoan(val)){
+            console.log(`Loan Granted!`);
+            this.deposit(val);
+        }
+        else
+            console.log(`Loan Declined!`);
+    };
 };
 
-// Child Prototype
-const StudentProto = Object.create(PersonProto);
-StudentProto.init = function(firstName, birthYear, course){
-    PersonProto.init.call(this, firstName, birthYear);
-    this.course = course;
-};
-StudentProto.introduce = function(){
-    console.log(`My name is ${this.firstName}. I'm ${this.calcAge()} yr old and studying ${this.course}.`);
-};
+const acc1 = new Account('Rishabh', 'INR', 1234);
 
-// Child Instance
-const ramesh = Object.create(StudentProto);
-ramesh.init('Ramesh', 1980, 'Chemistry');
+acc1.deposit(10000);
+acc1.withdraw(100);
+acc1.requestLoan(20000);
 
-console.log(ramesh.calcAge());      // from topmost prototype
-ramesh.introduce();     // from closest prototype
+/* We can still access the protected methods, but they should not be accessed */
+console.log(acc1._movements);
