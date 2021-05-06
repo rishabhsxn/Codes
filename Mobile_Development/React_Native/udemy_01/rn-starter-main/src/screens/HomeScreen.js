@@ -34,6 +34,13 @@ const HomeScreen = ({ navigation }) => {
 					navigation.navigate("ImageS");
 				}}
 			/>
+
+			<Button
+				title="Go to Counter Screen"
+				onPress={() => {
+					navigation.navigate("Counter");
+				}}
+			/>
 		</View>
 	);
 };
