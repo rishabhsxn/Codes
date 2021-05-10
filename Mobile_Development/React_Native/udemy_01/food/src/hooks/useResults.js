@@ -24,7 +24,7 @@ export default () => {
 
 	// this will run the callback only after the 1st render
 	useEffect(() => {
-		searchAPI("Pasta");
+		searchAPI("macaroni");
 	}, []);
 
 	return [searchAPI, results, errorMessage];
