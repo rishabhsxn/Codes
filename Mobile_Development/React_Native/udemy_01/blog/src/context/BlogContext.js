@@ -1,10 +1,6 @@
 import createDataContext from "./createDataContext";
 
-const initialBlogs = [
-	{ title: "Blog #1", id: 1 },
-	{ title: "Blog #2", id: 2 },
-	{ title: "Blog #3", id: 3 },
-];
+const initialBlogs = [{ id: 1, title: "Test Blog", content: "Test Content" }];
 
 const blogReducer = (state, action) => {
 	switch (action.type) {
