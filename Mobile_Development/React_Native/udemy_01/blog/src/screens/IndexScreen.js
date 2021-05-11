@@ -4,22 +4,16 @@ import {
 	View,
 	StyleSheet,
 	FlatList,
-	Button,
 	TouchableOpacity,
 } from "react-native";
 import { BlogContext } from "../context/BlogContext";
 import { Feather } from "@expo/vector-icons";
 
 const IndexScreen = ({ navigation }) => {
-	const {
-		state: blogs,
-		addBlogPost,
-		deleteBlogPost,
-	} = useContext(BlogContext);
+	const { state: blogs, deleteBlogPost } = useContext(BlogContext);
 
 	return (
 		<>
-			<Button title="Add Blog" onPress={addBlogPost} />
 			<FlatList
 				data={blogs}
 				keyExtractor={(blog) => `${blog.id}`}
@@ -75,6 +69,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		borderColor: "#000",
 		borderBottomWidth: 1,
+		paddingHorizontal: 6,
 	},
 	blogTitle: {
 		fontSize: 18,
