@@ -11,21 +11,29 @@ import { BlogContext } from "../context/BlogContext";
 import { Feather } from "@expo/vector-icons";
 
 const IndexScreen = () => {
-	const { state: blogs, addBlogPost } = useContext(BlogContext);
+	const {
+		state: blogs,
+		addBlogPost,
+		deleteBlogPost,
+	} = useContext(BlogContext);
 
 	return (
 		<>
 			<Button title="Add Blog" onPress={addBlogPost} />
 			<FlatList
 				data={blogs}
-				keyExtractor={(blog) => blog.title}
+				keyExtractor={(blog) => `${blog.id}`}
 				renderItem={({ item: blog }) => {
 					return (
 						<View style={styles.blog}>
 							<Text style={styles.blogTitle}>
 								{blog.title} - {blog.id}
 							</Text>
-							<TouchableOpacity onPress={() => {}}>
+							<TouchableOpacity
+								onPress={() => {
+									deleteBlogPost(blog.id);
+								}}
+							>
 								<Feather size={30} name="trash" />
 							</TouchableOpacity>
 						</View>

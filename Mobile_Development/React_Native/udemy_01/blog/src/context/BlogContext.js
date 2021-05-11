@@ -16,6 +16,10 @@ const blogReducer = (state, action) => {
 					id: Math.floor(Math.random() * 99999),
 				},
 			];
+
+		case "DELETE_BLOGPOST":
+			return state.filter((blog) => blog.id !== action.payload);
+
 		default:
 			return state;
 	}
@@ -30,7 +34,17 @@ const addBlogPost = (dispatch) => {
 	};
 };
 
+const deleteBlogPost = (dispatch) => {
+	return (id) => {
+		dispatch({ type: "DELETE_BLOGPOST", payload: id });
+	};
+};
+
 /* Pass our reducer, object containing callbacks to dispatch action & initialState
 and Receive the custom created Context & Provider from the function */
 export const { Context: BlogContext, Provider: BlogProvider } =
-	createDataContext(blogReducer, { addBlogPost }, initialBlogs);
+	createDataContext(
+		blogReducer,
+		{ addBlogPost, deleteBlogPost },
+		initialBlogs
+	);
