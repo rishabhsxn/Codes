@@ -18,8 +18,12 @@ const blogReducer = (state, action) => {
 };
 
 /* Helper function that will modify state variable in child component */
-const addBlogPost = () => {
-	dispatch({ type: "ADD_BLOGPOST" });
+/* IMPORTANT: We don't have the dispatch function here anymore, so we receive dispatch function as parameter,
+then return a callback that will call the dispatch function to send our action. */
+const addBlogPost = (dispatch) => {
+	return () => {
+		dispatch({ type: "ADD_BLOGPOST" });
+	};
 };
 
 /* Pass our reducer, object containing callbacks to dispatch action & initialState

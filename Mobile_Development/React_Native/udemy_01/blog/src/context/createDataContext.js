@@ -12,7 +12,21 @@ export default (reducer, actions, initialState) => {
 	const Provider = ({ children }) => {
 		const [state, dispatch] = useReducer(reducer, initialState);
 
-		return <Context.Provider value={state}>{children}</Context.Provider>;
+		/* actions is an object that contain different callbacks that we need to pass to the child components that
+        allow them to modify state. 
+        But these callback didn't have dispatch, so need to generate new callbacks that have access to dispatch without
+        the need of parameters (because child won't have the dispatch function to pass as parameter. */
+		const processedActions = {}; // this object will contain the new callbacks
+		for (let key in actions) {
+			processedActions[key] = actions[key](dispatch);
+		}
+
+		// now pass these callbacks in the value prop along side state
+		return (
+			<Context.Provider value={{ state, ...processedActions }}>
+				{children}
+			</Context.Provider>
+		);
 	};
 
 	return { Context, Provider };
