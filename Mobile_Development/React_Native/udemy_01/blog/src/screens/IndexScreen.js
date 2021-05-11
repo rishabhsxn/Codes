@@ -10,7 +10,7 @@ import {
 import { BlogContext } from "../context/BlogContext";
 import { Feather } from "@expo/vector-icons";
 
-const IndexScreen = () => {
+const IndexScreen = ({ navigation }) => {
 	const {
 		state: blogs,
 		addBlogPost,
@@ -26,9 +26,18 @@ const IndexScreen = () => {
 				renderItem={({ item: blog }) => {
 					return (
 						<View style={styles.blog}>
-							<Text style={styles.blogTitle}>
-								{blog.title} - {blog.id}
-							</Text>
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("Show", {
+										id: blog.id,
+									});
+								}}
+								style={styles.titleContainer}
+							>
+								<Text style={styles.blogTitle}>
+									{blog.title} - {blog.id}
+								</Text>
+							</TouchableOpacity>
 							<TouchableOpacity
 								onPress={() => {
 									deleteBlogPost(blog.id);
@@ -49,12 +58,16 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: "row",
 		justifyContent: "space-between",
-		padding: 10,
+		alignItems: "center",
 		borderColor: "#000",
 		borderBottomWidth: 1,
 	},
 	blogTitle: {
 		fontSize: 18,
+		margin: 10,
+	},
+	titleContainer: {
+		flex: 1,
 	},
 });
 
