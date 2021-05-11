@@ -1,17 +1,21 @@
 import createDataContext from "./createDataContext";
 
 const initialBlogs = [
-	{ title: "Blog #1" },
-	{ title: "Blog #2" },
-	{ title: "Blog #3" },
-	{ title: "Blog #4" },
-	{ title: "Blog #5" },
+	{ title: "Blog #1", id: 1 },
+	{ title: "Blog #2", id: 2 },
+	{ title: "Blog #3", id: 3 },
 ];
 
 const blogReducer = (state, action) => {
 	switch (action.type) {
 		case "ADD_BLOGPOST":
-			return [...state, { title: `Blog #${state.length + 1}` }];
+			return [
+				...state,
+				{
+					title: `Blog #${state.length + 1}`,
+					id: Math.floor(Math.random() * 99999),
+				},
+			];
 		default:
 			return state;
 	}

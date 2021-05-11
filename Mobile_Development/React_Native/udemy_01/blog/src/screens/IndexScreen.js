@@ -22,7 +22,9 @@ const IndexScreen = () => {
 				renderItem={({ item: blog }) => {
 					return (
 						<View style={styles.blog}>
-							<Text style={styles.blogTitle}>{blog.title}</Text>
+							<Text style={styles.blogTitle}>
+								{blog.title} - {blog.id}
+							</Text>
 							<TouchableOpacity onPress={() => {}}>
 								<Feather size={30} name="trash" />
 							</TouchableOpacity>
