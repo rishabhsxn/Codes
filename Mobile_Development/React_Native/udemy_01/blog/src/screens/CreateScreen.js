@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 import { BlogContext } from "../context/BlogContext";
 
-const CreateScreen = () => {
+const CreateScreen = ({ navigation }) => {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 
@@ -34,7 +34,12 @@ const CreateScreen = () => {
 			<Button
 				title="Save Post"
 				onPress={() => {
-					addBlogPost(title, content);
+					/* We can pass a callback to navigate to IndexScren to addBlogPost(), so that it will call it when
+                    the action is successfully dispatched.
+                    This will work perfectly when we even have an API call before dispatch or any error during dispatch. */
+					addBlogPost(title, content, () => {
+						navigation.navigate("Index");
+					});
 				}}
 			/>
 		</View>

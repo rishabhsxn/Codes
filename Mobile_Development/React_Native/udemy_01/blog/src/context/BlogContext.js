@@ -26,8 +26,9 @@ const blogReducer = (state, action) => {
 /* IMPORTANT: We don't have the dispatch function here anymore, so we receive dispatch function as parameter,
 then return a callback that will call the dispatch function to send our action. */
 const addBlogPost = (dispatch) => {
-	return (title, content) => {
+	return (title, content, callback) => {
 		dispatch({ type: "ADD_BLOGPOST", payload: { title, content } });
+		if (callback) callback();
 	};
 };
 
