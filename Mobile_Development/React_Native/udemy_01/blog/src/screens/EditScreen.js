@@ -5,7 +5,7 @@ import { BlogContext } from "../context/BlogContext";
 const EditScreen = ({ navigation }) => {
 	const id = navigation.getParam("id");
 
-	const { state } = useContext(BlogContext);
+	const { state, editBlogPost } = useContext(BlogContext);
 	const blogPost = state.find((blog) => blog.id === id);
 
 	const [title, setTitle] = useState(blogPost.title);
@@ -34,7 +34,14 @@ const EditScreen = ({ navigation }) => {
 				}}
 			/>
 
-			<Button title="Save Post" onPress={() => {}} />
+			<Button
+				title="Save Post"
+				onPress={() => {
+					editBlogPost(id, title, content, () => {
+						navigation.pop();
+					});
+				}}
+			/>
 		</View>
 	);
 };
