@@ -19,6 +19,20 @@ const IndexScreen = ({ navigation }) => {
 	useEffect(() => {
 		// fetch the blogposts from the json-server when the component renders for 1st time
 		getBlogPosts();
+
+		// this will refetch the blogposts when IndexScreen is in focus
+		const listener = navigation.addListener("didFocus", () => {
+			getBlogPosts();
+		});
+
+		/* IMPORTANT: Any function that we return from useEffect is automatically executed when a
+		component is removed from the navigation stack 
+		Therefore, it is best ideal for cleanup */
+		return () => {
+			/* IMPORTANT: If we don't remove the listener when a screen is removed from navigation stack,
+			it will cause memory leaks */
+			listener.remove();
+		};
 	}, []);
 
 	return (
