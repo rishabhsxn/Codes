@@ -1,5 +1,14 @@
 {
-	"blogposts": [
-		{ "id": "1", "title": "Test Blog", "content": "Test Content" }
-	]
+  "blogposts": [
+    {
+      "id": "1",
+      "title": "Test Blog",
+      "content": "Test Content"
+    },
+    {
+      "title": "New Blog",
+      "content": "New Blog content",
+      "id": "iPBIN1q"
+    }
+  ]
 }
