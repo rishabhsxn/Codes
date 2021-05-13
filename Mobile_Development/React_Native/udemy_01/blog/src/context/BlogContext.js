@@ -1,9 +1,13 @@
 import createDataContext from "./createDataContext";
+import jsonServer from "../api/jsonServer";
 
-const initialBlogs = [{ id: 1, title: "Test Blog", content: "Test Content" }];
+const initialBlogs = [];
 
 const blogReducer = (state, action) => {
 	switch (action.type) {
+		case "GET_BLOGPOSTS":
+			return action.payload;
+
 		case "ADD_BLOGPOST":
 			return [
 				...state,
@@ -35,6 +39,14 @@ const blogReducer = (state, action) => {
 /* Helper function that will modify state variable in child component */
 /* IMPORTANT: We don't have the dispatch function here anymore, so we receive dispatch function as parameter,
 then return a callback that will call the dispatch function to send our action. */
+const getBlogPosts = (dispatch) => {
+	return async () => {
+		const response = await jsonServer.get("/blogposts");
+
+		dispatch({ type: "GET_BLOGPOSTS", payload: response.data });
+	};
+};
+
 const addBlogPost = (dispatch) => {
 	return (title, content, callback) => {
 		dispatch({ type: "ADD_BLOGPOST", payload: { title, content } });
@@ -60,6 +72,6 @@ and Receive the custom created Context & Provider from the function */
 export const { Context: BlogContext, Provider: BlogProvider } =
 	createDataContext(
 		blogReducer,
-		{ addBlogPost, deleteBlogPost, editBlogPost },
+		{ addBlogPost, deleteBlogPost, editBlogPost, getBlogPosts },
 		initialBlogs
 	);
