@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
 	Text,
 	View,
@@ -10,7 +10,16 @@ import { BlogContext } from "../context/BlogContext";
 import { Feather } from "@expo/vector-icons";
 
 const IndexScreen = ({ navigation }) => {
-	const { state: blogs, deleteBlogPost } = useContext(BlogContext);
+	const {
+		state: blogs,
+		deleteBlogPost,
+		getBlogPosts,
+	} = useContext(BlogContext);
+
+	useEffect(() => {
+		// fetch the blogposts from the json-server when the component renders for 1st time
+		getBlogPosts();
+	}, []);
 
 	return (
 		<>
