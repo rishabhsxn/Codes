@@ -56,7 +56,10 @@ const addBlogPost = (dispatch) => {
 };
 
 const deleteBlogPost = (dispatch) => {
-	return (id) => {
+	return async (id) => {
+		await jsonServer.delete(`/blogposts/${id}`);
+
+		// when we get the response back and is successful, dispatch the action to remove from local state
 		dispatch({ type: "DELETE_BLOGPOST", payload: id });
 	};
 };
