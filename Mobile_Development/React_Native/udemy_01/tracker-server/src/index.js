@@ -1,3 +1,4 @@
+require("./models/User"); // special import. only import in index.js to avoid multiple calling of the code.
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");

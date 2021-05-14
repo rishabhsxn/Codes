@@ -2,6 +2,11 @@
 anything related to Authentication like signing in, signing up etc  */
 
 const express = require("express");
+const mongoose = require("mongoose");
+
+// to access an already defined model (DON'T IMPORT)
+const User = mongoose.model("User");
+// using this model, we can access the underlying User Collection in MongoDb
 
 /*
 Routing refers to determining how an application responds to a client request to a 
