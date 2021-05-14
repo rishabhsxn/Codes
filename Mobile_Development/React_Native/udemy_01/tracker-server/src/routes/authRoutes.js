@@ -18,8 +18,12 @@ to the main application object */
 const router = express.Router();
 
 // if a post call is made on /signup, run the callback
-router.post("/signup", (req, res) => {
-	console.log(req.body);
+router.post("/signup", async (req, res) => {
+	// create user instance and save in mongodb
+	const { email, password } = req.body;
+	const user = new User({ email, password });
+	await user.save();
+
 	res.send("You made a post request");
 });
 
