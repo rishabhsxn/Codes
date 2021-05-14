@@ -14,6 +14,7 @@ const router = express.Router();
 
 // if a post call is made on /signup, run the callback
 router.post("/signup", (req, res) => {
+	console.log(req.body);
 	res.send("You made a post request");
 });
 
