@@ -1,7 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
+
+app.use(authRoutes); // associate all the handlers (attached to the router) to the main express app
 
 const mongoUri =
 	"mongodb+srv://admin:passwordvar@cluster0.2tte6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
