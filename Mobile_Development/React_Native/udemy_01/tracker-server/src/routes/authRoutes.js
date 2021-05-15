@@ -3,6 +3,7 @@ anything related to Authentication like signing in, signing up etc  */
 
 const express = require("express");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 // to access an already defined model (DON'T IMPORT)
 const User = mongoose.model("User");
@@ -26,7 +27,9 @@ router.post("/signup", async (req, res) => {
 		const user = new User({ email, password });
 		await user.save();
 
-		res.send("You made a post request");
+		// after storing the user details, create jwt from it's ID & send the jwt token to client
+		const token = jwt.sign({ userId: user._id }, "MY_SECRET_KEY");
+		res.send({ token });
 	} catch (err) {
 		return res.status(422).send(err.message);
 	}
