@@ -2,6 +2,7 @@ require("./models/User"); // special import. only import in index.js to avoid mu
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
+const requireAuth = require("./middlewares/requireAuth");
 /* By default, our express api doesn't understand JSON.
 body-parser is a helper library that will automatically parse information associated
 it the body property of an incoming request. */
@@ -32,9 +33,10 @@ mongoose.connection.on("error", (err) => {
 	console.log("Error connecting to mongo:", err);
 });
 
-// first route
-app.get("/", (req, res) => {
-	res.send("Hi there!");
+// first route - run the middleware requireAuth before entering this route
+app.get("/", requireAuth, (req, res) => {
+	// now the request object must have details of user from middleware
+	res.send(`Your email is ${req.user.email}`);
 });
 
 app.listen(3000, () => {
