@@ -3,6 +3,7 @@ require("./models/Track");
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
+const trackRoutes = require("./routes/trackRoutes");
 const requireAuth = require("./middlewares/requireAuth");
 /* By default, our express api doesn't understand JSON.
 body-parser is a helper library that will automatically parse information associated
@@ -16,6 +17,7 @@ app.use(
 ); /* should be before app.use(authRoutes). Now we can read the body property
 in the req object in handlers */
 app.use(authRoutes); // associate all the handlers (attached to the router) to the main express app
+app.use(trackRoutes);
 
 const mongoUri =
 	"mongodb+srv://admin:passwordvar@cluster0.2tte6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
