@@ -35,4 +35,24 @@ router.post("/signup", async (req, res) => {
 	}
 });
 
+router.post("/signin", async (req, res) => {
+	const { email, password } = req.body;
+
+	if (!email || !password)
+		return res.status(422).send({ error: "Must provide email & password" });
+
+	const user = await User.findOne({ email });
+	if (!user) return res.status(404).send({ error: "User not found" });
+
+	// if password doesn't match, then the promise will be rejected
+	try {
+		await user.comparePassword(password);
+		// when passwords are matched, send the jwt so that the client can save it
+		const token = jwt.sign({ userId: user._id }, "MY_SECRET_KEY");
+		res.send({ token });
+	} catch (err) {
+		return res.status(422).send({ error: "Invalid email or password" });
+	}
+});
+
 module.exports = router;
