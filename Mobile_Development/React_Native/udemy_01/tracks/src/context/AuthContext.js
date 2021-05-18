@@ -1,5 +1,6 @@
 import createDataContext from "./createDataContext";
 import tracker from "../api/tracker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState = {
 	token: null,
@@ -11,7 +12,7 @@ const authReducer = (state, action) => {
 		case "SIGNIN":
 			return { token: action.payload, errorMessage: "" };
 		case "ERROR_MESSAGE":
-			return { token: "", errorMessage: action.payload };
+			return { token: null, errorMessage: action.payload };
 		default:
 			return state;
 	}
@@ -19,10 +20,10 @@ const authReducer = (state, action) => {
 
 const signup = (dispatch) => {
 	return async (email, password) => {
-		let response;
 		try {
 			// make post request to api with email and password
-			response = await tracker.post("/signup", { email, password });
+			const response = await tracker.post("/signup", { email, password });
+			await AsyncStorage.setItem("token", response.data.token);
 			// success => save incoming token
 			dispatch({ type: "SIGNIN", payload: response.data.token });
 			// then navigate to mainFlow
