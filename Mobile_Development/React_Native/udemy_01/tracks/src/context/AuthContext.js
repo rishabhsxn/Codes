@@ -2,7 +2,7 @@ import createDataContext from "./createDataContext";
 import tracker from "../api/tracker";
 
 const initialState = {
-	token: "",
+	token: null,
 	errorMessage: "",
 };
 
