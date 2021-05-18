@@ -1,6 +1,7 @@
 import createDataContext from "./createDataContext";
 import tracker from "../api/tracker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { navigate } from "../navigationRef";
 
 const initialState = {
 	token: null,
@@ -27,6 +28,7 @@ const signup = (dispatch) => {
 			// success => save incoming token
 			dispatch({ type: "SIGNIN", payload: response.data.token });
 			// then navigate to mainFlow
+			navigate("TrackList");
 		} catch (err) {
 			// fail => save error message
 			dispatch({
