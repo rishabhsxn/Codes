@@ -4,6 +4,7 @@ import {
 	View,
 	KeyboardAvoidingView,
 	ScrollView,
+	TouchableOpacity,
 } from "react-native";
 import { Text, Button, Input } from "react-native-elements";
 import Spacer from "../components/Spacer";
@@ -53,6 +54,17 @@ const SignupScreen = ({ navigation }) => {
 							onPress={() => signup(email, password)}
 						/>
 					</Spacer>
+					<Spacer>
+						<TouchableOpacity
+							onPress={() => {
+								navigation.navigate("Signin");
+							}}
+						>
+							<Text style={styles.link}>
+								Already have an Account? Sign In
+							</Text>
+						</TouchableOpacity>
+					</Spacer>
 				</View>
 			</ScrollView>
 		</KeyboardAvoidingView>
@@ -75,5 +87,9 @@ const styles = StyleSheet.create({
 		fontSize: 17,
 		color: "red",
 		marginLeft: 15,
+	},
+	link: {
+		fontSize: 16,
+		color: "blue",
 	},
 });
