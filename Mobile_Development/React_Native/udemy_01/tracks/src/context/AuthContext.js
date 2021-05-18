@@ -40,8 +40,19 @@ const signup = (dispatch) => {
 };
 
 const signin = (dispatch) => {
-	return ({ email, password }) => {
+	return async (email, password) => {
 		// similar to signup
+		try {
+			const response = await tracker.post("/signin", { email, password });
+			await AsyncStorage.setItem("token", response.data.token);
+			dispatch({ type: "SIGNIN", payload: response.data.token });
+			navigate("TrackList");
+		} catch (err) {
+			dispatch({
+				type: "ERROR_MESSAGE",
+				payload: "Something went wrong!",
+			});
+		}
 	};
 };
 
