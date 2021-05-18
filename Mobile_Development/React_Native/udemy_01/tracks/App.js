@@ -1,3 +1,9 @@
+// Tool for monitoring AsyncStorage, console.logs etc
+if (__DEV__)
+	import("./tools/ReactotronConfig").then(() =>
+		console.log("Reactotron Configured")
+	);
+
 import React from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";

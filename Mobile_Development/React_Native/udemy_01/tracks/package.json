@@ -27,7 +27,8 @@
     "react-navigation-tabs": "^2.11.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "reactotron-react-native": "^5.0.0"
   },
   "private": true
 }
