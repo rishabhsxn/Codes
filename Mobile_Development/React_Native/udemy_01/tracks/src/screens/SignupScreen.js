@@ -38,6 +38,13 @@ const SignupScreen = ({ navigation }) => {
 							autoCapitalize="none"
 							autoCorrect={false}
 							secureTextEntry
+							errorMessage={
+								state.errorMessage ? state.errorMessage : null
+							}
+							errorStyle={{
+								fontSize: 17,
+								marginLeft: -10,
+							}}
 						/>
 					</Spacer>
 					<Spacer>
@@ -63,5 +70,10 @@ export default SignupScreen;
 const styles = StyleSheet.create({
 	container: {
 		paddingVertical: 100,
+	},
+	errorStyle: {
+		fontSize: 17,
+		color: "red",
+		marginLeft: 15,
 	},
 });

@@ -19,15 +19,19 @@ const authReducer = (state, action) => {
 
 const signup = (dispatch) => {
 	return async (email, password) => {
+		let response;
 		try {
 			// make post request to api with email and password
-			const response = await tracker.post("/signup", { email, password });
+			response = await tracker.post("/signup", { email, password });
 			// success => save incoming token
 			dispatch({ type: "SIGNIN", payload: response.data.token });
 			// then navigate to mainFlow
 		} catch (err) {
 			// fail => save error message
-			dispatch({ type: "ERROR_MESSAGE", payload: err.message });
+			dispatch({
+				type: "ERROR_MESSAGE",
+				payload: "Something went wrong!",
+			});
 		}
 	};
 };
