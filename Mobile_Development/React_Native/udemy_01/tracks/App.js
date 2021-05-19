@@ -15,11 +15,14 @@ import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import TrackDetailsScreen from "./src/screens/TrackDetailsScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 import AccountScreen from "./src/screens/AccountScreen";
+import AuthResolveScreen from "./src/screens/AuthResolveScreen";
 
 import { AuthProvider } from "./src/context/AuthContext";
 import { setNavigator } from "./src/navigationRef";
 
+// AuthResolveScreen will open 1st when app is loaded
 const navigator = createSwitchNavigator({
+	AuthResolveScreen,
 	loginFlow: createStackNavigator({
 		Signup: SignupScreen,
 		Signin: SigninScreen,

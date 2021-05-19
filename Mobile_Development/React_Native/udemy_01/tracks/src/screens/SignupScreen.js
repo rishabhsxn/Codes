@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { StyleSheet, KeyboardAvoidingView, ScrollView } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import AuthForm from "../components/AuthForm";
@@ -7,13 +7,7 @@ import NavLink from "../components/NavLink";
 import { AuthContext } from "../context/AuthContext";
 
 const SignupScreen = () => {
-	const { state, signup, clearErrorMessage, tryLocalSignin } =
-		useContext(AuthContext);
-
-	// when the signup screen renders for the 1st time, check if token is present
-	useEffect(() => {
-		tryLocalSignin();
-	}, []);
+	const { state, signup, clearErrorMessage } = useContext(AuthContext);
 
 	return (
 		<KeyboardAvoidingView>
