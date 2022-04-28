@@ -9,7 +9,7 @@
     "@types/reactstrap": "^8.0.4",
     "bootstrap": "^4.3.1",
     "bootstrap-social": "^5.1.1",
-    "cross-fetch": "^3.0.4",
+    "cross-fetch": "^3.1.5",
     "font-awesome": "^4.7.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
